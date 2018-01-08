@@ -188,7 +188,8 @@ name "fig:Problem-sketch"
 \end_layout
 
 \begin_layout Standard
-Solve with one-dimensional FVM and compare results with analytical solution.
+Solve with one-dimensional Finite Volume Method (FVM) and compare results
+ with analytical solution.
  Use 5 control volumes.
  Feel free to use Example 4.1 from Versteeg and Malalasekera or course notes
  for verification.
@@ -231,7 +232,7 @@ It may also be a good idea to change your input values to match those in
 \begin_layout Subsection*
 Part c 
 \shape italic
-(if time)
+(plan only)
 \end_layout
 
 \begin_layout Standard
@@ -391,7 +392,7 @@ There is probably no time to program your changes, just plan them.
 \begin_layout Subsection*
 Part d 
 \shape italic
-(if time)
+(plan only)
 \end_layout
 
 \begin_layout Standard
