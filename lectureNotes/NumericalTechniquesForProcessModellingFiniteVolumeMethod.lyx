@@ -1,0 +1,4323 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+\begin_inset VSpace -3cm
+\end_inset
+
+Numerical Techniques for Process Modelling
+\begin_inset Newline newline
+\end_inset
+
+Part I:
+\begin_inset Newline newline
+\end_inset
+
+Finite Volume Method
+\begin_inset Newline newline
+\end_inset
+
+and 
+\begin_inset Newline newline
+\end_inset
+
+Computational Fluid Dynamics
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+KEB-45250
+\begin_inset Newline newline
+\end_inset
+
+Numerical Techniques for Process Modelling,
+\begin_inset Newline newline
+\end_inset
+
+Prosessien numeerinen mallinnus
+\begin_inset Newline newline
+\end_inset
+
+5 credits 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Antti Mikkonen
+\begin_inset Newline newline
+\end_inset
+
+antti.mikkonen@kapsi.fi
+\begin_inset Newline newline
+\end_inset
+
+Tampere University of Technology
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Updated on:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/kansi2.jpeg
+	lyxscale 20
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty} 
+\backslash
+pagenumbering{roman}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang finnish
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang finnish
+\begin_inset VSpace vfill
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang finnish
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\lang finnish
+LISENSSI TÄHÄN! OHEINEN LISENSSI PLACE HOLDERINA.
+ EI OLE TARKOITETTU SITOVAKSI
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+
+\lang finnish
+WORK> (c) by <AUTHOR(S)>
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+
+\lang finnish
+<WORK> is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike
+ 4.0 International License.
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+
+\lang finnish
+You should have received a copy of the license along with this work.
+ If not, see <http://creativecommons.org/licenses/by-nc-sa/4.0/>.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\lang finnish
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Preface
+\end_layout
+
+\begin_layout Standard
+This lecture note is meant for students on the course Numerical Techniques
+ for Process Modelling, arranged on Tampere University of Technology.
+ The course consist of three parts: computational fluid dynamics, general
+ use of numerical methods in energy related industrial problems, and reaction
+ modeling.
+ This booklet considers the computational fluid dynamics part.
+\end_layout
+
+\begin_layout Standard
+This lecture note is a custom fitted to contain the material considered
+ on the course.
+ If you prefer a full text book, see the introductory level text book by
+ Versteeg and Malalasekera, An introduction to Computational Fluid Dynamics
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "versteeg2007"
+
+\end_inset
+
+.
+ More detailed pointers to relevant section will be given in the text as
+ well as other outside sources.
+ 
+\end_layout
+
+\begin_layout Standard
+This is the first time this lecture note is used and the lecture note will
+ be written as the course progresses.
+ Errors are inevitable.
+ Feel free to email the author: antti.mikkonen@kapsi.fi.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Acronyms and translations
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "chapter:abbrev"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{{
+\backslash
+setlength
+\backslash
+tabcolsep{0.5cm}{
+\backslash
+setlength
+\backslash
+extrarowheight{0.2cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="3">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CFD 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Computational fluid dynamics
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Virtauslaskenta
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FEM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Finite element method
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Elementtimenetelmä
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+RANS
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Reynolds-averaged Navier-Stokes (equations)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+NS
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Navier-Stokes (equations)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FVM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Finite volume method
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Tilavuusmenetelmä
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Naming conventions and translations
+\end_layout
+
+\begin_layout Standard
+The following mean roughly the same thing.
+ Be vary of small differences!
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="3">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Heat diffusion 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Heat conduction
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Lämmön johtuminen/diffuusio
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Plan
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="15" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="3cm">
+<column alignment="center" valignment="top" width="2cm">
+<column alignment="center" valignment="top" width="1cm">
+<column alignment="center" valignment="top" width="1cm">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Week
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Chap.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Time
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Introduction
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Antti/Kaj/ Niko
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Linear differential equations
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Kaj
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Kaj
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Non-linear differential equations
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Kaj
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Kaj
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Finite Volume Method
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Antti
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Finite-Volume-Method"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ANSYS
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Medeso
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Diffusion-advection
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Antti
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Navier-Stokes, pressure coupling, compressibility
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Antti
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Turbulence
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Antti
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Mesh
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Antti
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Reaction models
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Niko
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Reaction models + 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Niko
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagenumbering{arabic} 
+\backslash
+setcounter{page}{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Finite Volume Method
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Finite-Volume-Method"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section we study the general properties of Finite Volume Method
+ (FVM) using one-dimensional heat conduction as an example.
+ The necessary steps are very similar in more complicated cases.
+ For the same information in more elaborated format see the introduction
+ level text book by Versteeg and Malalasekera, An introduction to Computational
+ Fluid Dynamics.
+ For this section see chapter four.
+\end_layout
+
+\begin_layout Standard
+The goal of FVM, and other similar numerical methods, is to divide a continuous
+ problem into small discrete pieces.
+ An approximate solution of the original problem is expressed with a large
+ number of simple arithmetic equations.
+ This results are readily collected in to a matrix and solved with a computer.
+ 
+\end_layout
+
+\begin_layout Standard
+The main advantages of numerical solution over analytical solution is the
+ ease of solving problems in complicated geometries and boundary conditions
+ or with varying fluid properties.
+ For such problems analytical solutions often don't exists or are very time
+ consuming to implement.
+ A word of warning is, however in order: it is very easy to produce false
+ results with numerical tools! Especially with commercial software.
+ Therefore it is important to always verify the numerical method with a
+ similar analytical solution if such is available.
+ 
+\end_layout
+
+\begin_layout Standard
+During this cource we become familiar with Finite Volume Method (FVM).
+ Other very similar numerical methods are Finite Element Method (FEM) and
+ Finite Difference Method (FDM).
+ In general, numerical solution of fluid related problems are often called
+ Computational Fluid Dynamics (CFD).
+ FVM method is the preferred method for fluid flow problems because of it's
+ simplicity and conservativeness (mass balance etc.).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Analytical modeling is very useful and should be preferred when ever possible.
+ However, in industrial problems the geometry or problem physics often becomes
+ complicated enough to make the analytical modeling cumbersome or impossible.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Heat Conduction (diffusion)
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+The material discussed in this section may be found in a more elaborated
+ format from Versteeg and Malalasekara 2007, Chapter 5.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "versteeg2007"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section we will learn to formulate and solve linear diffusion problems.
+ We use heat conduction as an example.
+ 
+\end_layout
+
+\begin_layout Subsection
+Developing the equations for 1D problem
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Developing-the-equations"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+See Versteeg and Malalasekare 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "versteeg2007"
+
+\end_inset
+
+ page 114, Section 4.1-4.3.
+\end_layout
+
+\begin_layout Standard
+The key concept for nearly all numerical solutions is discretization of
+ the problem.
+ In Finite Volume Method we divide the solution domain in small control
+ volumes very similar to the ones used in analytical modeling, see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Discretization"
+
+\end_inset
+
+.
+ The difference is that in analytical modeling we allow to control volume
+ to become infinitesimally small.
+ In 
+\bar under
+Finite
+\bar default
+ Volume Method we use some suitably small size instead.
+ 
+\end_layout
+
+\begin_layout Standard
+We use letter 
+\begin_inset Formula $P$
+\end_inset
+
+ to refer to the central point (node) of the control volume we are currently
+ interested in and 
+\begin_inset Formula $W$
+\end_inset
+
+ and 
+\begin_inset Formula $E$
+\end_inset
+
+ to refer to neighboring nodes as shown in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Discretization"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/Diffusion1dMesh.png
+	lyxscale 20
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Control volumes and nodes
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Discretization"
+
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "versteeg2007"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In addition to control volumes and nodes we also need to refer to the faces
+ at control volume boundaries.
+ We call these faces 
+\begin_inset Formula $w$
+\end_inset
+
+ and 
+\begin_inset Formula $e$
+\end_inset
+
+, see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Faces-and-distances"
+
+\end_inset
+
+.
+ The cell size, or distance from one face to another is called 
+\begin_inset Formula $\Delta x$
+\end_inset
+
+ as shown in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Faces-and-distances"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/1dDiskretointi.png
+	lyxscale 20
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Faces and distances 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Faces-and-distances"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "versteeg2007"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As a practical example, our domain could be a 100mm long metal rod and we
+ could divide it in 100 control volumes, each 1mm long.
+ 
+\end_layout
+
+\begin_layout Standard
+Let us concentrate on one control volume, the one around node 
+\begin_inset Formula $P$
+\end_inset
+
+, for a while.
+ If there is a heat flux density 
+\begin_inset Formula $q=-k\frac{\mathrm{d}T}{\mathrm{d}x}$
+\end_inset
+
+ from neighboring cell 
+\begin_inset Formula $W$
+\end_inset
+
+, across the face 
+\begin_inset Formula $A_{w}$
+\end_inset
+
+ at the boundary between nodes 
+\begin_inset Formula $W$
+\end_inset
+
+ and 
+\begin_inset Formula $P$
+\end_inset
+
+, to cell 
+\begin_inset Formula $P$
+\end_inset
+
+, the heat flux is 
+\begin_inset Formula $(qA)_{w}=-\left(kA\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{w}$
+\end_inset
+
+.
+ We use subscripts for locations, see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Heat-conduction"
+
+\end_inset
+
+.
+ Similarly for the east face 
+\begin_inset Formula $(qA)_{e}=-\left(kA\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{e}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+If there is a mean volumetric heat source 
+\begin_inset Formula $\overline{S}$
+\end_inset
+
+ inside the control volume, the total heat power is 
+\begin_inset Formula $S=\overline{S}\Delta V$
+\end_inset
+
+.
+ A practical example of such a source is electric heating.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/1dconductionq.svg
+	lyxscale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Heat conduction
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Heat-conduction"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similarly to the control volume used in analytical methods, we can now collect
+ the terms in a balance equation as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}(qA)_{w}-(qA)_{e}+\overline{S}\Delta V & =0\\
+\Leftrightarrow\left(kA\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{e}-\left(kA\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{w}+\overline{S}\Delta V & =0\\
+\\
+\end{alignedat}
+\label{eq:1dHeat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dHeat"
+
+\end_inset
+
+ contains the essence of Finite Volume Method.
+ Using a familiar control volume approach we have discretized our problem
+ for heat fluxes.
+ 
+\end_layout
+
+\begin_layout Standard
+What remains is to discretize the temperature gradients 
+\begin_inset Formula $\left(\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{w}$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{e}$
+\end_inset
+
+ at cell faces.
+ If thermal conductivity 
+\begin_inset Formula $k$
+\end_inset
+
+ and/or cross-section area 
+\begin_inset Formula $A$
+\end_inset
+
+ varies, they must be evaluated also.
+\end_layout
+
+\begin_layout Standard
+The most common way to discretize gradient term is to use central differencing.
+ The basic idea is to assume linear temperature profile between two nodes
+ as shown in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Central-differencing"
+
+\end_inset
+
+.
+ In essence central differencing is the same thing as linear interpolation.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/centralDifferencing.svg
+	lyxscale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Central differencing
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Central-differencing"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With uniform grid linear interpolation gives at cell faces
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boxed{\begin{alignedat}{1}k_{w} & =\frac{k_{W}+k_{P}}{2}\\
+k_{e} & =\frac{k_{E}+k_{P}}{2}\\
+A_{w} & =\frac{A_{W}+A_{P}}{2}\\
+A_{e} & =\frac{A_{E}+A_{P}}{2}
+\end{alignedat}
+}\label{eq:linearInterpolation}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If we have constant thermal conductivity 
+\begin_inset Formula $k$
+\end_inset
+
+ and/or constant cross-section area 
+\begin_inset Formula $A$
+\end_inset
+
+, we can ignore the interpolation in Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:linearInterpolation"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+With uniform grid central differencing scheme gives for a temperature gradients
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boxed{\begin{alignedat}{1}\left(\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{w} & \approx\frac{T_{P}-T_{W}}{\Delta x}\\
+\left(\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{e} & \approx\frac{T_{E}-T_{P}}{\Delta x}
+\end{alignedat}
+}\label{eq:centralDifferencing1D}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that for non-uniform grid where the 
+\begin_inset Formula $\Delta x$
+\end_inset
+
+ is not constant the form is slightly more complex.
+ 
+\end_layout
+
+\begin_layout Standard
+Substituting Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:centralDifferencing1D"
+
+\end_inset
+
+ into Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dHeat"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}k_{e}A_{e}\frac{T_{E}-T_{P}}{\Delta x}-k_{w}A_{w}\frac{T_{P}-T_{W}}{\Delta x}+\overline{S}\Delta V & =0\end{alignedat}
+\label{eq:Conduction1Draw}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now we have a fully discretized equation for heat conduction! 
+\end_layout
+
+\begin_layout Standard
+It is often useful to rearrange Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Conduction1Draw"
+
+\end_inset
+
+ as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\frac{k_{e}A_{e}}{\Delta x}T_{E}-\frac{k_{e}A_{e}}{\Delta x}T_{P}-\frac{k_{w}A_{w}}{\Delta x}T_{P} & +\frac{k_{w}A_{w}}{\Delta x}T_{W}+\overline{S}\Delta V=0\\
+\Leftrightarrow\underbrace{\left(\frac{k_{e}A_{e}}{\Delta x}+\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{P}=a_{W}+a_{E}}T_{P} & =\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{w}}T_{W}+\underbrace{\left(\frac{k_{e}A_{e}}{\Delta x}\right)}_{a_{E}}T_{E}+\underbrace{\overline{S}\Delta V}_{S_{u}}
+\end{alignedat}
+\label{eq:1dConductionReady}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Leftrightarrow\boxed{a_{P}T_{P}=a_{W}T_{W}+a_{E}T_{E}+S_{u}}\label{eq:1dConductionReadyShort}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At this point our equation is in a ready-for-a-computer form but lets make
+ a sanity check first.
+ 
+\end_layout
+
+\begin_layout Standard
+From experience we know that thermal conductivity 
+\begin_inset Formula $k$
+\end_inset
+
+, cross-section area 
+\begin_inset Formula $A$
+\end_inset
+
+ and cell size 
+\begin_inset Formula $\Delta x$
+\end_inset
+
+ are positive numbers.
+ Therefore 
+\begin_inset Formula $a=\frac{kA}{\Delta x}$
+\end_inset
+
+ is also a positive number.
+ Now, lets imagine that the temperature in the neighboring cell 
+\begin_inset Formula $T_{W}$
+\end_inset
+
+ rises.
+ What happens to the temperature in the studied cell 
+\begin_inset Formula $T_{P}$
+\end_inset
+
+? According to Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dConductionReadyShort"
+
+\end_inset
+
+ it rises because 
+\begin_inset Formula $a_{W}$
+\end_inset
+
+ is positive.
+ This agrees with our experience.
+ And what if we increase thermal conductivity? Multiplier 
+\begin_inset Formula $a_{W}$
+\end_inset
+
+ increases and 
+\begin_inset Formula $T_{P}$
+\end_inset
+
+ reacts more to changes in 
+\begin_inset Formula $T_{W}$
+\end_inset
+
+.
+ Again, this agrees with our experience.
+ Running a similar though experiment for 
+\begin_inset Formula $a_{E}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{u}$
+\end_inset
+
+ gives similar results and we can conclude that there is no obvious errors
+ in our formulation.
+\end_layout
+
+\begin_layout Subsubsection
+Same thing in math
+\end_layout
+
+\begin_layout Standard
+For one-dimensional steady heat conduction (diffusion) with a volumetric
+ source term we have
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\mathrm{\mathrm{d}}}{\mathrm{d}x}\left(k\frac{\mathrm{dT}}{dx}\right)+S=0\label{eq:Goverging1dDiffusion}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $T$
+\end_inset
+
+ is the temperature and 
+\begin_inset Formula $s$
+\end_inset
+
+ is the volumetric source term.
+ Integrating over a control volume gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\int_{CV}\frac{\mathrm{\mathrm{d}}}{\mathrm{d}x}\left(k\frac{\mathrm{dT}}{dx}\right)\mathrm{d}V+\int_{CV}S\mathrm{d}V=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using the Gauss divergence theorem we get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\int_{A}\boldsymbol{n}\cdot k\frac{\mathrm{dT}}{dx}\mathrm{d}A+\int_{CV}S\mathrm{d}V & =0\\
+\Leftrightarrow\left(kA\frac{\mathrm{dT}}{dx}\right)_{e}-\left(kA\frac{\mathrm{dT}}{dx}\right)_{w}+\overline{S}\Delta V & =0
+\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With central differencing, see Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:linearInterpolation"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:centralDifferencing1D"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+k_{e}A_{e}\frac{T_{E}-T_{P}}{\Delta x}-k_{w}A_{w}\frac{T_{P}-T_{W}}{\Delta x}+\overline{S}\Delta V=0\label{eq:mathRaw}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which is the same equations as Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Conduction1Draw"
+
+\end_inset
+
+.
+ Rearranging Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mathRaw"
+
+\end_inset
+
+ results in Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dConductionReady"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\underbrace{\left(\frac{k_{e}A_{e}}{\Delta x}+\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{P}=a_{W}+a_{E}}T_{P}=\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{w}}T_{W}+\underbrace{\left(\frac{k_{e}A_{e}}{\Delta x}\right)}_{a_{E}}T_{E}+\underbrace{\overline{S}\Delta V}_{S_{u}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Leftrightarrow\boxed{a_{P}T_{P}=a_{W}T_{W}+a_{E}T_{E}+S_{u}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Boundary conditions 
+\end_layout
+
+\begin_layout Standard
+In Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Developing-the-equations"
+
+\end_inset
+
+ we developed the discretized equations for 1D heat transfer inside the
+ domain.
+ In order to use the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dConductionReady"
+
+\end_inset
+
+ for anything real we now need to give it boundary conditions.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/boundaries1D.png
+	lyxscale 20
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Boundary conditions 1D
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Boundary-conditions-1D"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The cells that touch boundaries are called boundary cells and require special
+ attention.
+ Let us concentrate on cell 1 in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Boundary-conditions-1D"
+
+\end_inset
+
+ for a while.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Constant temperature boundary
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+See Versteeg and Malalasekare 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "versteeg2007"
+
+\end_inset
+
+ page 118, Example 4.1.
+\end_layout
+
+\begin_layout Standard
+We define a 
+\series bold
+constant temperature 
+\series default
+
+\begin_inset Formula $T_{A}$
+\end_inset
+
+ 
+\series bold
+for left boundary
+\series default
+.
+ We note that the distance from node 1 to face A is 
+\begin_inset Formula $\Delta x/2$
+\end_inset
+
+ (not all FVM meshes are build this way but the ones we use are).
+ Using the same interpolation and central differencing schemes as before,
+ Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:linearInterpolation"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:centralDifferencing1D"
+
+\end_inset
+
+, we get for the west side face in Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dHeat"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left(kA\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{w}\approx k_{A}A_{A}\frac{T_{P}-T_{A}}{\Delta x/2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Substituting this in Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dHeat"
+
+\end_inset
+
+ and threating the inside face 
+\begin_inset Formula $w$
+\end_inset
+
+ in the same way as before results in 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+k_{e}A_{e}\frac{T_{E}-T_{P}}{\Delta x}-k_{A}A_{A}\frac{T_{P}-T_{A}}{\Delta x/2}+\overline{S}\Delta V=0\label{eq:boundary1Draw}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Rearranging Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:boundary1Draw"
+
+\end_inset
+
+ gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{cc}
+\underbrace{\left(\frac{k_{e}A_{e}}{\Delta x}+\overbrace{\frac{k_{A}A_{A}}{\Delta x/2}}^{S_{P}}\right)}_{a_{P}=a_{E}+S_{P}}T_{P}=\underbrace{\left(\frac{k_{e}A_{e}}{\Delta x}\right)}_{a_{E}}T_{E}+\underbrace{\left(\frac{k_{A}A_{A}}{\Delta x/2}\right)T_{A}+\overline{S}\Delta V}_{S_{u}}\\
+\Leftrightarrow a_{P}T_{P}=a_{E}T_{E}+S_{u}
+\end{array}\label{eq:1dConsductionConstantTLEft}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Comparing Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dConductionReady"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dConsductionConstantTLEft"
+
+\end_inset
+
+ we notice a remarkable similarity.
+ The 
+\shape italic
+east
+\shape default
+ side coefficient 
+\begin_inset Formula $a_{E}$
+\end_inset
+
+ is unaffected.
+ 
+\shape italic
+West 
+\shape default
+side face doesn't exist and is replaced with source terms 
+\begin_inset Formula $S_{P}$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(\frac{k_{A}A_{A}}{\Delta x/2}\right)T_{A}$
+\end_inset
+
+.
+ The source term 
+\begin_inset Formula $\overline{S}\Delta V$
+\end_inset
+
+ stays unchanged.
+ This is typical to boundary conditions are simplifies matrix assembly.
+ We can first assemble the inner face coefficients and volumetric sources
+ and worry about boundaries later.
+ More about matrix assembly later in Sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Matrix-assembly"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+If the constant temperature is set on the 
+\begin_inset Formula $B$
+\end_inset
+
+ boundary as shown in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Boundary-conditions-1D"
+
+\end_inset
+
+ we follow a similar procedure as for 
+\begin_inset Formula $A$
+\end_inset
+
+ boundary.
+ Now we replace East side coefficient 
+\begin_inset Formula $a_{E}$
+\end_inset
+
+ with suitable source terms and arrive to 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{cc}
+\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}+\overbrace{\frac{k_{B}A_{B}}{\Delta x/2}}^{S_{P}}\right)}_{a_{P}=a_{W}+S_{P}}T_{P}=\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{W}}T_{W}+\underbrace{\left(\frac{k_{B}A_{B}}{\Delta x/2}\right)T_{B}+\overline{S}\Delta V}_{S_{u}}\\
+\Leftrightarrow a_{P}T_{P}=a_{W}T_{W}+S_{u}
+\end{array}\label{eq:1dConsductionConstantTRight}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Zero gradient (insulated) boundary
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+See Versteeg and Malalasekare 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "versteeg2007"
+
+\end_inset
+
+ page 125, Example 4.3.
+\end_layout
+
+\begin_layout Standard
+Zero gradient boundary for temperature in heat conduction context means
+ insulations as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+q=-k\underbrace{\frac{\mathrm{d}T}{\mathrm{d}x}}_{0}=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To apply the zero gradient boundary condition for East face in Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dHeat"
+
+\end_inset
+
+ we but the east side coefficient to zero as 
+\begin_inset Formula $a_{E}=0$
+\end_inset
+
+ and from Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dConductionReady"
+
+\end_inset
+
+ we get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{cc}
+\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{P}=a_{W}}T_{P}=\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{w}}T_{W}+\underbrace{\overline{S}\Delta V}_{S_{u}}\\
+\Leftrightarrow a_{P}T_{P}=a_{W}T_{W}+S_{u}
+\end{array}\label{eq:insulated1Dconduction}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+No additional source terms are needed.
+ 
+\end_layout
+
+\begin_layout Subsection
+Matrix assembly
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Matrix-assembly"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In previous section we have learned how to formulate the equations for our
+ problem.
+ Now we learn how to assemble these equations into a matrix form and feed
+ it to a computer.
+ We use Python for calculations.
+ We want the problem in linear matrix equations form
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{AT=b}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which can be readily solved with almost any programming language.
+ For example in Python, using scipy reads 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/linSystemSolution.png
+	lyxscale 20
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Linear system solution with Scipy
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Linear-system-solution"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We but all the constant values that do not depend on 
+\begin_inset Formula $T$
+\end_inset
+
+ in source vector 
+\begin_inset Formula $\boldsymbol{b}$
+\end_inset
+
+ and all the multiplying coefficients of temperatures in matrix 
+\begin_inset Formula $\boldsymbol{A}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let us consider one-dimensional heat conduction where the left boundary
+ is set at constant temperature 
+\begin_inset Formula $T_{B}$
+\end_inset
+
+ and right boundary is insulated, i.e.
+ 
+\begin_inset Formula $\frac{\mathrm{\mathrm{d}T}}{\mathrm{d}x}=0$
+\end_inset
+
+.
+ We have constant fluid properties and cross-section are 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ The domain length is 
+\begin_inset Formula $L$
+\end_inset
+
+ and we divide it in 
+\begin_inset Formula $n$
+\end_inset
+
+ volumes, each 
+\begin_inset Formula $\Delta x=L/n$
+\end_inset
+
+ long.
+ We start the cell numbering from left and use uniform mesh.
+ We have uniform volumetric heat generation 
+\begin_inset Formula $S$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For the inside cells, dividing by the constant area 
+\begin_inset Formula $A$
+\end_inset
+
+ we have from Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dConductionReady"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{cc}
+\underbrace{\left(\frac{k}{\Delta x}+\frac{k}{\Delta x}\right)}_{a_{P}=a_{W}+a_{E}}T_{P}=\underbrace{\left(\frac{k}{\Delta x}\right)}_{a_{w}}T_{W}+\underbrace{\left(\frac{k}{\Delta x}\right)}_{a_{E}}T_{E}+\underbrace{S\Delta x}_{S_{u}}\\
+\Leftrightarrow a_{P}T_{P}=a_{W}T_{W}+a_{E}T_{E}+S_{u}
+\end{array}\label{eq:1dworkedInside}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For left boundary, dividing by the constant area 
+\begin_inset Formula $A$
+\end_inset
+
+ we have from Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dConsductionConstantTLEft"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{cc}
+\underbrace{\left(\frac{k}{\Delta x}+\overbrace{\frac{k}{\Delta x/2}}^{S_{P}}\right)}_{a_{P}=a_{E}+S_{P}}T_{P}=\underbrace{\left(\frac{k}{\Delta x}\right)}_{a_{E}}T_{E}+\underbrace{\left(\frac{k}{\Delta x/2}\right)T_{A}+\overline{S}\Delta V}_{S_{u}}\\
+\Leftrightarrow a_{P}T_{P}=a_{E}T_{E}+S_{u}
+\end{array}\label{eq:1DworkedLeft}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For right boundary, dividing by the constant area 
+\begin_inset Formula $A$
+\end_inset
+
+ we have from Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:insulated1Dconduction"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{cc}
+\underbrace{\left(\frac{k}{\Delta x}\right)}_{a_{P}=a_{W}}T_{P}=\underbrace{\left(\frac{k}{\Delta x}\right)}_{a_{w}}T_{W}+\underbrace{\overline{S}\Delta V}_{S_{u}}\\
+\Leftrightarrow a_{P}T_{P}=a_{W}T_{W}+S_{u}
+\end{array}\label{eq:1dWorkedRigth}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We may now observe from Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dworkedInside"
+
+\end_inset
+
+-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dWorkedRigth"
+
+\end_inset
+
+ that the for all cells that do have a west boundary, the west face coefficient
+ is the same 
+\begin_inset Formula $a_{W}=\frac{k}{\Delta x}$
+\end_inset
+
+.
+ The west face coefficient operates on the currently studied cell 
+\begin_inset Formula $T_{P}$
+\end_inset
+
+ and the west side neighbor 
+\begin_inset Formula $T_{W}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Adding the west side coefficients into matrix 
+\begin_inset Formula $\boldsymbol{A}$
+\end_inset
+
+ gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{A}=\left[\begin{array}{ccccc}
+0 & 0 & 0 & 0 & 0\\
+-a_{W} & a_{W} & 0 & 0 & 0\\
+0 & -a_{W} & a_{W} & 0 & 0\\
+0 & 0 & -a_{W} & a_{W} & 0\\
+0 & 0 & 0 & -a_{W} & a_{W}
+\end{array}\right]\label{eq:AwithaE}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With python this can be done as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/aWassempy.png
+	lyxscale 20
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similarly, for all east faces that exist the east face coefficient 
+\begin_inset Formula $a_{E}=\frac{k}{\Delta x}$
+\end_inset
+
+ and the coefficient operates on the current cell and the east neighbor.
+ Adding the east coefficients to already build matrix in Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:AwithaE"
+
+\end_inset
+
+ gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{A}=\left[\begin{array}{ccccc}
+a_{E} & -a_{E} & 0 & 0 & 0\\
+-a_{W} & a_{W}+a_{E} & -a_{E} & 0 & 0\\
+0 & -a_{W} & a_{W}+a_{E} & -a_{E} & 0\\
+0 & 0 & -a_{W} & a_{W}+a_{E} & -a_{E}\\
+0 & 0 & 0 & -a_{W} & a_{W}
+\end{array}\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With python
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/aEassempy.png
+	lyxscale 20
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now we need to add the boundary conditions to our matrix 
+\begin_inset Formula $\boldsymbol{A}$
+\end_inset
+
+ and source vector 
+\begin_inset Formula $\boldsymbol{b}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+As can be seen from Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1DworkedLeft"
+
+\end_inset
+
+ the constant temperature boundary condition on the left contributes terms
+ 
+\begin_inset Formula $S_{P}=\frac{k}{\Delta x/2}$
+\end_inset
+
+ to the matrix 
+\begin_inset Formula $\boldsymbol{A}$
+\end_inset
+
+ first cell diagonal.
+ Adding that term gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{A}=\left[\begin{array}{ccccc}
+a_{E}+\frac{k}{\Delta x/2} & -a_{E} & 0 & 0 & 0\\
+-a_{W} & a_{W}+a_{E} & -a_{E} & 0 & 0\\
+0 & -a_{W} & a_{W}+a_{E} & -a_{E} & 0\\
+0 & 0 & -a_{W} & a_{W}+a_{E} & -a_{E}\\
+0 & 0 & 0 & -a_{W} & a_{W}
+\end{array}\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The constant boundary condition also contributes a source term 
+\begin_inset Formula $\left(\frac{k}{\Delta x/2}\right)T_{A}$
+\end_inset
+
+ to the first cell source vector.
+ The resulting source vector 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{b}=\begin{bmatrix}\left(\frac{k}{\Delta x/2}\right)T_{B} & 0 & 0 & 0 & 0\end{bmatrix}^{T}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With python the constant boundary condition is added as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/pythonContantleft.png
+	lyxscale 20
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The insulated boundary on the right produces no coefficients as no heat
+ is transfered through the boundary.
+ Nothing needs to be done.
+\end_layout
+
+\begin_layout Standard
+As final step we need to add the volumetric source to our source vector
+ 
+\begin_inset Formula $\boldsymbol{b}$
+\end_inset
+
+.
+ The volumetric source is the same in all Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dworkedInside"
+
+\end_inset
+
+-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dWorkedRigth"
+
+\end_inset
+
+, 
+\begin_inset Formula $S_{u}=S\Delta x$
+\end_inset
+
+.
+ By adding it to the source vector we get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{b}=\begin{bmatrix}\left(\frac{k}{\Delta x/2}\right)T_{B}+S\Delta x & S\Delta x & S\Delta x & S\Delta x & S\Delta x\end{bmatrix}^{T}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With python this can be done with vectorized statement as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/pythonSource.png
+	lyxscale 20
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now our linear system is ready and we can solve as shown in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Linear-system-solution"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+It's a good idea to check your code in as small increments as possible.
+ Print out your coefficients and matrices during development and compare
+ them to known values.
+ Debugging of small pieces is easier that large ones.
+ Software houses have teams of designated testers working in their companies
+ with the sole purpose of finding bugs.
+ Do it early.
+\end_layout
+
+\begin_layout Standard
+You can plot the solutions with python as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/1dcondicitpPlot.png
+	lyxscale 20
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/1dcondicitpPlotResult.png
+	lyxscale 20
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Plotting
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Unsteady
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+See Versteeg and Malalasekare 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "versteeg2007"
+
+\end_inset
+
+ page 243, Chapter 8.
+\end_layout
+
+\begin_layout Standard
+There are many different methods to tackle the time derivative term in one-dimen
+sional heat conduction 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\rho c\frac{\partial T}{\partial t}=\frac{\partial}{\partial x}\left(k\frac{\partial T}{\partial x}\right)+S\label{eq:unsteady1Dconduction}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+were 
+\begin_inset Formula $\rho$
+\end_inset
+
+ is density, 
+\begin_inset Formula $c$
+\end_inset
+
+ is specific heat capacity.
+ The partial derivate 
+\begin_inset Formula $\frac{\partial T}{\partial t}$
+\end_inset
+
+ mean that we now have two different derivatives, 
+\begin_inset Formula $\frac{\partial T}{\partial t}$
+\end_inset
+
+ and 
+\begin_inset Formula $\frac{\partial T}{\partial x}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+We will try to avoid mathematics as much as possible, for a more formal
+ approach see 
+\shape italic
+Versteeg and Malalasekare 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "versteeg2007"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let us first consider the left hand side of Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:unsteady1Dconduction"
+
+\end_inset
+
+, 
+\begin_inset Formula $\rho c\frac{\partial T}{\partial t}$
+\end_inset
+
+ .
+ We may discretized it as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\rho c\frac{\partial T}{\partial t}\approx\rho c\frac{T-T^{0}}{\Delta t}\label{eq:timeDiscretisation}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+ is time step and 
+\begin_inset Formula $T^{0}$
+\end_inset
+
+ is temperature from previous time step.
+ If we now substitute Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:timeDiscretisation"
+
+\end_inset
+
+ into Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:unsteady1Dconduction"
+
+\end_inset
+
+ we get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\rho c\frac{\partial T}{\partial t} & =\frac{\partial}{\partial x}\left(k\frac{\partial T}{\partial x}\right)+S\\
+\Leftrightarrow\rho c\frac{T-T^{0}}{\Delta t} & =\frac{\partial}{\partial x}\left(k\frac{\partial T}{\partial x}\right)+S
+\end{alignedat}
+\label{eq:time}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+we may now recognize the right hand side of Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:time"
+
+\end_inset
+
+, 
+\begin_inset Formula $\frac{\partial}{\partial x}\left(k\frac{\partial T}{\partial x}\right)+S$
+\end_inset
+
+ as the governing equation for steady state heat conduction, Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Goverging1dDiffusion"
+
+\end_inset
+
+.
+ We may use the FVM methods described before to discretize it.
+ Using FVM to the left hand side of Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:time"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\int_{CV}\rho c\frac{T-T^{0}}{\Delta t}dV\approx\rho cA\frac{T-T^{0}}{\Delta t}\Delta x\label{eq:timeVol}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The remaining choice is at what time to we evaluate the right hand side
+ of Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:time"
+
+\end_inset
+
+.
+ If we choose to evaluate it at the last time step corresponding to 
+\begin_inset Formula $T^{0}$
+\end_inset
+
+ we get explicit Euler scheme.
+ Explicit Euler requires very small time steps.
+ We choose to use the new time.
+ This is caller implicit Euler scheme.
+ Implicit Euler is unconditionally stable and easy to use.
+ For more temporal accuracy look in to Runge-Kutta or other higher order
+ schemes.
+\end_layout
+
+\begin_layout Standard
+With FVM and Implicit Euler we get from Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:time"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:timeVol"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dConductionReady"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{cc}
+\underbrace{\rho cA\frac{\Delta x}{\Delta t}}_{a_{P}^{0}}(T_{P}-T_{P}^{0})+\underbrace{\left(\frac{k_{e}A_{e}}{\Delta x}+\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{W}+a_{E}}T_{P}=\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{w}}T_{W}+\underbrace{\left(\frac{k_{e}A_{e}}{\Delta x}\right)}_{a_{E}}T_{E}+\underbrace{\overline{S}\Delta V}_{S_{u}}\\
+\Leftrightarrow a_{P}^{0}T_{P}-a_{P}^{0}T_{P}^{0}+a_{W}T_{P}+a_{E}T_{P}=a_{w}T_{W}+a_{E}T_{E}+S_{u}\\
+\Leftrightarrow\boxed{\underbrace{(a_{P}^{0}+a_{W}+a_{E})}_{a_{P}}T_{P}=a_{w}T_{W}+a_{E}T_{E}+a_{P}^{0}T_{P}^{0}+S_{u}}\\
+\\
+\end{array}\label{eq:1DconductionUnsteady}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1DconductionUnsteady"
+
+\end_inset
+
+ we see that the solution of one time step in unsteady case is very similar
+ to the steady one.
+ To progress the solution repeat the process in a loop.
+ An example is given in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Time-stepping"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/timeStepping.png
+	lyxscale 20
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Time stepping
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Time-stepping"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+2D case
+\end_layout
+
+\begin_layout Subsection
+Notations
+\end_layout
+
+\begin_layout Subsection
+Extra material
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+Extra material.
+ Not needed on this course.
+\end_layout
+
+\begin_layout Subsubsection
+Performance issues with example codes
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+Extra material.
+ Not needed on this course.
+\end_layout
+
+\begin_layout Standard
+All the examples are written with clarity in mind.
+ They usually sacrifice performance for this goal.
+ The most important performance limiting factor is the use of dense matrices.
+ 
+\end_layout
+
+\begin_layout Standard
+The multiplying matrix 
+\begin_inset Formula $\boldsymbol{A}$
+\end_inset
+
+ is mostly empty in most FVM problems, i.e.
+ mostly filled with zeros.
+ It would be a LOT better to use sparse matrices.
+ With large systems sparse matrices are decades faster that dense matrices.
+ 
+\end_layout
+
+\begin_layout Standard
+The Python sparse matrix syntax is rather verbose but straight forward to
+ use.
+ Do not be frighten by the long command.
+ You can usually just copy-paste it from your previous codes.
+ See https://docs.scipy.org/doc/scipy/reference/sparse.html for more.
+\end_layout
+
+\begin_layout Standard
+We often use unnecessary loops.
+ Looping is slow in Python and indexing of large matrices is also unnecessary.
+ As rule of a thumb always use vectorized commands if you can.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Application to other physics
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+Extra material.
+ Not needed on this course.
+\end_layout
+
+\begin_layout Standard
+Many problems in other fields are very similar to heat conduction.
+ Here are some examples.
+\end_layout
+
+\begin_layout Paragraph
+Moisture transfer
+\end_layout
+
+\begin_layout Paragraph
+Electric heating
+\end_layout
+
+\begin_layout Standard
+Electric potential be solved from the well-known Poisson equation (same
+ as heat conduction equation)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\nabla\cdot\sigma\nabla\phi=0\label{eq:electricPotential}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is electric potential.
+ Electric field 
+\begin_inset Formula $\boldsymbol{E}$
+\end_inset
+
+ is solved from
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{E=}-\nabla\phi
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and electric current density 
+\begin_inset Formula $\boldsymbol{J}$
+\end_inset
+
+ from
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{J}=\sigma\boldsymbol{E}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and finally the volumetric electric heating power 
+\begin_inset Formula $p$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+p=\frac{\partial P}{\mathit{\partial}V}=\boldsymbol{J}\cdot\boldsymbol{E}\boldsymbol{=\boldsymbol{J}\cdot\boldsymbol{J}/\sigma=\frac{\mid\boldsymbol{J}\mid^{2}}{\sigma}}\label{eq:JouleHeating}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Electric conductivity can be calculated from electric resistivity 
+\begin_inset Formula $\rho$
+\end_inset
+
+ as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\sigma=\frac{1}{\rho}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Linear Mechanics
+\end_layout
+
+\begin_layout Standard
+For small deformations
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+-\nabla\cdot\boldsymbol{\sigma} & =\boldsymbol{f}\label{eq:linearMech}\\
+\boldsymbol{\sigma} & =\lambda\nabla\cdot\boldsymbol{u}\boldsymbol{\mathrm{I}}+2\mu\mathrm{\boldsymbol{D}}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The resulting equation is similar linear system as for heat conduction and
+ can be solved with same methods.
+ 
+\end_layout
+
+\begin_layout Standard
+The stress equation is very similar as that in Navier-Stokes equations.
+ If we remove movement related terms from Navier-Stokes equations, we end
+ up with an equation very similar to Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:linearMech"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Advection-diffusion
+\end_layout
+
+\begin_layout Section
+Navier-Stokes
+\end_layout
+
+\begin_layout Subsection
+The NS equation
+\end_layout
+
+\begin_layout Subsection
+Compressible vs.
+ incompressible
+\end_layout
+
+\begin_layout Subsection
+Pressure coupling
+\end_layout
+
+\begin_layout Subsection
+Boundary conditions
+\end_layout
+
+\begin_layout Section
+Mesh
+\end_layout
+
+\begin_layout Section
+Turbulence
+\end_layout
+
+\begin_layout Section
+Math
+\end_layout
+
+\begin_layout Standard
+Tähän kappaleeseen kootaan hyödyllistä matematiikkaa, joka ei olisi sopinut
+ prujun muihin kohtiin.
+\end_layout
+
+\begin_layout Paragraph
+Gaussin divergenssi lause
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\nabla\cdot\boldsymbol{F}dV=\int_{S}\boldsymbol{n}\cdot\boldsymbol{F}dA\label{eq:gaussin_lause}
+\end{equation}
+
+\end_inset
+
+\SpecialChar softhyphen
+
+\end_layout
+
+\begin_layout Standard
+jossa 
+\begin_inset Formula $\boldsymbol{F}$
+\end_inset
+
+on vektori arvoinen function, esim.
+ lämmönjohtumiselle 
+\begin_inset Formula $k\nabla T$
+\end_inset
+
+, 
+\begin_inset Formula $\boldsymbol{n}$
+\end_inset
+
+ on pinnan normaalivektori.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+External Resources
+\end_layout
+
+\begin_layout Subsection
+Books etc.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Recommonded for this course
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+An Introduction to Computational Fluid Dynamics: The Finite Volume Method,
+ Versteeg, H.K.
+ and Malalasekera, W.
+ 2007
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+FVM diffusion in Wikipedia
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+https://en.wikipedia.org/wiki/
+\begin_inset Newline newline
+\end_inset
+
+Finite_volume_method_for_one-dimensional_steady_state_diffusion
+\end_layout
+
+\begin_layout Itemize
+https://en.wikipedia.org/wiki/
+\begin_inset Newline newline
+\end_inset
+
+Finite_volume_method_for_two_dimensional_diffusion_problem
+\end_layout
+
+\begin_layout Itemize
+https://en.wikipedia.org/wiki
+\begin_inset Newline newline
+\end_inset
+
+/Finite_volume_method_for_three-dimensional_diffusion_problem
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+For advanced studies in OpenFOAM
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+https://www.researchgate.net/profile/Tobias_Holzmann/publication/
+\begin_inset Newline newline
+\end_inset
+
+307546712_Mathematics_Numerics_Derivations_and_OpenFOAMR/links/
+\begin_inset Newline newline
+\end_inset
+
+59c7ffde0f7e9bd2c014693c/Mathematics-Numerics-Derivations-and-OpenFOAMR.pdf
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Programs, programming, libraries etc.
+\end_layout
+
+\begin_layout Itemize
+https://anaconda.org/
+\end_layout
+
+\begin_layout Itemize
+http://www.openfoam.org/
+\end_layout
+
+\begin_layout Itemize
+http://www.openfoam.com/
+\end_layout
+
+\begin_layout Itemize
+http://www.ansys.com/
+\end_layout
+
+\begin_layout Itemize
+https://fenicsproject.org/
+\end_layout
+
+\begin_layout Itemize
+https://www.ctcms.nist.gov/fipy/index.html
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Authors notes
+\end_layout
+
+\begin_layout Itemize
+Source code 5xCtrl+, 50% scaling
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "bibliography"
+options "plain"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
