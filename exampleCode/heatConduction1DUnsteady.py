@@ -8,7 +8,7 @@ See Fersteeg and Malalasekera 2007, example 8.2 om page 253 for details.
 Constant propersties, contant temperature boundary, zero gradient (insulated) 
 boundary, transient.
 
-Emphesis on simplisity. Low performance in larger systems.
+Emphasis on simplicity. Low performance in larger systems.
 
 Created on Thu Jan  4 17:45:12 2018
 

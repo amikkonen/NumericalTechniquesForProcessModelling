@@ -7,7 +7,7 @@ See Fersteeg and Malalasekera 2007, example 4.1 om page 118 for details.
 
 No sources, constant propersties, contant temperature boundaries.
 
-Emphesis on simplisity. Low performance in larger systems.
+Emphasis on simplicity. Low performance in larger systems.
 
 Created on Thu Jan  4 15:48:25 2018
 

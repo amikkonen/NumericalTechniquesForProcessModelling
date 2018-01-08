@@ -8,7 +8,7 @@ See Fersteeg and Malalasekera 2007, example 4.3 om page 125 for details.
 Linear source (heat convection), constant propersties, 
 contant temperature boundary, zero gradient (insulated) boundary.
 
-Emphesis on simplisity. Low performance in larger systems.
+Emphasis on simplicity. Low performance in larger systems.
 
 Created on Thu Jan  4 16:54:30 2018
 
