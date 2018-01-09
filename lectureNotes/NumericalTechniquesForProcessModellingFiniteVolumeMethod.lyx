@@ -2967,7 +2967,9 @@ In previous section we have learned how to formulate the equations for our
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\boldsymbol{AT=b}
+\begin{alignedat}{1}\boldsymbol{AT} & =\boldsymbol{b}\\
+\Leftrightarrow\boldsymbol{T} & \boldsymbol{=A^{-1}b}
+\end{alignedat}
 \end{equation}
 
 \end_inset
@@ -3496,7 +3498,35 @@ reference "fig:Linear-system-solution"
 \end_inset
 
 .
- 
+ The full system reads
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{cc}
+\underbrace{\left[\begin{array}{ccccc}
+a_{E}+\frac{k}{\Delta x/2} & -a_{E} & 0 & 0 & 0\\
+-a_{W} & a_{W}+a_{E} & -a_{E} & 0 & 0\\
+0 & -a_{W} & a_{W}+a_{E} & -a_{E} & 0\\
+0 & 0 & -a_{W} & a_{W}+a_{E} & -a_{E}\\
+0 & 0 & 0 & -a_{W} & a_{W}
+\end{array}\right]}_{\boldsymbol{A}}\underbrace{\begin{bmatrix}T_{1}\\
+T_{2}\\
+T_{3}\\
+T_{4}\\
+T_{5}
+\end{bmatrix}}_{\boldsymbol{T}}=\underbrace{\begin{bmatrix}\left(\frac{k}{\Delta x/2}\right)T_{B}+S\Delta x\\
+S\Delta x\\
+S\Delta x\\
+S\Delta x\\
+S\Delta x
+\end{bmatrix}}_{\boldsymbol{b}}\end{array}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3620,8 +3650,8 @@ were
 \end_layout
 
 \begin_layout Standard
-We will try to avoid mathematics as much as possible, for a more formal
- approach see 
+We will try to avoid mathematics as much as possible.
+ For a more formal approach see 
 \shape italic
 Versteeg and Malalasekare 
 \begin_inset CommandInset citation
@@ -3693,9 +3723,7 @@ reference "eq:unsteady1Dconduction"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\begin{alignedat}{1}\rho c\frac{\partial T}{\partial t} & =\frac{\partial}{\partial x}\left(k\frac{\partial T}{\partial x}\right)+S\\
-\Leftrightarrow\rho c\frac{T-T^{0}}{\Delta t} & =\frac{\partial}{\partial x}\left(k\frac{\partial T}{\partial x}\right)+S
-\end{alignedat}
+\begin{alignedat}{1}\rho c\frac{T-T^{0}}{\Delta t} & =\frac{\partial}{\partial x}\left(k\frac{\partial T}{\partial x}\right)+S\end{alignedat}
 \label{eq:time}
 \end{equation}
 
@@ -3705,29 +3733,7 @@ reference "eq:unsteady1Dconduction"
 \end_layout
 
 \begin_layout Standard
-we may now recognize the right hand side of Eq.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:time"
-
-\end_inset
-
-, 
-\begin_inset Formula $\frac{\partial}{\partial x}\left(k\frac{\partial T}{\partial x}\right)+S$
-\end_inset
-
- as the governing equation for steady state heat conduction, Eq.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:Goverging1dDiffusion"
-
-\end_inset
-
-.
- We may use the FVM methods described before to discretize it.
- Using FVM to the left hand side of Eq.
+Using FVM to the left hand side of Eq.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3746,7 +3752,29 @@ reference "eq:time"
 
 \end_inset
 
+We may now recognize the right hand side of Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:timeVol"
 
+\end_inset
+
+, 
+\begin_inset Formula $\frac{\partial}{\partial x}\left(k\frac{\partial T}{\partial x}\right)+S$
+\end_inset
+
+ as the governing equation for steady state heat conduction, Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Goverging1dDiffusion"
+
+\end_inset
+
+.
+ We may use the FVM methods described before to discretize it.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -3878,6 +3906,25 @@ name "fig:Time-stepping"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+It is often convenient to collect the time-independent terms into a separate
+ source vector, see 
+\shape italic
+bConstant
+\shape default
+ in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Time-stepping"
+
+\end_inset
+
+.
+ This often results in simpler and faster code.
+ 
 \end_layout
 
 \begin_layout Subsection
