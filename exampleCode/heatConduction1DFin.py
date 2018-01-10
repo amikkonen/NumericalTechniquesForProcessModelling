@@ -15,6 +15,7 @@ Created on Thu Jan  4 16:54:30 2018
 @author: Antti Mikkonen, a.mikkonen@iki.fi
 """
 import scipy as sp
+from scipy import linalg
 from matplotlib import pyplot as plt
 
 ##############################################################################
