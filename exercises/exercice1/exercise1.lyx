@@ -94,8 +94,8 @@ Introduction
 
 \begin_layout Standard
 On this course we use two computational tools: Python and ANSYS.
- In this exercise session we concentrate on Python.
- An intensive hand-on course on ANSYS will follow.
+ In this exercise session, we concentrate on Python.
+ An intensive hands-on-course on ANSYS will follow.
 \end_layout
 
 \begin_layout Standard
@@ -163,13 +163,15 @@ First steps
 \end_layout
 
 \begin_layout Standard
-There are great many ways to access the power of python but we use Spyder3
- on this course.
+There are great many ways to access the power of Python but we use Spyder3
+ in this course.
  Note that we use Python3.
- Python2 is still widely in use but obsolite.
- If you want to install the necessary tools on your own computer we recommend
- the Anaconda package (https://www.anaconda.com/download/#windows) on Windows.
- For Linux computers use your favorite package manager.
+ Python2 is still widely in use but obsolete.
+ If you want to install the necessary tools on your own computer, we recommend
+ the Anaconda package (https://www.anaconda.com/download/#windows) on Windows
+ and OSX.
+ On Linux, you can also use Anaconda but I would recommend using your favorite
+ package manager.
  
 \end_layout
 
@@ -190,7 +192,7 @@ reference "fig:Spyder3"
 \end_layout
 
 \begin_layout Standard
-On the right you'll see the IPython interpreter.
+On the right, you'll see IPython interpreter.
  
 \series bold
 Start typing simple math in to the IPython
@@ -280,8 +282,8 @@ print(c)
 \end_layout
 
 \begin_layout Standard
-This is convinient for extrimely simple cases but quickly becomes tiresome.
- So lets 
+This is convenient for extremely simple cases but quickly becomes tiresome.
+ So let us 
 \series bold
 start scripting
 \series default
@@ -299,8 +301,8 @@ F5
 
 \series default
 .
- The script you such created will run in the IPython just like if you had
- writen it there.
+ The script you such created will run in IPython just like if you had written
+ it there.
 \end_layout
 
 \begin_layout Standard
@@ -319,8 +321,8 @@ name "sec:First-toy-problem"
 \end_layout
 
 \begin_layout Standard
-Now that we have familiarised us with Python scripting lets do something
- usefull.
+Now that we have familiarized ourselves with Python scripting, lets do something
+ useful.
  Consider the pressure drop in a pipe
 \end_layout
 
@@ -1305,10 +1307,6 @@ name "fig:Unit-test"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Section*
 
 \end_layout
 
