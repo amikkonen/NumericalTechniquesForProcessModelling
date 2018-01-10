@@ -5,6 +5,9 @@
 \save_transient_properties true
 \origin unavailable
 \textclass article
+\begin_preamble
+\date{}
+\end_preamble
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -101,11 +104,12 @@ On this course we use two computational tools: Python and ANSYS.
 \begin_layout Standard
 The purpose of this exercise session is to familiarize us with Python in
  the context of scientific calculations.
+ We will start with the very basics and proceed to library usage.
  No prior experience with Python is necessary, but programming is not explicitly
  thought on this course.
- So if you feel uncertain about your programming and/or Python skills in
- general we recommend the official Python documentation (https://docs.python.org/3
-/tutorial/) or the TUT basic programming course 
+ If you feel uncertain about your programming and/or Python skills in general
+ we recommend the official Python documentation (https://docs.python.org/3/tutoria
+l/) or the TUT basic programming course 
 \begin_inset Quotes eld
 \end_inset
 
@@ -170,7 +174,7 @@ There are great many ways to access the power of Python but we use Spyder3
  If you want to install the necessary tools on your own computer, we recommend
  the Anaconda package (https://www.anaconda.com/download/#windows) on Windows
  and OSX.
- On Linux, you can also use Anaconda but I would recommend using your favorite
+ On Linux, you can also use Anaconda, but I would recommend using your favorite
  package manager.
  
 \end_layout
@@ -376,7 +380,7 @@ where
 \begin_inset Formula $L$
 \end_inset
 
- is pipe lenght, 
+ is pipe length, 
 \begin_inset Formula $d$
 \end_inset
 
@@ -403,8 +407,12 @@ reference "eq:f"
 \end_inset
 
 .
- Log-operator is not available in the standart Python so we need to import
+ Log-operator is not available in the standard Python so we need to import
  a library.
+ Libraries are pre-existing collections of code that we can use in our own
+ code.
+ With Python, you can usually find a free library to do almost exactly what
+ you want.
  
 \end_layout
 
@@ -418,7 +426,7 @@ import library_name
 \end_inset
 
  command in Python.
- A library can be given a more simple name with a 
+ A library can be given a simpler name with a 
 \begin_inset Quotes eld
 \end_inset
 
@@ -447,7 +455,7 @@ sp.log
 \end_layout
 
 \begin_layout Standard
-Use the same input values as show in Fig.
+Use the same input values as shown in Fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -470,7 +478,7 @@ status open
 \begin_inset Graphics
 	filename toy1.png
 	lyxscale 10
-	width 40text%
+	width 50text%
 
 \end_inset
 
@@ -502,11 +510,10 @@ name "fig:First-toy-problem"
 \end_layout
 
 \begin_layout Standard
-What we just did could have been easily done with a hand held calculator
- also.
+What we just did could have been easily done with a hand a held calculator.
  Manual calculations are, however, slow and error prone.
  One you write a script you can easily vary the input parameters.
- Try playing around.
+ Try to play.
 \end_layout
 
 \begin_layout Section
@@ -521,15 +528,14 @@ name "sec:Solving-a-large"
 \end_layout
 
 \begin_layout Standard
-Now lets solve the toy problem in Section 
+Now let us solve the toy problem in Section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:First-toy-problem"
 
 \end_inset
 
- for a ten different values of velocity and plot the resulting pressure
- drop.
+ for ten different values of velocity and plot the resulting pressure drop.
  Let 
 \begin_inset Formula $V=1,2,3,...,10m/s$
 \end_inset
@@ -541,11 +547,15 @@ reference "sec:First-toy-problem"
 \begin_layout Standard
 One way to solve this problem is to create a list of the velocity values
  and the loop through them in a for-loop.
- Let's start simple by considering the list and loop first and ignore the
- toy problem for a while.
- Comment out the previos lines from your sctipt by adding a # symbol in
+ 
+\end_layout
+
+\begin_layout Standard
+Let us start simple by familiarizing us with the list and loop first and
+ ignore the toy problem for a now.
+ Comment out the previous lines from your script by adding a # symbol in
  from of all the lines.
- you can also use the comment-hotkey 
+ You can also use the comment-hot key 
 \begin_inset Quotes eld
 \end_inset
 
@@ -554,12 +564,12 @@ Ctrl-1
 \end_inset
 
  to comment faster.
- Commented lines will be ignored by the intepreter.
+ Commented lines will be ignored by the interpreter.
  
 \end_layout
 
 \begin_layout Standard
-List are created with square brackets [].
+Lists are created with square brackets [].
  Type 
 \begin_inset Quotes eld
 \end_inset
@@ -608,13 +618,13 @@ for V in Vs:
 
 \begin_layout Standard
 Note that the empty spaces (indent) are part of the Python syntax.
- Running the code should print all the indivitual V values in Vs, i.e.
+ Running the code should print all the individual V values in Vs, i.e.
  1,2,3,4...10.
 \end_layout
 
 \begin_layout Standard
-Now uncomment the input values from before (rho, L,...) expect for V and copy-paste
- the relevant code inside the for-loop, as shown in Fig.
+Now uncomment the input values from before (rho, L,...) and copy-paste the
+ relevant code inside the for-loop, as shown in Fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -623,7 +633,7 @@ reference "fig:For-loo"
 \end_inset
 
 .
- Runnning this code now prints the solution for all the velocities.
+ Running this code now prints the solution for all the velocities.
 \end_layout
 
 \begin_layout Standard
@@ -637,7 +647,7 @@ status open
 \begin_inset Graphics
 	filename forloop.png
 	lyxscale 10
-	width 40text%
+	width 50text%
 
 \end_inset
 
@@ -686,14 +696,14 @@ reference "sec:Solving-a-large"
 
 \end_inset
 
- are convinient until a certain number of cases but quickly become cumbersome.
- We now learn how to plot the results in a graphigal manner instead.
+ are convenient until a certain number of cases but quickly become cumbersome.
+ We'll now learn how to plot the results in a graphical manner instead.
  
 \end_layout
 
 \begin_layout Standard
 First we need to collect the resulting pressure drops (dp) in a new list.
- First initialize a empty list before the for-loop as 
+ First initialize an empty list before the for-loop as 
 \begin_inset Quotes eld
 \end_inset
 
@@ -733,7 +743,7 @@ status open
 \begin_inset Graphics
 	filename dps.png
 	lyxscale 10
-	width 40text%
+	width 50text%
 
 \end_inset
 
@@ -765,7 +775,7 @@ name "fig:List-of-pressure"
 \end_layout
 
 \begin_layout Standard
-The standart tool for scientific plotting in Python is 
+The standard tool for scientific plotting in Python is 
 \begin_inset Quotes eld
 \end_inset
 
@@ -782,7 +792,7 @@ from matplotlib import pyplot as plt
 \begin_inset Quotes erd
 \end_inset
 
- in the beginging of the script.
+ in the beginning of the script.
  Matplotlib is a very large library and we only need the 
 \begin_inset Quotes eld
 \end_inset
@@ -806,7 +816,7 @@ plt.plot(Vs, dps)
 .
  The resulting plot should be visible in the IPython after running the scrip
  (F5).
- We can make the plot prettyer by adding labels and grid.
+ We can make the plot prettier by adding labels and grid.
  See the complete code in Fig.
  
 \begin_inset CommandInset ref
@@ -829,7 +839,7 @@ status open
 \begin_inset Graphics
 	filename plotting.png
 	lyxscale 10
-	width 40text%
+	width 50text%
 
 \end_inset
 
@@ -873,23 +883,22 @@ Scipy Arrays
 \end_layout
 
 \begin_layout Standard
-The lists and loops used in the previous Section work just fine but it is
- often preferrable to use scipy arrays in stead.
+The lists and loops used in the previous Section work just fine, but it
+ is often preferable to use scipy arrays instead.
  This usually results in faster and simpler code.
- So lets convert our script to scipy array format.
+ So let us convert our script to scipy array format.
  You may want to make a back up of your script at this point.
 \end_layout
 
 \begin_layout Standard
-Scipy arrays are basicly lists on steroids.
- They can do pretty much everything lists can do and a lot more.
- Lets play around for a while first.
+Scipy arrays are basically lists on steroids.
+ They can do pretty much everything lists can do, and a lot more.
  
 \end_layout
 
 \begin_layout Standard
-In your IPython intepreted define a couple of scipy arrays of same size,
- say: 
+In your IPython interpreted define a couple of scipy arrays of the same
+ size, say: 
 \begin_inset Quotes eld
 \end_inset
 
@@ -914,13 +923,13 @@ b=sp.array([3,4])
 Now start doing simple math with the newly created a and b.
  Such as a*b, a**2, sp.log(b),...
  You'll notice that all the operations are done element vice.
- In other words a*b results in two different operations 1*3 and 2*4.
+ In other words, a*b results in two different operations 1*3 and 2*4.
  
 \end_layout
 
 \begin_layout Standard
 You can also access elements inside your arrays using indexing.
- For example 
+ For example, 
 \begin_inset Quotes eld
 \end_inset
 
@@ -983,7 +992,7 @@ Vs=[1,2,3,4,5,6,7,8,9,10]
 \begin_inset Quotes erd
 \end_inset
 
- with a equvalent scipy array 
+ with a equivalent scipy array 
 \begin_inset Quotes eld
 \end_inset
 
@@ -998,9 +1007,9 @@ Vs=sp.array([1,2,3,4,5,6,7,8,9,10])
 \end_layout
 
 \begin_layout Standard
-Now, we can remove the loop from our scipt by using the scipy array instead
+Now, we can remove the loop from our script by using the scipy array instead
  of single value in our calculations.
- Also remove the other unnnessesary variables.
+ Also remove the other unnecessary variables.
  I also removed the 
 \begin_inset Quotes eld
 \end_inset
@@ -1009,8 +1018,8 @@ s
 \begin_inset Quotes erd
 \end_inset
 
- letters from the variable names to make the code prettyer.
- See complite code in Fig.
+ letters from the variable names to make the code prettier.
+ See complete code in Fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1032,7 +1041,7 @@ status open
 \begin_inset Graphics
 	filename array.png
 	lyxscale 10
-	width 40text%
+	width 50text%
 
 \end_inset
 
@@ -1070,12 +1079,12 @@ Defining a function
 \begin_layout Standard
 In order to make our code more structured and reusable it is often useful
  to define a lot of functions.
- In this toy problem the function definition is a little artificial but
- let's do it anyway.
+ In this toy problem, the function definition is a little artificial but
+ let us do it for the practice.
 \end_layout
 
 \begin_layout Standard
-In Python functions are defined with the key word 
+In Python, functions are defined with the keyword 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1095,7 +1104,7 @@ reference "fig:Naive-function"
 \end_inset
 
 .
- This should run exactly like before.
+ This should run exactly as before.
 \end_layout
 
 \begin_layout Standard
@@ -1109,7 +1118,7 @@ status open
 \begin_inset Graphics
 	filename def1.png
 	lyxscale 10
-	width 40text%
+	width 50text%
 
 \end_inset
 
@@ -1141,8 +1150,10 @@ name "fig:Naive-function"
 \end_layout
 
 \begin_layout Standard
-Now let's make use the fysical input parameters as paremeters for the function.
+Now let us turn the physical input parameters of our problem as parameters
+ for the function.
  We also return the pressure drop from the function.
+ Returning a value from a function makes it accessible outside of the function.
  See Fig.
  
 \begin_inset CommandInset ref
@@ -1165,7 +1176,7 @@ status open
 \begin_inset Graphics
 	filename def2.png
 	lyxscale 10
-	width 40text%
+	width 50text%
 
 \end_inset
 
@@ -1197,10 +1208,10 @@ name "fig:Function-with-parameters"
 \end_layout
 
 \begin_layout Standard
-Now we have a solver function that takes all the fysical paramters of the
- pressure drop as input parameters and return the pressure drop.
- In a more complicated problem this would likely be a small part of the
- complite solution and repeted for many different cases.
+Now we have a solver function that takes all the physical parameters of
+ the pressure drop as input parameters and return the pressure drop.
+ In a more complicated problem, this would likely be a small part of the
+ complete solution and repeated for many different cases.
  
 \end_layout
 
@@ -1245,7 +1256,7 @@ unit testing
 If the unit testing part doesn't make sense to you, never mind.
  Just believe it's a good programming practice and the reasons will become
  obvious with experience.
- Or search internet for 
+ Or search Internet for 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1257,7 +1268,13 @@ unit test
 \end_layout
 
 \begin_layout Standard
-The complite code below in Fig.
+In the following Python exercises you will often be given a template file
+ to work with.
+ 
+\end_layout
+
+\begin_layout Standard
+The complete code below in Fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1279,7 +1296,7 @@ status open
 \begin_inset Graphics
 	filename unitTest.png
 	lyxscale 10
-	width 40text%
+	width 60text%
 
 \end_inset
 
@@ -1308,6 +1325,400 @@ name "fig:Unit-test"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+Fluid properties
+\end_layout
+
+\begin_layout Standard
+A very common feature of a fluid related engineering problem is the fluid
+ properties.
+ It quickly becomes cumbersome to look for to fluid properties from tables
+ and type the values in the solver.
+ Luckily, there are libraries for this too.
+\end_layout
+
+\begin_layout Standard
+On this course, we use CoolProp library.
+ The syntax is a little old fashioned but easy to use.
+ And after this, you can always just copy-paste it.
+ For the complete code see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:CoolProp"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename coolprop.png
+	lyxscale 10
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+CoolProp
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:CoolProp"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+First we need to import the CoolProp library.
+ We only use the 
+\shape italic
+PropsSI
+\shape default
+ part of the library so we only import that.
+ See line 9 in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:CoolProp"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The kinematic viscosity is not directly available from PropsSI, so we get
+ dynamic viscosity 
+\begin_inset Formula $\mu$
+\end_inset
+
+ and density 
+\begin_inset Formula $\rho$
+\end_inset
+
+ first.
+ Kinematic viscosity is then calculated as 
+\begin_inset Formula $\nu=\frac{\mu}{\rho}$
+\end_inset
+
+.
+ See lines 28-30 in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:CoolProp"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The first parameter in the PropsSI call is the property we want: 
+\begin_inset Quotes eld
+\end_inset
+
+V
+\begin_inset Quotes erd
+\end_inset
+
+ for viscosity and 
+\begin_inset Quotes eld
+\end_inset
+
+D
+\begin_inset Quotes erd
+\end_inset
+
+ for density.
+ The next four are the temperature and pressure where we want the value.
+ The units are Kelvins and Pascals.
+ The last one is the fluid.
+ 
+\end_layout
+
+\begin_layout Standard
+The parameters are quite flexible.
+ If you, for example, would want to get saturated water viscosity at 
+\begin_inset Formula $T=300K$
+\end_inset
+
+, you could write
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename saturated.png
+	lyxscale 10
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Quotes eld
+\end_inset
+
+
+\shape italic
+Q
+\shape default
+
+\begin_inset Quotes erd
+\end_inset
+
+ is quality.
+\end_layout
+
+\begin_layout Standard
+Like programming in general, using a fluid properties library is radically
+ faster and less error prone than manual labor.
+\end_layout
+
+\begin_layout Section
+Importing
+\end_layout
+
+\begin_layout Standard
+We have already imported plenty of stuff but let us now look a little into
+ what it means.
+\end_layout
+
+\begin_layout Standard
+As previously stated, libraries are pre-existing collections of code.
+ They can be written by somebody else or by yourself.
+ 
+\end_layout
+
+\begin_layout Standard
+Where do libraries come from and how does Python find them? The simplest
+ explanation is that you wrote them and placed them in the same folder as
+ the main script.
+ If the library only consist of one file, it is usually called a module.
+ There is no fundamental difference.
+\end_layout
+
+\begin_layout Standard
+Let us now turn our code into a module format.
+ You may leave your existing code as it is.
+ If you want your code to look the same as the example in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Module"
+
+\end_inset
+
+, name your existing code 
+\begin_inset Quotes eld
+\end_inset
+
+solver.py
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Now, create a new python file in the same folder as you 
+\begin_inset Quotes eld
+\end_inset
+
+solver.py
+\begin_inset Quotes erd
+\end_inset
+
+ file.
+ You may name it 
+\begin_inset Quotes eld
+\end_inset
+
+main.py
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Copy paste everything expect the solver implementation from your 
+\begin_inset Quotes eld
+\end_inset
+
+solver.py
+\begin_inset Quotes erd
+\end_inset
+
+ into 
+\begin_inset Quotes eld
+\end_inset
+
+main.py
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename module.png
+	lyxscale 10
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Module
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Module"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+You may now access your solver implementation from 
+\begin_inset Quotes eld
+\end_inset
+
+solver.py
+\begin_inset Quotes erd
+\end_inset
+
+ in 
+\begin_inset Quotes eld
+\end_inset
+
+main.py
+\begin_inset Quotes erd
+\end_inset
+
+ by importing it, see line 10 in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Module"
+
+\end_inset
+
+.
+ You also need to add the solver.
+ prefix to the solver call on line 24 in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Module"
+
+\end_inset
+
+.
+ This is highly useful in more complex programs.
+\end_layout
+
+\begin_layout Standard
+It is likely that you will not need to make your own modules in this course.
+ You may, however, be given modules written by the staff.
+ 
+\end_layout
+
+\begin_layout Standard
+What about scipy, matplotlib and the other libraries we've been importing?
+ 
+\end_layout
+
+\begin_layout Standard
+If Python doesn't find any modules or libraries in the same folder, it will
+ look into the default install locations of libraries.
+ The exact procedure is not relevant to us.
+ The TUT computers used on this course have the needed libraries pre-installed.
+ 
+\end_layout
+
+\begin_layout Standard
+If you want to add something to your Python, the easiest way to do it is
+ with PIP.
+ You simply write 
+\begin_inset Quotes eld
+\end_inset
+
+pip install package_name
+\begin_inset Quotes erd
+\end_inset
+
+.
+ PIP comes with Python and works on all platforms.
+ 
 \end_layout
 
 \end_body
