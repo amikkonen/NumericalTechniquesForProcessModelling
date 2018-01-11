@@ -1519,11 +1519,11 @@ Like programming in general, using a fluid properties library is radically
 \end_layout
 
 \begin_layout Section
-Importing
+Importing modules
 \end_layout
 
 \begin_layout Standard
-We have already imported plenty of stuff but let us now look a little into
+We have already imported plenty of stuff, but let us now look a little into
  what it means.
 \end_layout
 
