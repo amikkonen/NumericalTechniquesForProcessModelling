@@ -18,7 +18,7 @@ def main():
                         ])
     
     def free_fall(t, y):
-        return sp.array([y[1], -9.8])
+        return sp.array([y[1], -g])
 
     # Last time    
     t_end = 5
