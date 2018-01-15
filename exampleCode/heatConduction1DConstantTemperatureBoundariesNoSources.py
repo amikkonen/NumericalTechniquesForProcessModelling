@@ -55,16 +55,12 @@ def main(n, kt, Ac, L, T_A, T_B):
     # Solution
     T = sp.linalg.solve(A,b)
     
-    # Post
-    print("A\n", A)
-    print("b\n", b)
-    print("T\n",T)
+#    # Post
+#    print("A\n", A)
+#    print("b\n", b)
+#    print("T\n",T)
     
-    # Plot numerical and exact solution
-    plt.plot([0,L], [T_A, T_B], "r", label="exact")
-    plt.plot(sp.linspace(dx/2,L-dx/2,n), T, "k--o", label="numerical")
-    plt.legend()
-    plt.xlim(0,L)
+    return T, dx
     
 ##############################################################################
 
@@ -82,5 +78,12 @@ if __name__ == "__main__":
     T_A = 100
     T_B = 500
     
-    main(n, kt, Ac, L, T_A, T_B)
+    T, dx = main(n, kt, Ac, L, T_A, T_B)
+    
+    # Plot numerical and exact solution
+    plt.plot([0,L], [T_A, T_B], "r", label="exact")
+    plt.plot(sp.linspace(dx/2,L-dx/2,n), T, "k--o", label="numerical")
+    plt.legend()
+    plt.xlim(0,L)
+    
     print("END")

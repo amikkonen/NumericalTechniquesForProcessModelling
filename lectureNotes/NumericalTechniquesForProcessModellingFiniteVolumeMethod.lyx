@@ -1349,6 +1349,12 @@ What is CFD?
 \end_layout
 
 \begin_layout Standard
+Probably the best place to start studying Computational Fluid Dynamics (CFD)
+ is to go to Youtube and search with: CFD, Fluent, or OpenFOAM.
+ There should be plenty of instructional videos.
+\end_layout
+
+\begin_layout Standard
 In industry, the problem geometry is often complicated, see Fig.
  Fig.
  
@@ -1579,7 +1585,82 @@ Pre-processing
 \end_layout
 
 \begin_layout Standard
-consists 
+Pre-processing is everything that needs to be done before the actual numerical
+ solver is used.
+ The two main components are geometry processing (CAD) and meshing.
+ 
+\end_layout
+
+\begin_layout Paragraph
+With the geometry
+\end_layout
+
+\begin_layout Standard
+, there is basically two different options: you draw the geometry by your
+ self or you get the geometry from someone else.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/introduction/truck-1499377_1920.jpg
+	lyxscale 20
+	height 3cm
+
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 1cm
+\end_inset
+
+
+\begin_inset Graphics
+	filename kuvat/introduction/Truck.PNG
+	lyxscale 20
+	height 3cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Geometry simplification
+\begin_inset CommandInset citation
+LatexCommand cite
+key "truck,ahmad_truck"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Geometry-simplification"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -3874,17 +3955,70 @@ The multiplying matrix
 
  is mostly empty in most FVM problems, i.e.
  mostly filled with zeros.
- It would be a LOT better to use sparse matrices.
+ It would be a LOT faster to use sparse matrices.
  With large systems sparse matrices are decades faster that dense matrices.
+ Sparseness also saves memory.
+\end_layout
+
+\begin_layout Standard
+The Python syntax for sparse matrices is rather verbose, but straight forward
+ to use.
+ Do not be frighten by the long commands.
+ You can usually just copy-paste it from your previous codes or create a
+ wrapper.
+ For an example wrapper see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Sparse-matrix-wrapper"
+
+\end_inset
+
+.
+ See https://docs.scipy.org/doc/scipy/reference/sparse.html for more details.
  
 \end_layout
 
 \begin_layout Standard
-The Python sparse matrix syntax is rather verbose but straight forward to
- use.
- Do not be frighten by the long command.
- You can usually just copy-paste it from your previous codes.
- See https://docs.scipy.org/doc/scipy/reference/sparse.html for more.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/sparseMatrix.png
+	lyxscale 20
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Sparse matrix wrapper class 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Sparse-matrix-wrapper"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

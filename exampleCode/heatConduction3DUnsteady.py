@@ -6,7 +6,7 @@ A course example of unsteady 3D heat conduction.
 Constant propersties, contant temperature boundary, zero gradient (insulated) 
 boundary, transient.
 
-Emphasis on simplicity. Low performance in larger systems.
+NOTE: USE OF SPARSE MATRIXES IN MatrixA
 
 Created on Sat Jan 13 13:10:11 2018
 
