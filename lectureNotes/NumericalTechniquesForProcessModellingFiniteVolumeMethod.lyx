@@ -1598,7 +1598,18 @@ With the geometry
 \begin_layout Standard
 , there is basically two different options: you draw the geometry by your
  self or you get the geometry from someone else.
+ Either way, you must pay attention to the same things.
+ What do you want to include to your model? See example in Fig.
  
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Geometry-simplification"
+
+\end_inset
+
+.
+ On the left there is a photo of a real truck and on the right a simplified
+ model for CFD.
 \end_layout
 
 \begin_layout Standard
