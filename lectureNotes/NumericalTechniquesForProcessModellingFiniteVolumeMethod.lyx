@@ -1592,12 +1592,13 @@ Pre-processing is everything that needs to be done before the actual numerical
 \end_layout
 
 \begin_layout Paragraph
-With the geometry
+Geometry
 \end_layout
 
 \begin_layout Standard
-, there is basically two different options: you draw the geometry by your
- self or you get the geometry from someone else.
+is the staring point of CFD simulation.
+ There is basically two different options: you draw the geometry by yourself
+ or you get the geometry from someone else.
  Either way, you must pay attention to the same things.
  What do you want to include to your model? See example in Fig.
  
@@ -1610,6 +1611,20 @@ reference "fig:Geometry-simplification"
 .
  On the left there is a photo of a real truck and on the right a simplified
  model for CFD.
+ 
+\end_layout
+
+\begin_layout Standard
+Let us assume that the problem is to solve air resistance of the truck at
+ a certain speed.
+ For this calculation we need a simplified outer surface of the truck.
+ Nothing in the inside is of interest.
+ Small details like bolts are also meaningless for the air resistance and
+ would make meshing much more complicated.
+ One must usually make some educated guesses about what ti include in the
+ model.
+ If we are given a detailed CAD file of the truck we want to remove all
+ the unimportant details .
 \end_layout
 
 \begin_layout Standard
@@ -1672,6 +1687,511 @@ name "fig:Geometry-simplification"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Once the truck CAD model is ready, we need to model the actual calculation
+ domain.
+ For a air resistance calculation the domain would be something like shown
+ in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Calculation-domain"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/introduction/carDomain.png
+	lyxscale 20
+	height 3cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Calculation domain.
+ TODO! Errors at boundary conditions.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "car"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Calculation-domain"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We'll want to model the air around the truck.
+ Not the truck itself.
+ We need to model some air in front of the truck and to its sides.
+ Most of the domain will, however, be behind the truck where the eddies
+ form.
+ The volume limited by the truck surface is cut away from the domain.
+\end_layout
+
+\begin_layout Paragraph
+Meshing 
+\end_layout
+
+\begin_layout Standard
+is the next step after calculation domain is created.
+ Meshing is typically the most time consuming part of setting up a CFD simulatio
+n.
+ The actual solution may run longer but requires no user input.
+ The mesh must be fine enough to be apple to represent a meaningful solution
+ of the problem.
+ One of the main concepts behind Finite Volume Method, the numerical method
+ used on this course, is that each cell only contain one value for a given
+ quantity.
+ 
+\end_layout
+
+\begin_layout Standard
+If we were to mesh the inside of a pipe with only one cell across the diameter
+ we would essentially doing 1D solution with only one value for velocity
+ etc.
+ If we would use 10 cells there would be 10 values, etc.
+ How many cells is needed cannot be reliably predicted.
+ The used method is essentially to keep refining the mesh until the solution
+ doesn't change anymore.
+ 
+\end_layout
+
+\begin_layout Standard
+In our car example we need a sufficient number of cells around all the modeled
+ geometry details.
+ See Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Surface-mesh-details"
+
+\end_inset
+
+.
+ Modeling of small details quickly becomes very expensive and often doesn't
+ provide any value to the solution.
+ Therefore we come back to the suitably simplified geometry.
+ As Einstein stated: 
+\begin_inset Quotes eld
+\end_inset
+
+
+\shape italic
+Everything should be made as simple as possible, but not simpler.
+\shape default
+
+\begin_inset Quotes erd
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/introduction/carSurfaceMesh.png
+	lyxscale 20
+	height 3cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Surface mesh details
+\begin_inset CommandInset citation
+LatexCommand cite
+key "car"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Surface-mesh-details"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This far we have only paid attention to the mesh near the car surface.
+ As we are interested in the force the air flow causes on the car, the most
+ important phenomena happens near the surface.
+ But we still need to pay attention to the rest of the domain as well.
+ 
+\end_layout
+
+\begin_layout Standard
+Great many different meshing strategies exists.
+ The main categories are structured and unstructured meshes.
+ See Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Structured-and-unstructured"
+
+\end_inset
+
+ for examples.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/introduction/g_flu_ug_mulbgrid.png
+	lyxscale 20
+	height 3cm
+
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 1cm
+\end_inset
+
+
+\begin_inset Graphics
+	filename kuvat/introduction/g_flu_ug_tetgrd.png
+	lyxscale 20
+	height 3cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Structured and unstructured mesh
+\begin_inset CommandInset citation
+LatexCommand cite
+key "structureUnstrucutred"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Structured-and-unstructured"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Structural meshes form a block structure where each block is a twisted rectangul
+ar block.
+ Unstructured meshes form a more chaotic form.
+ The two strategies can also be combined.
+ In general, structured meshes give better solutions with less cells than
+ unstructured ones.
+ Structured meshes are, however, very difficult to form for complex geometries.
+ 
+\end_layout
+
+\begin_layout Standard
+The individual cells can be of any form, but hexahedron, tetrahedron, and
+ polyhedron are the most common ones, see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cell-types"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/introduction/g_flu_ug_fig_grid_elements.png
+	lyxscale 20
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Cell types
+\begin_inset CommandInset citation
+LatexCommand cite
+key "structureUnstrucutred"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cell-types"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Solver
+\end_layout
+
+\begin_layout Standard
+After geometry and mesh have been created it is time to start defining the
+ solver settings.
+ Each solver is a little different but the same basic concepts apply to
+ all.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Governing equations
+\end_layout
+
+\begin_layout Standard
+are the equations that define the physics and chemistry 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+underline{inside}
+\end_layout
+
+\end_inset
+
+ the calculation domain.
+ Boundary conditions define the borders.
+ The choices for a fluid flow problem would be, for example: compressible
+ or incompressible Navier-Stokes, steady state or unsteady simulation, etc.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Material properties
+\end_layout
+
+\begin_layout Standard
+define the behavior of the fluid.
+ We need to choose between constant and varying fluid properties and define
+ them.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Boundary condition
+\end_layout
+
+\begin_layout Standard
+define the behavior at the boundary.
+ Its common to define a constant velocity or mass flow for inlet.
+ Temperature etc.
+ also needs boundary conditions.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Discretization method
+\end_layout
+
+\begin_layout Standard
+means the numerical details of the solution.
+ Discretization is done in space and time.
+ An example of discretization method is linear interpolation in which a
+ unknown value between two known values is assumed to lie on a straight
+ line between the two know values.
+ On the other hand, if there is a strong flow from the direction of a known
+ value to the unknown one, we could assume that the unknown point has the
+ same value as the upwind one.
+ This is called first order upwind scheme.
+ 
+\end_layout
+
+\begin_layout Standard
+There exists a great many discretization schemes but most common ones are
+ similar to linear interpolation and upwind scheme.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Time stepping 
+\end_layout
+
+\begin_layout Standard
+is needed for unsteady calculations.
+ The basic idea is that we know the field values at one time and make some
+ suitable simplification in order to proceed to next time.
+ 
+\end_layout
+
+\begin_layout Standard
+Let us consider a rock throwing example for a while.
+ The rock is thrown with some know velocity from some known position at
+ a known time.
+ To numerically solve the rock flight path we could assume for a suitably
+ small amount of time the rock travels in a straight line with constant
+ velocity.
+ We could then calculate a new location for the rock and after calculating
+ the new velocity repeat the process.
+ This would called explicit Euler method.
+\end_layout
+
+\begin_layout Standard
+If we are interested in the unsteady behavior, we need to use a small enough
+ time step to capture all the interesting physics.
+ A too large time step usually also cause the simulation to break.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Iteration method
+\end_layout
+
+\begin_layout Standard
+Even if we are solving a steady state problem we usually need to iterate
+ the solution.
+ Most fluid related problems are highly nonlinear and require iteration.
+ Due to the nonlinear nature of the problem, the iteration process is quite
+ sensitive and often breaks.
+ 
+\end_layout
+
+\begin_layout Standard
+A typical trick to keep the process converging is to use under relaxation.
+ With under relaxation we don't accept the new solution of out equations
+ as they are, but instead use some value between the old and the new result.
+ This limits the rate of change in the solution and often assists in convergence.
+ 
+\end_layout
+
+\begin_layout Standard
+Time stepping and solving of nonlinear equations are remarkably similar
+ and time stepping methods are sometimes used for steady state problems
+ also.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Saving the results
+\end_layout
+
+\begin_layout Standard
+is necessary for post processing.
+ It is, however, often inconvenient to save all the results as this would
+ require huge amounts of storage and slow down the solution.
+ One would usually save all field of the final solution and some snapshots
+ of interesting values during the iteration.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Post-processing
+\end_layout
+
+\begin_layout Subsection
+Convergence
+\end_layout
+
+\begin_layout Subsection
+Mesh independency
 \end_layout
 
 \begin_layout Section
