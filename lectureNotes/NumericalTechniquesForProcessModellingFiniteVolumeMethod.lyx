@@ -2186,12 +2186,233 @@ is necessary for post processing.
 Post-processing
 \end_layout
 
+\begin_layout Standard
+Post-processing is the step in which the interesting numbers are extracted
+ from the solution.
+ The solution may consist of hundreds of GB:s of velocity, temperature,
+ etc.
+ data but we only want the mean heat transfer or pressure drag, i.e.
+ one number.
+ Post-processing is also the step in which fancy pictures and videos are
+ made.
+ In addition to being very marketable the figures and videos teach intuitive
+ understanding of the simulation.
+\end_layout
+
+\begin_layout Standard
+For example, below in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Temperature-and-velocity"
+
+\end_inset
+
+, we see the temperature and velocity fields at one time step and 2D slice
+ from a 3D solution.
+ The application is a heat exchanger.
+ Such colorful pictures are important in marketing.
+ The visualizations are also useful for intuitive understanding.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/kansi2.jpeg
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Temperature and velocity fields at one time step
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kansi"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Temperature-and-velocity"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Convergence
 \end_layout
 
+\begin_layout Standard
+For a steady state case convergence means that the solution of the nonlinear
+ system doesn't chance between iterations.
+ 
+\end_layout
+
+\begin_layout Standard
+For a unsteady case convergence may mean that the solution of one time step
+ doesn't change between iterations.
+ It may also mean that the solution has converged to a steady state solution
+ and doesn't change.
+ 
+\end_layout
+
+\begin_layout Standard
+To have a meaningful discussion about convergence a convergence criteria
+ is needed.
+ The best convergence criteria are based on the physics of the problem.
+ For example mean heat transfer coefficient of drag force are good convergence
+ criteria.
+ 
+\end_layout
+
+\begin_layout Standard
+It is rather typical that a fluid problem doesn't have a steady state solution.
+ In Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Pseudo-convergence-of"
+
+\end_inset
+
+ we see an example for a heat exchanger.
+ The mean heat transfer coefficient (htc) and pressure drop (dp) both start
+ to oscillate around a mean but no convergence occurs.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename kuvat/introduction/pseudoConvergence.pdf
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Pseudo convergence of steady state solution
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Pseudo-convergence-of"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is usually up to user experience to know when the solution is 
+\begin_inset Quotes eld
+\end_inset
+
+good enough
+\begin_inset Quotes erd
+\end_inset
+
+.
+ No formal and practical solution exists.
+ 
+\end_layout
+
+\begin_layout Standard
+It is common to use a math based criteria called residual for convergence.
+ The residual doesn't usually have any obvious physical meaning and it is
+ near impossible to know when a solution is good enough from the residual.
+ It is better to avoid using them altogether.
+ 
+\end_layout
+
 \begin_layout Subsection
 Mesh independency
+\end_layout
+
+\begin_layout Standard
+As stated before, each cell in the mesh only represent a single value in
+ a velocity or temperature field.
+ In for these discrete number to represent the real continuous physics of
+ a fluid flow, a lot of them is needed.
+ Experience is the only reliable way to know how many cells are needed without
+ a formal grid independency test.
+ 
+\end_layout
+
+\begin_layout Standard
+A formal grid independency test consists of running a series of simulations
+ on finer and finer meshes.
+ Once the solution doesn't change we can conclude that the solution is grid
+ independent on that mesh topology.
+ Mesh topology means the meshing strategy, cell type, etc.
+ To be totally formal, a series of different topologies would then be needed.
+ 
+\end_layout
+
+\begin_layout Standard
+In industry, it is often near impossible to run a formal mesh independency
+ test even for a single mesh topology.
+ The computational cost increases fast with mesh refining.
+ Usually faster than 
+\begin_inset Formula $\mathcal{O}(n^{2}\log{n})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+It is, however, often practical to first run a simulation on a coarse mesh
+ and then use the results of that simulation as a initial value on a finer
+ mesh.
+ This may make the calculation faster and gives some understanding of the
+ mesh dependency of the solution.
+ 
 \end_layout
 
 \begin_layout Section
