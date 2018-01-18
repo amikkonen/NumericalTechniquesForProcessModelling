@@ -1744,9 +1744,9 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figures/introduction/placeHolder/carDomain.png
+	filename figures/introduction/motorbikeDomain.png
 	lyxscale 20
-	height 3cm
+	width 100col%
 
 \end_inset
 
@@ -1757,15 +1757,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Calculation domain.
- TODO! Errors at boundary conditions.
-\begin_inset CommandInset citation
-LatexCommand cite
-key "car"
-
-\end_inset
-
-
+Calculation domain
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Calculation-domain"
@@ -1782,6 +1774,10 @@ name "fig:Calculation-domain"
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 
 \end_layout
 
@@ -1861,9 +1857,10 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figures/introduction/placeHolder/carSurfaceMesh.png
+	filename figures/introduction/motorbikeSurfaceMesh_org2.png
 	lyxscale 20
-	height 3cm
+	width 100col%
+	clip
 
 \end_inset
 
@@ -1874,14 +1871,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Surface mesh details
-\begin_inset CommandInset citation
-LatexCommand cite
-key "car"
-
-\end_inset
-
-
+Surface mesh
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Surface-mesh-details"
@@ -1933,9 +1923,9 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figures/introduction/placeHolder/g_flu_ug_mulbgrid.png
-	lyxscale 20
-	height 3cm
+	filename figures/introduction/meshStructural.png
+	lyxscale 5
+	width 45text%
 
 \end_inset
 
@@ -1946,9 +1936,9 @@ status open
 
 
 \begin_inset Graphics
-	filename figures/introduction/placeHolder/g_flu_ug_tetgrd.png
-	lyxscale 20
-	height 3cm
+	filename figures/introduction/meshUnStructural.png
+	lyxscale 5
+	width 45text%
 
 \end_inset
 
@@ -1959,14 +1949,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Structured and unstructured mesh
-\begin_inset CommandInset citation
-LatexCommand cite
-key "structureUnstrucutred"
-
-\end_inset
-
-
+Structured and unstructured (low quality) meshes of a 2D wing
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Structured-and-unstructured"
@@ -2032,13 +2015,6 @@ status open
 
 \begin_layout Plain Layout
 Cell types
-\begin_inset CommandInset citation
-LatexCommand cite
-key "structureUnstrucutred"
-
-\end_inset
-
-
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Cell-types"

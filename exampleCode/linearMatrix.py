@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-A course example of steady one-dimensional heat conduction in a fin.
-
+A simple example of linear algebra.
 
 Created on Thu Jan  18 9:49 2018
 
@@ -26,7 +25,7 @@ def main():
     # Solution
     x = sp.linalg.solve(A,b)
 
-
+    # Post
     print("A\n",A)
     print("b\n",b)
     print("x\n",x)
