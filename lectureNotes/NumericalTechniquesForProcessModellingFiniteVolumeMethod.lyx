@@ -149,7 +149,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/kansi2.jpeg
+	filename figures/else/kansi2.jpeg
 	lyxscale 20
 	width 80col%
 
@@ -1301,8 +1301,39 @@ setcounter{page}{1}
 
 \end_layout
 
+\begin_layout Section*
+Structure
+\end_layout
+
+\begin_layout Standard
+In 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Introduction"
+
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Introduction"
+
+\end_inset
+
+ I attempt to give a overview of all the topics covered on this course.
+ I will use minimal math.
+ If you prefer equations, this section will be of little value to you.
+\end_layout
+
 \begin_layout Section
 Introduction
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Introduction"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1383,7 +1414,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/introduction/Moto2_CFD_hepia-cmefe_1.png
+	filename figures/introduction/Moto2_CFD_hepia-cmefe_1.png
 	lyxscale 20
 	width 60text%
 
@@ -1449,7 +1480,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/introduction/CmefeCFDmoteur.png
+	filename figures/introduction/CmefeCFDmoteur.png
 	lyxscale 20
 	width 60text%
 
@@ -1522,7 +1553,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/introduction/balanceNeighbors.png
+	filename figures/introduction/balanceNeighbors.png
 	lyxscale 20
 
 \end_inset
@@ -1636,7 +1667,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/introduction/truck-1499377_1920.jpg
+	filename figures/introduction/truck-1499377_1920.jpg
 	lyxscale 20
 	height 3cm
 
@@ -1649,7 +1680,7 @@ status open
 
 
 \begin_inset Graphics
-	filename kuvat/introduction/Truck.PNG
+	filename figures/introduction/Truck.PNG
 	lyxscale 20
 	height 3cm
 
@@ -1713,7 +1744,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/introduction/carDomain.png
+	filename figures/introduction/placeHolder/carDomain.png
 	lyxscale 20
 	height 3cm
 
@@ -1830,7 +1861,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/introduction/carSurfaceMesh.png
+	filename figures/introduction/placeHolder/carSurfaceMesh.png
 	lyxscale 20
 	height 3cm
 
@@ -1902,7 +1933,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/introduction/g_flu_ug_mulbgrid.png
+	filename figures/introduction/placeHolder/g_flu_ug_mulbgrid.png
 	lyxscale 20
 	height 3cm
 
@@ -1915,7 +1946,7 @@ status open
 
 
 \begin_inset Graphics
-	filename kuvat/introduction/g_flu_ug_tetgrd.png
+	filename figures/introduction/placeHolder/g_flu_ug_tetgrd.png
 	lyxscale 20
 	height 3cm
 
@@ -1988,9 +2019,8 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/introduction/g_flu_ug_fig_grid_elements.png
+	filename figures/introduction/CellTypes.png
 	lyxscale 20
-	width 60text%
 
 \end_inset
 
@@ -2077,6 +2107,36 @@ define the behavior of the fluid.
 \end_layout
 
 \begin_layout Paragraph
+Turbulence model
+\end_layout
+
+\begin_layout Standard
+is almost always needed in industrial applications.
+ In some lucky cases the flow is laminar and easy to solve but not usually.
+ This course will almost exclusively consider two equation Reynolds averaged
+ turbulence models.
+ 
+\end_layout
+
+\begin_layout Standard
+In industrial applications it's not possible to use fine enough mesh and
+ time steps to calculate the small scale fluctuation of the flow.
+ Therefore we use sub models for the small scale phenomena.
+ This modeling, together with mesh quality, is usually the largest source
+ of error in CFD calculations.
+ 
+\end_layout
+
+\begin_layout Standard
+At this stage, it's sufficient to say that if you have no better knowledge,
+ always use k-
+\begin_inset Formula $\mathrm{\omega}$
+\end_inset
+
+-SST model.
+\end_layout
+
+\begin_layout Paragraph
 Boundary condition
 \end_layout
 
@@ -2086,6 +2146,14 @@ define the behavior at the boundary.
  Temperature etc.
  also needs boundary conditions.
  
+\end_layout
+
+\begin_layout Standard
+In industrial problem a considerable problem may be that the boundary conditions
+ are not known.
+ This makes reliable CFD solution near impossible.
+ General understanding about the modeled case helps to identify sensible
+ boundary conditions.
 \end_layout
 
 \begin_layout Paragraph
@@ -2225,7 +2293,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/kansi2.jpeg
+	filename figures/else/kansi2.jpeg
 	lyxscale 20
 	width 50col%
 
@@ -2316,7 +2384,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/introduction/pseudoConvergence.pdf
+	filename figures/introduction/pseudoConvergence.pdf
 	lyxscale 20
 	width 50col%
 
@@ -2415,11 +2483,38 @@ It is, however, often practical to first run a simulation on a coarse mesh
  
 \end_layout
 
+\begin_layout Subsection
+Turbulence
+\end_layout
+
+\begin_layout Subsection
+Navier-Stokes equation
+\end_layout
+
+\begin_layout Subsection
+Other equations
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
-Finite Volume Method
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:Finite-Volume-Method"
+Heat Conduction (diffusion)
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+The material discussed in this section may be found in a more elaborated
+ format from Versteeg and Malalasekara 2007, Chapter 5.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "versteeg2007"
 
 \end_inset
 
@@ -2459,54 +2554,13 @@ The main advantages of numerical solution over analytical solution is the
 \end_layout
 
 \begin_layout Standard
-During this cource we become familiar with Finite Volume Method (FVM).
+During this course we become familiar with Finite Volume Method (FVM).
  Other very similar numerical methods are Finite Element Method (FEM) and
  Finite Difference Method (FDM).
  In general, numerical solution of fluid related problems are often called
  Computational Fluid Dynamics (CFD).
  FVM method is the preferred method for fluid flow problems because of it's
  simplicity and conservativeness (mass balance etc.).
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Analytical modeling is very useful and should be preferred when ever possible.
- However, in industrial problems the geometry or problem physics often becomes
- complicated enough to make the analytical modeling cumbersome or impossible.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Heat Conduction (diffusion)
-\end_layout
-
-\begin_layout Standard
-
-\shape italic
-The material discussed in this section may be found in a more elaborated
- format from Versteeg and Malalasekara 2007, Chapter 5.
- 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "versteeg2007"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-In this section we will learn to formulate and solve linear diffusion problems.
- We use heat conduction as an example.
  
 \end_layout
 
@@ -2592,7 +2646,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/Diffusion1dMesh.png
+	filename figures/heatConduction/Diffusion1dMesh.png
 	lyxscale 20
 	width 60text%
 
@@ -2647,7 +2701,7 @@ In addition to control volumes and nodes we also need to refer to the faces
  
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:Faces-and-distances"
+reference "fig:Heat-conduction"
 
 \end_inset
 
@@ -2660,7 +2714,7 @@ reference "fig:Faces-and-distances"
  
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:Faces-and-distances"
+reference "fig:Heat-conduction"
 
 \end_inset
 
@@ -2676,7 +2730,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/1dDiskretointi.png
+	filename figures/heatConduction/1dDiskretointi.png
 	lyxscale 20
 	width 60text%
 
@@ -2797,7 +2851,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/1dconductionq.svg
+	filename figures/heatConduction/1dconduction.png
 	lyxscale 20
 
 \end_inset
@@ -2909,7 +2963,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/centralDifferencing.svg
+	filename figures/heatConduction/centralDifferencing.png
 	lyxscale 20
 
 \end_inset
@@ -3332,7 +3386,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/boundaries1D.png
+	filename figures/heatConduction/boundaries1D.png
 	lyxscale 20
 	width 80col%
 
@@ -3727,7 +3781,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/linSystemSolution.png
+	filename figures/heatConduction/linSystemSolution.png
 	lyxscale 20
 	scale 50
 
@@ -3976,7 +4030,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/aWassempy.png
+	filename figures/heatConduction/aWassempy.png
 	lyxscale 20
 	scale 50
 
@@ -4037,7 +4091,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/aEassempy.png
+	filename figures/heatConduction/aEassempy.png
 	lyxscale 20
 	scale 50
 
@@ -4136,7 +4190,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/pythonContantleft.png
+	filename figures/heatConduction/pythonContantleft.png
 	lyxscale 20
 	scale 50
 
@@ -4210,7 +4264,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/pythonSource.png
+	filename figures/heatConduction/pythonSource.png
 	lyxscale 20
 	scale 50
 
@@ -4288,7 +4342,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/1dcondicitpPlot.png
+	filename figures/heatConduction/1dcondicitpPlot.png
 	lyxscale 20
 	scale 50
 
@@ -4300,7 +4354,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/1dcondicitpPlotResult.png
+	filename figures/heatConduction/1dcondicitpPlotResult.png
 	lyxscale 20
 	scale 50
 
@@ -4611,7 +4665,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/timeStepping.png
+	filename figures/heatConduction/timeStepping.png
 	lyxscale 20
 	scale 50
 
@@ -4664,11 +4718,275 @@ reference "fig:Time-stepping"
 \end_layout
 
 \begin_layout Subsection
-2D case
+2D and 3D cases
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+See Versteeg and Malalasekare 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "versteeg2007"
+
+\end_inset
+
+ page 129, Chapter 4.4-4.5.
+\end_layout
+
+\begin_layout Standard
+Extension from 1D to 2D or 3D is straight forward.
+ We again form a control volume and add all the fluxes in a balance equation.
+ It is customary to use North and South (N,S) as names for the upper and
+ lower neighbors.
+ See Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:2D-control-volume"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/heatConduction/2dConductionNotation.png
+	lyxscale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset space \hspace{}
+\length 0.8cm
+\end_inset
+
+
+\begin_inset Graphics
+	filename figures/heatConduction/2dConductionCV.png
+	lyxscale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+2D notations and control volume 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:2D-control-volume"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Forming a balance equation for 2D heat conduction results in
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}(qA)_{w}-(qA)_{e}+(qA)_{s}-(qA)_{n}+\overline{S}\Delta V & =0\\
+\Leftrightarrow\left(kA\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{e}-\left(kA\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{w}+\left(kA\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{n}-\left(kA\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{s}+\overline{S}\Delta V & =0\\
+\\
+\end{alignedat}
+\label{eq:2DrawConduction}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With finite volume method, using central differencing and linear interpolation
+ Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2DrawConduction"
+
+\end_inset
+
+ gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\underbrace{\left(\frac{k_{e}A_{e}}{\Delta x}+\frac{k_{w}A_{w}}{\Delta x}+\frac{k_{s}A_{s}}{\Delta y}+\frac{k_{n}A_{n}}{\Delta y}\right)}_{a_{P}=a_{W}+a_{E}+a_{S}+a_{N}}T_{P} & =\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{w}}T_{W}+\underbrace{\left(\frac{k_{e}A_{e}}{\Delta x}\right)}_{a_{E}}T_{E}\\
+ & \;\;+\underbrace{\left(\frac{k_{s}A_{s}}{\Delta y}\right)}_{a_{S}}T_{S}+\underbrace{\left(\frac{k_{n}A_{n}}{\Delta y}\right)}_{a_{N}}T_{N}\\
+ & \;\;+\underbrace{\overline{S}\Delta V}_{S_{u}}
+\end{alignedat}
+\label{eq:2dconduction}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Leftrightarrow\boxed{a_{P}T_{P}=a_{W}T_{W}+a_{E}T_{E}+a_{S}T_{S}+a_{N}T_{N}+S_{u}}\label{eq:2dconductionShrt}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As we can see from Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2dconduction"
+
+\end_inset
+
+-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2dconductionShrt"
+
+\end_inset
+
+ the extension from 1D to 2D only bring a couple of new terms to the equation.
+ The structure remains the same.
+ 
+\end_layout
+
+\begin_layout Standard
+Similarly, extension from 2D to 3D would give two more terms.
+ The extra directions are usually named Bottom and Top (B and T).
+\end_layout
+
+\begin_layout Standard
+The author would recommend deriving the Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2dconduction"
+
+\end_inset
+
+ by yourself and programming your own 2D solver.
+ The geometry and code is still relatively easy to understand.
+ 3D solver code becomes rather complicated and mostly teaches programming
+ with very little new to learn about FVM.
+\end_layout
+
+\begin_layout Standard
+If you program your own solver in 2D or 3D, it is highly recommended to
+ use sparse matrices, see extra material in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Performance-issues-with"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
 Notations
+\end_layout
+
+\begin_layout Standard
+One we move from 1D to 2D or 3D, the full notation of partial differential
+ equations quickly becomes cumbersome.
+ Using a 3D heat conduction as an example the full form is 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial}{\partial x}\left(k\frac{\partial T}{\partial x}\right)+\frac{\partial}{\partial y}\left(k\frac{\partial T}{\partial y}\right)+\frac{\partial}{\partial z}\left(k\frac{\partial T}{\partial z}\right)+S=0\label{eq:3dconductionFull}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+it is customary to use either a vector or tensor notation instead.
+ With vector notation Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:3dconductionFull"
+
+\end_inset
+
+ becomes
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\nabla\cdot k\nabla T+S=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and with tensor notation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial}{\partial x_{j}}\left(k\frac{\partial T}{\partial x_{j}}\right)+S=0\label{eq:conductionTensor}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Both vector and tensor notations are widely used in the literature.
+ It's rather necessary to understand them and they will be used on this
+ course also.
+ 
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Subsection
@@ -4684,6 +5002,13 @@ Extra material.
 
 \begin_layout Subsubsection
 Performance issues with example codes
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Performance-issues-with"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4740,7 +5065,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename kuvat/sparseMatrix.png
+	filename figures/heatConduction/sparseMatrix.png
 	lyxscale 20
 	scale 50
 
@@ -5122,12 +5447,9 @@ https://fenicsproject.org/
 https://www.ctcms.nist.gov/fipy/index.html
 \end_layout
 
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
+\begin_layout Section*
+\begin_inset Note Note
+status open
 
 \begin_layout Section*
 Authors notes
@@ -5143,6 +5465,11 @@ text width 11.6cm
 
 \begin_layout Itemize
 text height 19.5cm, big fig height 19.5cm/3 = 6.5cm
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
