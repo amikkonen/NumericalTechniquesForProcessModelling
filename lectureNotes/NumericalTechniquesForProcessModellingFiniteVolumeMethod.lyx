@@ -1778,10 +1778,6 @@ name "fig:Calculation-domain"
 \end_layout
 
 \begin_layout Standard
-
-\end_layout
-
-\begin_layout Standard
 We'll want to model the air around the truck.
  Not the truck itself.
  We need to model some air in front of the truck and to its sides.
@@ -1871,7 +1867,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Surface mesh
+Surface mesh (low quality) 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Surface-mesh-details"
