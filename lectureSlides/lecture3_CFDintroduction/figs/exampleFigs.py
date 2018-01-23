@@ -100,3 +100,14 @@ print(A@x-b)
 #print(A@x-b)    
     
     
+
+
+
+def Ra_func(beta, dT, L, nu, alpha):
+    return beta*dT*9.81*L**3/(nu*alpha)
+
+
+    
+    
+    
+    

@@ -13,18 +13,18 @@ from scipy.sparse import linalg as splinalg
 
 class SparseMatrixA(object):
     def __init__(self):
-        self.l = []
-        self.m = []
+        self.row = []
+        self.col = []
         self.val = []
 
-    def add(self, l, m, val):
-        self.l.append(l)
-        self.m.append(m)
+    def add(self, row, col, val):
+        self.row.append(row)
+        self.col.append(col)
         self.val.append(val)
 
     def finalize(self):
         return sparse.csr_matrix(sparse.coo_matrix(
-                               (self.val, [self.l, self.m])
+                               (self.val, [self.row, self.col])
                               ))
     
     def solve(self,b, A=None):
