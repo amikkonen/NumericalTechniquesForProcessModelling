@@ -7,6 +7,14 @@
 \textclass article
 \begin_preamble
 \numberwithin{equation}{section}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -1901,6 +1909,10 @@ text width 11.6cm
 
 \begin_layout Itemize
 text height 19.5cm, big fig height 19.5cm/3 = 6.5cm
+\end_layout
+
+\begin_layout Itemize
+normal fig size 3.5,2.5 inc
 \end_layout
 
 \end_inset

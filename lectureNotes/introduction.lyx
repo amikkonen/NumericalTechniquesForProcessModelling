@@ -88,6 +88,756 @@ name "sec:Introduction"
 \end_layout
 
 \begin_layout Standard
+Computational fluid dynamics (CFD) offers great flexibility for an engineer.
+ It can can give valuable insights into many problems outside the scope
+ of analytical methods.
+ Unlike analytical methods, CFD is not limited to simple geometries and
+ can model most geometries encountered by an engineer.
+ Varying material properties are also straight forward to model.
+ A word of warning is, however, in order.
+\end_layout
+
+\begin_layout Standard
+The acronym of Computational Fluid Dynamics, CFD, has many interpretation:
+ Colorful Fluid Dynamics, Colors For Directors, Cleverly Forged Data, etc.
+ As usual, there is some truth in the joke.
+ It is very easy to produce false results with CFD.
+ Learning how to use CFD programs well enough to produce pretty videos may
+ give false confidence.
+ With few exceptions, CFD programs need an expert user to be reliable.
+ 
+\end_layout
+
+\begin_layout Subsection
+What is CFD?
+\end_layout
+
+\begin_layout Standard
+Computational fluid dynamics (CFD) studies fluid flow using computers to
+ solve numerical approximations of often complex problems.
+ There are many ways to build the approximations, but in this text we will
+ study exclusively finite volume method (FVM).
+ In FVM we divide the calculation domain in to small pieces called cells.
+ The cells form a mesh that fill the computational domain, see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Engine"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/CmefeCFDmoteur.png
+	lyxscale 20
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Engine mesh
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Engine"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wiki:moto"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Mesh might be the most important concept in finite volume method.
+ Each cell form a control volume, that is very similar to the control volume
+ used in analytical fluid dynamics.
+ The main difference is that in 
+\bar under
+finite
+\bar default
+ volume method the control volume has a finite size.
+ In analytical methods we would typically let the control volume be infinitesima
+lly small.
+ In finite volume method we assume that a single value of a field variable,
+ say pressure, is enough to represent the value of that field inside the
+ whole cell.
+ In other words, the original continuous field is approximated with a discrete,
+ non-continuous one.
+ 
+\end_layout
+
+\begin_layout Standard
+As the mathematical concepts may quickly become a little confusing without
+ a concrete example, let us consider a fully developed turbulent velocity
+ profile in a pipe, see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Turbulent-flow-velocity"
+
+\end_inset
+
+.
+ The velocity distribution is, of course, continuous.
+ Discretizing the profile with ten cells gives the discretized profile in
+ Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Turbulent-flow-velocity"
+
+\end_inset
+
+.
+ This is analogous to using a discretized numerical solution.
+ In the example case with ten equally sized cells, using finite volume method
+ would probably fail miserably as the mesh is unable to represent the fast
+ change in velocity profile near the wall.
+ We would need smaller cells near the wall.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/wallProfile10.pdf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Fully developed turbulent velocity profile in a pipe
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Turbulent-flow-velocity"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/CellTypes.png
+	lyxscale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Cell types
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cell-types"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/Moto2_CFD_hepia-cmefe_1.png
+	lyxscale 20
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Aerodynamics of a motorcycle
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Aerodynamics-of-motorcycles"
+
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wiki:moto"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/motoWinnerMotors.jpg
+	lyxscale 5
+	height 4cm
+
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 1cm
+\end_inset
+
+
+\begin_inset Graphics
+	filename figures/introduction/motoCAD.png
+	lyxscale 20
+	height 4cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Geometry simplification
+\begin_inset CommandInset citation
+LatexCommand cite
+key "motoWinnerMotors"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Geometry-simplification-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/motorbikeDomain.png
+	lyxscale 20
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Calculation domain
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Calculation-domain"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/boundaryConditions.png
+	lyxscale 20
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Boundary contions
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Boundary-contions"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/motorbikeSurfaceMesh_org2.png
+	lyxscale 20
+	width 100col%
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Surface mesh (low quality) 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Surface-mesh-details"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/meshStructural.png
+	lyxscale 5
+	width 45text%
+
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 1cm
+\end_inset
+
+
+\begin_inset Graphics
+	filename figures/introduction/meshUnStructural.png
+	lyxscale 5
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Structured and unstructured (low quality) meshes of a 2D wing
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Structured-and-unstructured"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/meshRefinement/compination.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mesh refinement
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Mesh-refinement"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/unsteady/combination.png
+	lyxscale 20
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Unsteady solution
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Unsteady-solution"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/steady/combination.png
+	lyxscale 20
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Steady solution
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Steady-solution"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/else/kansi2.jpeg
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Temperature and velocity fields at one time step
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kansi"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Temperature-and-velocity"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/pseudoConvergence.pdf
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Pseudo convergence of steady state solution
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Pseudo-convergence-of"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+OLDIntroduction
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Introduction-1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 This section attempts to give on overview of the Computational Fluid Dynamics
  material discussed on this course.
  Math is avoided and all points will be returned to in greater detail.
@@ -178,14 +928,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Aerodynamics of a motorcycle
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Aerodynamics-of-motorcycles"
-
-\end_inset
-
- 
+Aerodynamics of a motorcycle 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "wiki:moto"
@@ -245,13 +988,6 @@ status open
 
 \begin_layout Plain Layout
 Engine mesh
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Engine"
-
-\end_inset
-
-
 \begin_inset CommandInset citation
 LatexCommand cite
 key "wiki:moto"
@@ -514,13 +1250,6 @@ key "motoWinnerMotors"
 \end_inset
 
 
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Geometry-simplification-1"
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -571,13 +1300,6 @@ status open
 
 \begin_layout Plain Layout
 Calculation domain
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Calculation-domain"
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -680,14 +1402,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Surface mesh (low quality) 
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Surface-mesh-details"
-
-\end_inset
-
-
+Surface mesh (low quality)
 \end_layout
 
 \end_inset
@@ -759,13 +1474,6 @@ status open
 
 \begin_layout Plain Layout
 Structured and unstructured (low quality) meshes of a 2D wing
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Structured-and-unstructured"
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -824,13 +1532,6 @@ status open
 
 \begin_layout Plain Layout
 Cell types
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Cell-types"
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -1099,13 +1800,6 @@ key "kansi"
 \end_inset
 
 
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Temperature-and-velocity"
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -1183,13 +1877,6 @@ status open
 
 \begin_layout Plain Layout
 Pseudo convergence of steady state solution
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Pseudo-convergence-of"
-
-\end_inset
-
-
 \end_layout
 
 \end_inset

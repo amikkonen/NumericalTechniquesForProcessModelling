@@ -511,6 +511,11 @@ What remains is to discretize the temperature gradients
 \end_inset
 
  varies, they must be evaluated also.
+ Cross-section area 
+\begin_inset Formula $A$
+\end_inset
+
+ is usually known and requires no special care.
 \end_layout
 
 \begin_layout Standard
@@ -577,9 +582,7 @@ With uniform grid linear interpolation gives at cell faces
 \begin_inset Formula 
 \begin{equation}
 \boxed{\begin{alignedat}{1}k_{w} & =\frac{k_{W}+k_{P}}{2}\\
-k_{e} & =\frac{k_{E}+k_{P}}{2}\\
-A_{w} & =\frac{A_{W}+A_{P}}{2}\\
-A_{e} & =\frac{A_{E}+A_{P}}{2}
+k_{e} & =\frac{k_{E}+k_{P}}{2}
 \end{alignedat}
 }\label{eq:linearInterpolation}
 \end{equation}
@@ -594,11 +597,7 @@ If we have constant thermal conductivity
 \begin_inset Formula $k$
 \end_inset
 
- and/or constant cross-section area 
-\begin_inset Formula $A$
-\end_inset
-
-, we can ignore the interpolation in Eq.
+ we can ignore the interpolation in Eq.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -607,7 +606,16 @@ reference "eq:linearInterpolation"
 \end_inset
 
 .
- 
+ Note that if 
+\begin_inset Formula $k$
+\end_inset
+
+ at the faces might be known from the problem geometry.
+ In this case there is no need to interpolate even if 
+\begin_inset Formula $k$
+\end_inset
+
+ varies spacially.
 \end_layout
 
 \begin_layout Standard
