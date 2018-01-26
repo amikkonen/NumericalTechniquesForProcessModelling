@@ -83,7 +83,7 @@ KEB-45250 Numerical Techniques for Process Modeling
 \begin_inset Newline newline
 \end_inset
 
-Exercise 3 - CFD case planing
+Exercise 3 - CFD case study and time stepping
 \begin_inset Newline newline
 \end_inset
 
@@ -99,22 +99,118 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Today we will plan a wing study but calculate it.
- Todays exercise will likely be the least computer intensive on the whole
- course.
- The setup in this courses CFD assignment will probably be very similar
- to this wing exercise.
- Of course, in the assignment you have to run the calculation and write
- a report.
+Today we will have two exercises.
+ First one is a case study for a boiler super heater.
+ The second one is a numerical solution of water freezing in a pipe during
+ winter.
+\end_layout
+
+\begin_layout Section
+Super heater
+\end_layout
+
+\begin_layout Standard
+The purpose of this exercise is to initiate discussion and thinking.
+ It does not have a single right answer.
+ It's recommended to form small groups and ask a lot of questions.
+ We will use 20-30min for the total discussion.
+\end_layout
+
+\begin_layout Standard
+Super heaters are used in many boilers.
+ The super heater is located in the red area in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Boiler-(kattila)-and"
+
+\end_inset
+
+.
+ The assignment is to first calculate the heat transfer for a super heater
+ and compare the results to measured data.
+ The second part is to optimize the super heater geometry.
+\end_layout
+
+\begin_layout Standard
+The dimensions of the super heater are 
+\begin_inset Formula $L_{x}=2.5m$
+\end_inset
+
+, 
+\begin_inset Formula $L_{y}=15m$
+\end_inset
+
+, 
+\begin_inset Formula $L_{z}=20m$
+\end_inset
+
+.
+ The pipe diameter is 
+\begin_inset Formula $d=5cm$
+\end_inset
+
+.
+ In flow direction there are 
+\begin_inset Formula $n_{x}=30$
+\end_inset
+
+ pipes in a row and in cross-flow direction there are 
+\begin_inset Formula $n_{z}=150$
+\end_inset
+
+ pipes.
+ The pipes are arranged 
+\begin_inset Quotes eld
+\end_inset
+
+in-line
+\begin_inset Quotes erd
+\end_inset
+
+, see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Pipe-arrangements"
+
+\end_inset
+
+.
+ There are five super heaters in a series and we are calculating the second
+ one.
+ The inlet velocity for the super heater is 
+\begin_inset Formula $V=7m/s$
+\end_inset
+
+ and temperature is 
+\begin_inset Formula $T_{in}=900C$
+\end_inset
+
+.
+ The chemical composition of the gas is known.
  
 \end_layout
 
 \begin_layout Standard
-Our story is about a landing airplane but airplane wings are remarkably
- similar to other wings.
- The same kind of simulation would apply to wind turbine, steam turbine,
- or water pump.
+There exists correlations for a tube bundle similar to that used in a super
+ heater, See Fig.
  
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Correlations-from-VDI"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Discuss where the correlation based approach would work in our case and
+ where CFD would be better.
+ How would you combine the two approaches? What kind of CFD simulation would
+ you do? The whole boiler or maybe just a couple of pipes? Consider the
+ computational cost and the feasibility of optimization.
 \end_layout
 
 \begin_layout Standard
@@ -127,8 +223,8 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/ami/share/numericalTechniquesForProcessModelling/exercises/exercise3/figs/https:pixnio.comfree-images201706082017-06-08-15-30-47.jpg.jpg
-	lyxscale 10
+	filename /home/ami/share/numericalTechniquesForProcessModelling/exercises/exercise3/figs/mod.svg
+	lyxscale 30
 	height 5cm
 
 \end_inset
@@ -140,7 +236,7 @@ status open
 
 
 \begin_inset Graphics
-	filename /home/ami/share/numericalTechniquesForProcessModelling/exercises/exercise3/figs/389px-Aircraft_wing_flaps_full_dsc06835.jpg
+	filename /home/ami/share/numericalTechniquesForProcessModelling/exercises/exercise3/figs/tulistin.jpg
 	lyxscale 30
 	height 5cm
 
@@ -153,10 +249,10 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Airplane during landing [Wikipedia] 
+Boiler (kattila) and super heater (tulistin)
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:Airplane-during-landing"
+name "fig:Boiler-(kattila)-and"
 
 \end_inset
 
@@ -171,158 +267,239 @@ name "fig:Airplane-during-landing"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Section*
-Wing drag, lift, and stall speed
 \end_layout
 
 \begin_layout Standard
-You have been given an assignment to calculate the lift and drag coefficients
- of airplane wing during landing, see Fig.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Airplane-during-landing"
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
 
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/ami/share/numericalTechniquesForProcessModelling/exercises/exercise3/figs/arrangement.png
+	lyxscale 30
+	height 4cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Pipe arrangements
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Pipe-arrangements"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/ami/share/numericalTechniquesForProcessModelling/exercises/exercise3/figs/cor1.png
+	lyxscale 30
+	width 45text%
+
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 0.5cm
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/ami/share/numericalTechniquesForProcessModelling/exercises/exercise3/figs/cor2.png
+	lyxscale 30
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Correlations from VDI Heat atlas p.725
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Correlations-from-VDI"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Time stepping
+\end_layout
+
+\begin_layout Standard
+In this exercise we implement explicit Euler time integration method.
+ Our example case studies the time it takes for a horizontal water pipe
+ to reach temperature 
+\begin_inset Formula $T=0C$
+\end_inset
+
+ if exposed to subzero environment.
+\end_layout
+
+\begin_layout Standard
+Use explicit time stepping 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+f(t_{0}+\Delta t)=f(t_{0})+\Delta tf'(t_{0})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For horizontal pipe natural convection can be calculated from
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\overline{Nu}=0.36+\frac{0.518\mathrm{Ra_{D}^{1/4}}}{[1+(0.559/\mathrm{Pr})^{9/16}]^{4/9}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{\mathrm{Ra}_{D}=}\frac{\beta\Delta TgD^{3}}{\nu^{2}}\mathrm{Pr}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\beta=\frac{1}{T}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ignore the heat conduction in pipe and convection inside the pipe.
+ Assume a bulk temperature for water.
+\end_layout
+
+\begin_layout Standard
+Take pipe diameter 
+\begin_inset Formula $D=3cm$
+\end_inset
+
+, water initial temperature 
+\begin_inset Formula $T_{init}=4C$
+\end_inset
+
+, outside temperature 
+\begin_inset Formula $T_{\infty}=-10C$
 \end_inset
 
 .
- You are also tasked with predicting the stall speed.
- Angle of attach, air speed, and geometry are given.
- Plan the study.
- See Fig.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Angle-of-attack"
-
-\end_inset
-
- for angle of attack and stall.
 \end_layout
 
 \begin_layout Standard
-Start the study with a more simple validation case with available experimental
- data.
- Looking up scientific papers on the subject would also be a good idea but
- we will not do that this time.
- Wing are a much studied subject and established methods would be relatively
- easy to find.
- 
+For a control volume we have
 \end_layout
 
 \begin_layout Standard
-Plan a steady state 2D simulation using NACA 2412 wing profile at angles
- of attacks 
-\begin_inset Formula $\alpha=6^{\circ}$
+\begin_inset Formula 
+\begin{align}
+\rho A_{pipe}\mathrm{d}xc_{p}\frac{\mathrm{d}T}{\mathrm{dt}} & =-hPdx(T_{w}-T_{\infty})\\
+\Leftrightarrow\rho A_{pipe}c_{p}\frac{\mathrm{d}T}{\mathrm{dt}} & =-hP(T_{w}-T_{\infty})
+\end{align}
+
 \end_inset
 
- and 
-\begin_inset Formula $\alpha=12^{\circ}$
-\end_inset
 
-.
- Horizontal air speed 
-\begin_inset Formula $V_{x}=270km/h$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Standard
-Plan an unsteady simulation with the real geometry for landing, see Fig.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Flap-alignment-[Wikipedia]"
-
-\end_inset
-
-.
- 
+Derive numerical solution using explicit time stepping.
+ Program you own solver.
 \end_layout
 
 \begin_layout Standard
-Plan a full 3D simulation of an airplane during landing.
+If you have time, try implementing a implicit solver.
 \end_layout
 
-\begin_layout Paragraph
-Things to consider:
+\begin_layout Subsection
+Sample derivation
 \end_layout
 
-\begin_layout Itemize
-Pre-processing
-\end_layout
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{cc}
+\Leftrightarrow\rho A_{pipe}c_{p}\frac{\mathrm{d}T}{\mathrm{dt}} & =-hP(T_{w}-T_{\infty})\\
+\Leftrightarrow\frac{\mathrm{d}T}{\mathrm{dt}} & =-\frac{hP}{\rho A_{pipe}c_{p}}(T_{w}-T_{\infty})\\
+\Leftrightarrow\frac{\Delta T}{\Delta t} & =-\frac{hP}{\rho A_{pipe}c_{p}}(T_{w}-T_{\infty})\\
+\frac{T_{w}-T_{w}^{*}}{\Delta t} & =-\frac{hP}{\rho A_{pipe}c_{p}}(T_{w}^{*}-T_{\infty})\\
+\Leftrightarrow T_{w} & =T_{w}^{*}-\frac{hP}{\rho A_{pipe}c_{p}}(T_{w}^{*}-T_{\infty})\Delta t\\
+\Leftrightarrow T_{w} & =T_{w}^{*}-\frac{qP}{\rho A_{pipe}c_{p}}\Delta t
+\end{array}
+\end{equation}
 
-\begin_deeper
-\begin_layout Itemize
-wing CAD model, calculation domain, 2D/3D, details
-\end_layout
+\end_inset
 
-\begin_layout Itemize
-Meshing strategy
-\end_layout
 
-\end_deeper
-\begin_layout Itemize
-Solver
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Equations
-\end_layout
-
-\begin_layout Itemize
-Material properties
-\end_layout
-
-\begin_layout Itemize
-steady/unsteady
-\end_layout
-
-\begin_layout Itemize
-compressible/incompressible
-\end_layout
-
-\begin_layout Itemize
-turbulence model
-\end_layout
-
-\begin_layout Itemize
-wall treatment
-\end_layout
-
-\begin_layout Itemize
-boundary conditions
-\end_layout
-
-\begin_layout Itemize
-convergence
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Post-processing
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-what to save
-\end_layout
-
-\begin_layout Itemize
-validation
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Mesh independency
-\end_layout
-
-\begin_layout Itemize
-How to report the results
 \end_layout
 
 \begin_layout Standard
@@ -332,163 +509,42 @@ How to report the results
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename /home/ami/share/numericalTechniquesForProcessModelling/exercises/exercise3/figs/wing1.png
-	lyxscale 10
-	width 45text%
-
-\end_inset
-
-
-\begin_inset Graphics
-	filename /home/ami/share/numericalTechniquesForProcessModelling/exercises/exercise3/figs/wing2.png
-	lyxscale 10
-	width 45text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Flap alignment and angle of attack [Wikipedia]
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Flap-alignment-[Wikipedia]"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename /home/ami/share/numericalTechniquesForProcessModelling/exercises/exercise3/figs/Airfoil_angle_of_attack.jpg
-	lyxscale 10
-	width 45text%
-
-\end_inset
-
-
-\begin_inset Graphics
-	filename /home/ami/share/numericalTechniquesForProcessModelling/exercises/exercise3/figs/StallFormation.gif
-	lyxscale 10
-	width 45text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Angle of attack and stall [Wikipedia] 
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Angle-of-attack"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section*
-Equations
+Figures from
+\end_layout
+
+\begin_layout Itemize
+http://www.knowenergy.net/suomi/monipoltt_kattilat/7_lammonsiirtimet/frame.htm
+\end_layout
+
+\begin_layout Itemize
+Korkealaatuinen lämmönvaihdin Superheater for Power Plant Boiler, HTEG,
+ http://fi.hengtaointernational.com/superheater/superior-quality-heat-exchanger-su
+perheater.html
 \end_layout
 
 \begin_layout Standard
-Drag coefficient
-\end_layout
+\begin_inset Note Note
+status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula 
-\begin{equation}
-C_{D}=\frac{D}{\frac{1}{2}\rho V^{2}A}
-\end{equation}
+\begin{align}
+ & \Rightarrow\rho A_{pipe}c_{p}\frac{T_{w}-T_{w}^{*}}{\Delta t}=hP(T_{w}^{*}-T_{\infty})\\
+ & \frac{T_{w}-T_{w}^{*}}{\Delta t}=\frac{hP(T_{w}^{*}-T_{\infty})}{\rho A_{pipe}c_{p}}\\
+ & T_{w}=T_{w}^{*}+\frac{hP(T_{w}^{*}-T_{\infty})}{\rho A_{pipe}c_{p}}\Delta t\\
+ & T_{w}=T_{w}^{*}+\frac{h\pi d(T_{w}^{*}-T_{\infty})}{\rho1/4d^{2}\pi c_{p}}\Delta t\\
+ & T_{w}=T_{w}^{*}+\frac{4h(T_{w}^{*}-T_{\infty})}{\rho dc_{p}}\Delta t
+\end{align}
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-where 
-\begin_inset Formula $D$
-\end_inset
-
- is lift force, 
-\begin_inset Formula $\rho$
-\end_inset
-
- is density, 
-\begin_inset Formula $V$
-\end_inset
-
- is air speed, and 
-\begin_inset Formula $A$
-\end_inset
-
- is wing area.
- Similarly, the lift coefficient is
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-C_{L}=\frac{L}{\frac{1}{2}\rho V^{2}A}
-\end{equation}
-
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-where 
-\begin_inset Formula $L$
-\end_inset
-
- is lift force.
 \end_layout
 
 \end_body
