@@ -83,8 +83,8 @@ Heat Conduction (diffusion)
 \begin_layout Standard
 
 \shape italic
-The material discussed in this section may be found in a more elaborated
- format from Versteeg and Malalasekara 2007, Chapter 5.
+The topics discussed in this section may be found in a more elaborated format
+ from Versteeg and Malalasekara 2007, Chapter 5.
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -96,27 +96,31 @@ key "versteeg2007"
 \end_layout
 
 \begin_layout Standard
-In this section we study the general properties of Finite Volume Method
- (FVM) using one-dimensional heat conduction as an example.
- The necessary steps are very similar in more complicated cases.
- For the same information in more elaborated format see the introduction
- level text book by Versteeg and Malalasekera, An introduction to Computational
- Fluid Dynamics.
- For this section see chapter four.
+In this section we learn to implement a finite volume solver for heat conduction.
+ This will allow us to create our own solvers for heat conduction and to
+ understand more complex problems later on.
+ 
 \end_layout
 
 \begin_layout Standard
-The goal of FVM, and other similar numerical methods, is to divide a continuous
- problem into small discrete pieces.
+For the same information in more elaborated format and different style,
+ see the introduction level text book by Versteeg and Malalasekera, An introduct
+ion to Computational Fluid Dynamics.
+\end_layout
+
+\begin_layout Standard
+The goal of finite volume method (FVM), and most other CFD methods, is to
+ divide a complex continuous problem into manageable small pieces.
  An approximate solution of the original problem is expressed with a large
  number of simple arithmetic equations.
- This results are readily collected in to a matrix and solved with a computer.
+ These equations are readily assembled in to a matrix and solved with a
+ computer.
  
 \end_layout
 
 \begin_layout Standard
 The main advantages of numerical solution over analytical solution is the
- ease of solving problems in complicated geometries and boundary conditions
+ ease of solving problems in complicated geometries, boundary conditions
  or with varying fluid properties.
  For such problems analytical solutions often don't exists or are very time
  consuming to implement.
@@ -129,10 +133,10 @@ The main advantages of numerical solution over analytical solution is the
 
 \begin_layout Standard
 During this course we become familiar with Finite Volume Method (FVM).
- Other very similar numerical methods are Finite Element Method (FEM) and
- Finite Difference Method (FDM).
- In general, numerical solution of fluid related problems are often called
- Computational Fluid Dynamics (CFD).
+ Other very similar numerical methods include Finite Element Method (FEM)
+ and Finite Difference Method (FDM).
+ In general, numerical solution of fluid related problems are called Computation
+al Fluid Dynamics (CFD).
  FVM method is the preferred method for fluid flow problems because of it's
  simplicity and conservativeness (mass balance etc.).
  
@@ -163,6 +167,14 @@ key "versteeg2007"
 \end_layout
 
 \begin_layout Standard
+We will start with a 1D problem and only briefly consider 2D and 3D problems
+ at the end.
+ The extension is straight forward and serves as a great test case for ones
+ understanding.
+ 
+\end_layout
+
+\begin_layout Standard
 The key concept for nearly all numerical solutions is discretization of
  the problem.
  In Finite Volume Method we divide the solution domain in small control
@@ -186,12 +198,21 @@ Finite
 \end_layout
 
 \begin_layout Standard
+Together the control volumes fill the solution domain.
+ We will derive the equations for a single cell at a time and need to define
+ some notations at the beginning.
+ In general, we need information of the cell we are studying and its immediate
+ neighbors.
+ 
+\end_layout
+
+\begin_layout Standard
 We use letter 
 \begin_inset Formula $P$
 \end_inset
 
  to refer to the central point (node) of the control volume we are currently
- interested in and 
+ studying and 
 \begin_inset Formula $W$
 \end_inset
 
@@ -352,11 +373,11 @@ As a practical example, our domain could be a 100mm long metal rod and we
 \end_layout
 
 \begin_layout Standard
-Let us concentrate on one control volume, the one around node 
+Let us consider one control volume, the one around node 
 \begin_inset Formula $P$
 \end_inset
 
-, for a while.
+.
  If there is a heat flux density 
 \begin_inset Formula $q=-k\frac{\mathrm{d}T}{\mathrm{d}x}$
 \end_inset
@@ -366,7 +387,7 @@ Let us concentrate on one control volume, the one around node
 \end_inset
 
 , across the face 
-\begin_inset Formula $A_{w}$
+\begin_inset Formula $w$
 \end_inset
 
  at the boundary between nodes 
@@ -385,16 +406,12 @@ Let us concentrate on one control volume, the one around node
 \begin_inset Formula $(qA)_{w}=-\left(kA\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{w}$
 \end_inset
 
-.
- We use subscripts for locations, see Fig.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Heat-conduction"
-
+, where 
+\begin_inset Formula $A_{w}$
 \end_inset
 
-.
+ is the face area.
+ The locations are marked with subscripts.
  Similarly for the east face 
 \begin_inset Formula $(qA)_{e}=-\left(kA\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{e}$
 \end_inset
@@ -459,7 +476,7 @@ name "fig:Heat-conduction"
 
 \begin_layout Standard
 Similarly to the control volume used in analytical methods, we can now collect
- the terms in a balance equation as
+ the terms in a balance equation for heat as
 \end_layout
 
 \begin_layout Standard
@@ -487,13 +504,13 @@ reference "eq:1dHeat"
 \end_inset
 
  contains the essence of Finite Volume Method.
- Using a familiar control volume approach we have discretized our problem
+ Using a familiar control volume approach, we have discretized our problem
  for heat fluxes.
  
 \end_layout
 
 \begin_layout Standard
-What remains is to discretize the temperature gradients 
+What remains is to express the temperature gradients 
 \begin_inset Formula $\left(\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{w}$
 \end_inset
 
@@ -501,7 +518,7 @@ What remains is to discretize the temperature gradients
 \begin_inset Formula $\left(\frac{\mathrm{d}T}{\mathrm{d}x}\right)_{e}$
 \end_inset
 
- at cell faces.
+ at cell faces using temperature values at cell centers.
  If thermal conductivity 
 \begin_inset Formula $k$
 \end_inset
@@ -510,18 +527,69 @@ What remains is to discretize the temperature gradients
 \begin_inset Formula $A$
 \end_inset
 
- varies, they must be evaluated also.
+ varies, they must also be evaluated.
  Cross-section area 
 \begin_inset Formula $A$
 \end_inset
 
- is usually known and requires no special care.
+ is usually independent of the temperature and requires no special care.
+ Thermal conductivity may also be known independent from temperature and
+ directly available from the geometry.
+ Let us now consider the more general case when thermal conductivity depends
+ on temperature.
+ 
+\end_layout
+
+\begin_layout Standard
+The most common way to calculate the thermal conductivity at node temperatures
+ and use linear interpolation to calculate face values.
+ For uniform mesh size linear interpolation gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boxed{\begin{alignedat}{1}k_{w} & =\frac{k_{W}+k_{P}}{2}\\
+k_{e} & =\frac{k_{E}+k_{P}}{2}
+\end{alignedat}
+}\label{eq:linearInterpolation}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Central-differencing"
+
+\end_inset
+
+ for illustration.
+ If we have constant thermal conductivity 
+\begin_inset Formula $k$
+\end_inset
+
+ we can ignore the interpolation in Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:linearInterpolation"
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
 The most common way to discretize gradient term is to use central differencing.
- The basic idea is to assume linear temperature profile between two nodes
- as shown in Fig.
+ Similarly to linear interpolation, the basic idea is to assume a linear
+ temperature profile between two nodes as shown in Fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -530,7 +598,7 @@ reference "fig:Central-differencing"
 \end_inset
 
 .
- In essence central differencing is the same thing as linear interpolation.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -575,51 +643,8 @@ name "fig:Central-differencing"
 \end_layout
 
 \begin_layout Standard
-With uniform grid linear interpolation gives at cell faces
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-\boxed{\begin{alignedat}{1}k_{w} & =\frac{k_{W}+k_{P}}{2}\\
-k_{e} & =\frac{k_{E}+k_{P}}{2}
-\end{alignedat}
-}\label{eq:linearInterpolation}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-If we have constant thermal conductivity 
-\begin_inset Formula $k$
-\end_inset
-
- we can ignore the interpolation in Eq.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:linearInterpolation"
-
-\end_inset
-
-.
- Note that if 
-\begin_inset Formula $k$
-\end_inset
-
- at the faces might be known from the problem geometry.
- In this case there is no need to interpolate even if 
-\begin_inset Formula $k$
-\end_inset
-
- varies spacially.
-\end_layout
-
-\begin_layout Standard
 With uniform grid central differencing scheme gives for a temperature gradients
+ at faces
 \end_layout
 
 \begin_layout Standard
@@ -662,7 +687,7 @@ reference "eq:1dHeat"
 
 \end_inset
 
- 
+ gives
 \end_layout
 
 \begin_layout Standard
@@ -678,7 +703,7 @@ reference "eq:1dHeat"
 \end_layout
 
 \begin_layout Standard
-Now we have a fully discretized equation for heat conduction! 
+Now we have a fully discretized the equation for heat conduction! 
 \end_layout
 
 \begin_layout Standard
@@ -719,13 +744,13 @@ reference "eq:Conduction1Draw"
 \end_layout
 
 \begin_layout Standard
-At this point our equation is in a ready-for-a-computer form but lets make
- a sanity check first.
+At this point our equation is ready for a computer but let us make some
+ sanity checks first.
  
 \end_layout
 
 \begin_layout Standard
-From experience we know that thermal conductivity 
+We know that thermal conductivity 
 \begin_inset Formula $k$
 \end_inset
 
@@ -743,7 +768,7 @@ From experience we know that thermal conductivity
 \end_inset
 
  is also a positive number.
- Now, lets imagine that the temperature in the neighboring cell 
+ Now, imagine that the temperature in the neighboring cell 
 \begin_inset Formula $T_{W}$
 \end_inset
 
@@ -798,7 +823,7 @@ Same thing in math
 
 \begin_layout Standard
 For one-dimensional steady heat conduction (diffusion) with a volumetric
- source term we have
+ source term the governing equation is
 \end_layout
 
 \begin_layout Standard
@@ -818,7 +843,7 @@ where
 \end_inset
 
  is the temperature and 
-\begin_inset Formula $s$
+\begin_inset Formula $S$
 \end_inset
 
  is the volumetric source term.
@@ -955,7 +980,7 @@ reference "eq:1dConductionReady"
 
 \end_inset
 
- for anything real we now need to give it boundary conditions.
+ for anything real we need to give it boundary conditions.
  
 \end_layout
 
@@ -1004,7 +1029,7 @@ name "fig:Boundary-conditions-1D"
 \begin_layout Standard
 The cells that touch boundaries are called boundary cells and require special
  attention.
- Let us concentrate on cell 1 in Fig.
+ Let us consider cell 1 in Fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1012,7 +1037,7 @@ reference "fig:Boundary-conditions-1D"
 
 \end_inset
 
- for a while.
+.
  
 \end_layout
 
@@ -1333,7 +1358,7 @@ In previous section we have learned how to formulate the equations for our
  Now we learn how to assemble these equations into a matrix form and feed
  it to a computer.
  We use Python for calculations.
- We want the problem in linear matrix equations form
+ We want the problem in linear matrix form
 \end_layout
 
 \begin_layout Standard
@@ -1351,7 +1376,7 @@ In previous section we have learned how to formulate the equations for our
 
 \begin_layout Standard
 which can be readily solved with almost any programming language.
- For example in Python, using scipy reads 
+ For example in Python, using Scipy reads 
 \end_layout
 
 \begin_layout Standard
@@ -1442,9 +1467,9 @@ Let us consider one-dimensional heat conduction where the left boundary
 \end_inset
 
  long.
- We start the cell numbering from left and use uniform mesh.
+ We start the cell numbering from left and use an uniform mesh.
  We have uniform volumetric heat generation 
-\begin_inset Formula $S$
+\begin_inset Formula $\overline{S}$
 \end_inset
 
 .
@@ -1744,7 +1769,7 @@ The constant boundary condition also contributes a source term
 \begin_inset Formula $\left(\frac{k}{\Delta x/2}\right)T_{A}$
 \end_inset
 
- to the first cell source vector.
+ to the first cell of the source vector.
  The resulting source vector 
 \end_layout
 
@@ -1793,7 +1818,7 @@ The insulated boundary on the right produces no coefficients as no heat
 \end_layout
 
 \begin_layout Standard
-As final step we need to add the volumetric source to our source vector
+As the final step we need to add the volumetric source to our source vector
  
 \begin_inset Formula $\boldsymbol{b}$
 \end_inset
@@ -2165,9 +2190,13 @@ reference "eq:time"
 \end_inset
 
  we get explicit Euler scheme.
- Explicit Euler requires very small time steps.
- We choose to use the new time.
- This is caller implicit Euler scheme.
+ Explicit Euler requires very small time steps and is rarely suitable.
+ 
+\end_layout
+
+\begin_layout Standard
+We choose to use the new time.
+ This is called implicit Euler scheme.
  Implicit Euler is unconditionally stable and easy to use.
  For more temporal accuracy look in to Runge-Kutta or other higher order
  schemes.
@@ -2226,7 +2255,77 @@ reference "eq:1DconductionUnsteady"
 
  we see that the solution of one time step in unsteady case is very similar
  to the steady one.
- To progress the solution repeat the process in a loop.
+ We only have two extra terms, 
+\begin_inset Formula $a_{P}^{0}$
+\end_inset
+
+ in the 
+\begin_inset Formula $a_{P}$
+\end_inset
+
+ term and 
+\begin_inset Formula $a_{P}^{0}T_{P}^{0}$
+\end_inset
+
+.
+ The 
+\begin_inset Formula $a_{P}^{0}$
+\end_inset
+
+ remains constant during time steps and can be added to the coefficient
+ matrix.
+ In Python 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/heatConduction/1dTimeAP0.png
+	lyxscale 20
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The source term 
+\begin_inset Formula $a_{P}^{0}T_{P}^{0}$
+\end_inset
+
+ changes with temperature and has to updated during every time step.
+ It is often convenient to collect the time-independent terms into a separate
+ source vector, see 
+\shape italic
+bConstant
+\shape default
+ in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Time-stepping"
+
+\end_inset
+
+.
+ This often results in simpler and faster code.
+ 
+\end_layout
+
+\begin_layout Standard
+To progress the solution repeat the process in a loop.
  An example is given in Fig.
  
 \begin_inset CommandInset ref
@@ -2278,25 +2377,6 @@ name "fig:Time-stepping"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-It is often convenient to collect the time-independent terms into a separate
- source vector, see 
-\shape italic
-bConstant
-\shape default
- in Fig.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Time-stepping"
-
-\end_inset
-
-.
- This often results in simpler and faster code.
- 
 \end_layout
 
 \begin_layout Subsection
@@ -2474,7 +2554,7 @@ Similarly, extension from 2D to 3D would give two more terms.
 \end_layout
 
 \begin_layout Standard
-The author would recommend deriving the Eq.
+The author would recommend motivated students to derive the Eq.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2482,7 +2562,7 @@ reference "eq:2dconduction"
 
 \end_inset
 
- by yourself and programming your own 2D solver.
+ and to program a 2D solver.
  The geometry and code is still relatively easy to understand.
  3D solver code becomes rather complicated and mostly teaches programming
  with very little new to learn about FVM.
@@ -2564,7 +2644,14 @@ and with tensor notation
 Both vector and tensor notations are widely used in the literature.
  It's rather necessary to understand them and they will be used on this
  course also.
- 
+ For index notation see Appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Tensor-notation"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
@@ -2630,7 +2717,7 @@ reference "fig:Sparse-matrix-wrapper"
 \end_inset
 
 .
- See https://docs.scipy.org/doc/scipy/reference/sparse.html for more details.
+ For more detail see https://docs.scipy.org/doc/scipy/reference/sparse.html.
  
 \end_layout
 
@@ -2679,7 +2766,7 @@ name "fig:Sparse-matrix-wrapper"
 \begin_layout Standard
 We often use unnecessary loops.
  Looping is slow in Python and indexing of large matrices is also unnecessary.
- As rule of a thumb always use vectorized commands if you can.
+ As rule of a thumb, always use vectorized commands if you can.
  
 \end_layout
 

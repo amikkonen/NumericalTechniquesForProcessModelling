@@ -148,6 +148,14 @@ Tampere University of Technology
 \begin_inset Newline newline
 \end_inset
 
+Version 0.1
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
 Updated on:
 \end_layout
 
@@ -205,7 +213,8 @@ License
 
 \begin_layout Standard
 Some license similar to creative commons will be added once the legal details
- have been studied.
+ have been studied and all the place holder figures replaced.
+ For now, these notes are for use of the students of KEB-45250 only.
 \end_layout
 
 \begin_layout Standard
@@ -224,7 +233,8 @@ Publication version history
 \end_layout
 
 \begin_layout Standard
-These notes are written during the first implementation of this course.
+These notes are written during the first implementation of this course and
+ published in parts.
  Backward compatibility in equation numbers etc.
  is attempted.
  Below you'll see the main changes between published versions.
@@ -314,7 +324,7 @@ Notes
 \begin_inset Text
 
 \begin_layout Plain Layout
-Chapters 1-?
+Chapters 1-2
 \end_layout
 
 \end_inset
@@ -487,29 +497,6 @@ Chapters 1-?
 \end_layout
 
 \begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset toc
-LatexCommand tableofcontents
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 
 \lang finnish
 \begin_inset Newpage newpage
@@ -593,7 +580,7 @@ This lecture note is meant for students on the course Numerical Techniques
 
 \begin_layout Standard
 This lecture note is a custom fitted to contain the material considered
- on the course.
+ on the course and presented in my style.
  If you prefer a full text book, see the introductory level text book by
  Versteeg and Malalasekera, An introduction to Computational Fluid Dynamics
  
@@ -604,8 +591,7 @@ key "versteeg2007"
 \end_inset
 
 .
- More detailed pointers to relevant section will be given in the text as
- well as other outside sources.
+ More detailed pointers will be given in the text.
  
 \end_layout
 
@@ -619,8 +605,8 @@ This is the first time this lecture note is used and the lecture note will
 \begin_layout Standard
 Very few things in this world are solo achievements.
  Neither are these notes.
- Many of the used pictures are freely available in the Internet.
- The sources are listed in the references.
+ Many of the used pictures are freely available in the Internet and the
+ sources are listed in the references.
  People who have contributed in some less obvious way are listed in the
  next section.
  Thanks for all the contributers!
@@ -1747,6 +1733,62 @@ Lämmön johtuminen/diffuusio
 
 \end_layout
 
+\begin_layout Section*
+\begin_inset Note Note
+status open
+
+\begin_layout Section*
+Structure
+\end_layout
+
+\begin_layout Plain Layout
+In 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Introduction"
+
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Introduction"
+
+\end_inset
+
+ I attempt to give a overview of all the topics covered on this course.
+ I will use minimal math.
+ If you prefer equations, this section will be of little value to you.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
@@ -1767,37 +1809,6 @@ pagenumbering{arabic}
 setcounter{page}{1}
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section*
-Structure
-\end_layout
-
-\begin_layout Standard
-In 
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "sec:Introduction"
-
-\end_inset
-
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Introduction"
-
-\end_inset
-
- I attempt to give a overview of all the topics covered on this course.
- I will use minimal math.
- If you prefer equations, this section will be of little value to you.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage newpage
 \end_inset
 
 
@@ -1838,7 +1849,18 @@ filename "heatConduction.lyx"
 \end_layout
 
 \begin_layout Part
+
+\color red
 TODO
+\end_layout
+
+\begin_layout Standard
+
+\color red
+Everything from here on is very much unfinished.
+ If you wish to read it anyway, expect all kinds of errors and changes afterward
+s.
+ 
 \end_layout
 
 \begin_layout Section
@@ -1915,13 +1937,6 @@ text height 19.5cm, big fig height 19.5cm/3 = 6.5cm
 normal fig size 3.5,2.5 inc
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage newpage
 \end_inset
 
 

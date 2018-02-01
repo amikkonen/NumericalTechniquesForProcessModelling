@@ -88,6 +88,12 @@ name "sec:Introduction"
 \end_layout
 
 \begin_layout Standard
+This section given an over view of some of the key concepts of CFD with
+ very little theoretical detail.
+ Most subject will be considered in more detail later.
+\end_layout
+
+\begin_layout Standard
 Computational fluid dynamics (CFD) offers great flexibility for an engineer.
  It can can give valuable insights into many problems outside the scope
  of analytical methods.
@@ -109,7 +115,7 @@ The acronym of Computational Fluid Dynamics, CFD, has many interpretation:
 \end_layout
 
 \begin_layout Subsection
-What is CFD?
+Mesh Basics
 \end_layout
 
 \begin_layout Standard
@@ -226,6 +232,17 @@ reference "fig:Turbulent-flow-velocity"
  would probably fail miserably as the mesh is unable to represent the fast
  change in velocity profile near the wall.
  We would need smaller cells near the wall.
+ In real use cases the mesh is usually refined near walls and other regions
+ where fast changes happen, see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Structured-and-unstructured"
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -266,6 +283,135 @@ name "fig:Turbulent-flow-velocity"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The guiding principle of meshing is to have small cells where fast change
+ occurs and larger cells elsewhere to avoid unnecessary computational cost.
+ In addition, we want our cells to have regular shapes and the cell face
+ normals to align with stream lines.
+ This allows for better numerical accuracy.
+ 
+\end_layout
+
+\begin_layout Standard
+In Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Structured-and-unstructured"
+
+\end_inset
+
+ we see two main strategies to achieve these goals.
+ On the left we have a structured mesh.
+ The mesh is pieced together solely from morphed rectangles.
+ For simple shapes this strategy often lead to high quality meshes if enough
+ effort is spend on the process.
+ 
+\end_layout
+
+\begin_layout Standard
+On the right in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Structured-and-unstructured"
+
+\end_inset
+
+ we see an unstructured mesh.
+ Unstructured meshes have more chaotic structure than structured ones.
+ As a rule of a thump one can usually get a better mesh using structured
+ meshes is enough effort is spend in the meshing process.
+ Unstructured meshes are, however, a lot easier and faster to generate with
+ automatic algorithms.
+ For complex shapes, unstructured meshes are practically the only option.
+ The two strategies can be combined.
+ One could, for example, use a structured mesh near the wing in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Structured-and-unstructured"
+
+\end_inset
+
+ and unstructured one else where.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/meshStructural.png
+	lyxscale 5
+	width 45text%
+
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 1cm
+\end_inset
+
+
+\begin_inset Graphics
+	filename figures/introduction/meshUnStructural.png
+	lyxscale 5
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Structured and unstructured (low quality) meshes of a 2D wing
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Structured-and-unstructured"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The cells in meshes may have an arbitrary shape.
+ Simple, regular shapes like the ones in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cell-types"
+
+\end_inset
+
+ are, however, preferred for numerical accuracy.
+ In finite volume method the cell shape and aliment to stream lines is one
+ of the most important factor for reliable solution.
+ In practice, however, it is often more convenient to use a brute force
+ approach.
+ Even low quality cells give good results if small enough cells are used.
+ The computational expense limits this approach to meshing.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -310,6 +456,53 @@ name "fig:Cell-types"
 \end_layout
 
 \begin_layout Standard
+We have been discussing the mesh quality for a while now.
+ How does one know if the mesh is good enough? Unfortunately, one can never
+ truly know.
+ In most cases, the best we can get is an educated guess.
+ Fortunately, there are many ways to recognize a low quality mesh.
+ 
+\end_layout
+
+\begin_layout Standard
+The first thing to do with any CFD solution is to have critical look at
+ the solution on general.
+ Is there something obviously unrealistic there? Negative temperature or
+ pressure would be obvious indicators of problems.
+ Or maybe you can see large 
+\begin_inset Quotes eld
+\end_inset
+
+pixels
+\begin_inset Quotes erd
+\end_inset
+
+ with large steps in say, temperature, between neighboring cells.
+ This would indicate a too coarse mesh.
+ 
+\end_layout
+
+\begin_layout Standard
+A bit more formal method for mesh quality study is the grid independency
+ test.
+ If the mesh is fine (small cells) enough, the solution does not change
+ much with further refinement.
+ See Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Mesh-refinement"
+
+\end_inset
+
+ for an example of refinement process.
+ In practice, a full grid independency test might be infeasible due to high
+ computational cost.
+ To be fully formal, more than one meshing strategy should be used.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -318,9 +511,9 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figures/introduction/Moto2_CFD_hepia-cmefe_1.png
-	lyxscale 20
-	width 60text%
+	filename figures/introduction/meshRefinement/compination.png
+	lyxscale 50
+	width 100text%
 
 \end_inset
 
@@ -331,31 +524,91 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Aerodynamics of a motorcycle
+Mesh refinement
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:Aerodynamics-of-motorcycles"
+name "fig:Mesh-refinement"
 
 \end_inset
 
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To truly know if a simulation is readable, is to test it with experimental
+ data or known analytical solution.
+ Usually this is only possible for simple test cases.
+ If the test case and the real application are similar enough, it's reasonable
+ to assume that if the model works for the test case it will also work for
+ the real case.
+\end_layout
+
+\begin_layout Subsection
+Steps of CFD
+\end_layout
+
+\begin_layout Standard
+We started our discussion about CFD with the basics of meshing.
+ Now we will quickly familiarize ourselves with the other steps of CFD.
+\end_layout
+
+\begin_layout Standard
+The process of CFD is usually divided in three parts:
+\end_layout
+
+\begin_layout Itemize
+Preprocessing
+\end_layout
+
+\begin_layout Itemize
+Solver
+\end_layout
+
+\begin_layout Itemize
+Post-processing
+\end_layout
+
+\begin_layout Standard
+Simply put, preprocessing is everything you do before opening the actual
+ CFD solver programs.
+ Solver part happens in the CFD solver.
+ Post-processing is everything that happens after you close the actual solver.
  
-\begin_inset CommandInset citation
-LatexCommand cite
-key "wiki:moto"
-
-\end_inset
-
-
 \end_layout
 
-\end_inset
-
-
+\begin_layout Subsubsection
+Preprocessing
 \end_layout
 
-\end_inset
+\begin_layout Standard
+Preprocessing consist of two main parts: CAD and meshing.
+ A CFD solver operates in a mesh.
+ Mesh is usually based on a geometry created in a CAD program.
+ Some meshing strategies do not need a CAD geometry but in general the two
+ are closely linked.
+ In order to make a mesh with a suitable level of detail, a CAD model with
+ suitable level of detail is needed.
+ The suitable level of detail depends on a case.
+ The main idea is that the CAD geometry and the mesh should contain the
+ features that are important for the problem at hand and nothing else.
+ 
+\end_layout
 
-
+\begin_layout Standard
+The choice of level of detail in the model is far from easy.
+ Experience and intuition is needed.
+ If possible, it's a good practice to look up a scientific paper on a similar
+ case or ask from someone with experience.
 \end_layout
 
 \begin_layout Standard
@@ -421,6 +674,23 @@ name "fig:Geometry-simplification-1"
 \end_layout
 
 \begin_layout Standard
+In Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Geometry-simplification-1"
+
+\end_inset
+
+ we see a photo of a motorcycle and a simplified CAD model of the motorcycle
+ surface.
+ If we are modeling the flow outside the motorcycle we only want to include
+ the outer shell of the motorcycle in our CAD model.
+ Many details on the outer surface may also be ignored.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -463,45 +733,74 @@ name "fig:Calculation-domain"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename figures/introduction/boundaryConditions.png
-	lyxscale 20
-	width 60text%
+It is important to understand that if we want to solve the air flow outside
+ the motorcycle, we won't be modeling the motorcycle itself.
+ Our model will consist of the air around the motorcycle.
+ In Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Calculation-domain"
 
 \end_inset
 
-
+ we see a typical calculation domain for an outside flow of a vehicle.
+ We need to be able to solve all the important flow phenomena and therefore
+ our domain must be large enough to contain them.
+ 
 \end_layout
 
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Boundary contions
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Boundary-contions"
-
-\end_inset
-
-
+\begin_layout Standard
+The flow in front of the motorcycle is mostly unaffected by the motorcycle
+ expect for a short distance in front of the motorcycle.
+ Therefore we only model a small amount of air in front of the motorcycle.
+ 
 \end_layout
 
-\end_inset
-
-
+\begin_layout Standard
+The motorcycle will create a long wake behind it.
+ The wake is important for the aerodynamics of the motorcycle and we want
+ to include it in our model.
+ Therefore a large amount of air is modeled behind the motorcycle.
+ 
 \end_layout
 
+\begin_layout Standard
+The air flow on top of the bike and to it sides will be mostly unaffected
+ by the motorcycle until the flow reaches the wake region.
+ The width and height must be suitably sized to contain the wake.
+ The example domain seems a little unnecessary high to the author.
+ 
+\end_layout
+
+\begin_layout Standard
+Modeling a unnecessarily large domain is computationally expensive and will
+ limit the mesh size.
+ Again, experience and understanding of the flow phenomena is needed.
+ 
+\end_layout
+
+\begin_layout Standard
+Setting boundary conditions is usually considered as part of the solver
+ setup, see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Boundary-contions"
+
 \end_inset
 
-
+.
+ However, the used boundary conditions directly affect the used domain and
+ mesh.
+ It is quite common that there is only a rough knowledge of the boundary
+ condition.
+ It could, for example, that the total inlet mass flow is known but the
+ velocity profile is not known.
+ In such cases it is convenient to extend the inlet region far upstream
+ allowing the velocity profile to develop before it reaches the region of
+ interest.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -548,6 +847,85 @@ name "fig:Surface-mesh-details"
 \end_layout
 
 \begin_layout Standard
+The mesh must have sufficiently small cells to accurately represent the
+ modeled phenomena.
+ In Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Surface-mesh-details"
+
+\end_inset
+
+ there are obvious problems.
+ Half of the disk brake, for example, has been cut out of the simulation
+ due to too coarse a mesh.
+\end_layout
+
+\begin_layout Subsubsection
+Solver
+\end_layout
+
+\begin_layout Standard
+Understanding a CFD solver requires much more theory than understanding
+ the basics of preprocessing and post-processing.
+ We will therefore only give a very short introduction here.
+ 
+\end_layout
+
+\begin_layout Standard
+Solver set up contains all the physics and numerical method definitions
+ of the problem.
+ At this stage we choose 
+\end_layout
+
+\begin_layout Itemize
+steady state or unsteady simulation
+\end_layout
+
+\begin_layout Itemize
+compressible flow or incompressible flow
+\end_layout
+
+\begin_layout Itemize
+boundary conditions 
+\end_layout
+
+\begin_layout Itemize
+fluid properties
+\end_layout
+
+\begin_layout Itemize
+turbulence model
+\end_layout
+
+\begin_layout Itemize
+additional models like chemistry or radiation
+\end_layout
+
+\begin_layout Standard
+Inside the solution domain the physical models we have defined describe
+ the flow.
+ At the boundary, however, additional information must be given.
+ Boundary conditions define the context of the physics we are solving.
+ Typical boundary conditions are inlet velocity profiles and pressure levels.
+ Mathematical concepts such as symmetry are also often used to save computationa
+l results.
+ Using symmetry, again, requires understanding of the phenomena.
+ For example, wakes of symmetrical obstacles are not symmetrical.
+ See Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Boundary-contions"
+
+\end_inset
+
+ for examples of boundary conditions.
+ The mathematical definitions will be given later.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -556,22 +934,9 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figures/introduction/meshStructural.png
-	lyxscale 5
-	width 45text%
-
-\end_inset
-
-
-\begin_inset space \hspace{}
-\length 1cm
-\end_inset
-
-
-\begin_inset Graphics
-	filename figures/introduction/meshUnStructural.png
-	lyxscale 5
-	width 45text%
+	filename figures/introduction/boundaryConditions.png
+	lyxscale 20
+	width 60text%
 
 \end_inset
 
@@ -582,10 +947,10 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Structured and unstructured (low quality) meshes of a 2D wing
+Boundary conditions
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:Structured-and-unstructured"
+name "fig:Boundary-contions"
 
 \end_inset
 
@@ -603,45 +968,81 @@ name "fig:Structured-and-unstructured"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename figures/introduction/meshRefinement/compination.png
-	lyxscale 50
-	width 100text%
-
-\end_inset
-
-
+In general, fluid flow problems do not have a steady state solution.
+ Some low Reynolds number flows are truly steady state, but usually a steady
+ state solution is a mathematical artifact that hopefully represent a mean
+ flow.
+ In order to save computational resources, it is often preferred to not
+ model the fine details of the flow.
+ With suitable choices of of turbulence model and geometry simplification
+ one may get a useful steady state solution of a complex flow.
+ 
 \end_layout
 
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Mesh refinement
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Mesh-refinement"
+\begin_layout Standard
+An example is the well known test case by Pitz and Daily 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pitzDaily1981"
 
 \end_inset
 
+, see Figs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Unsteady-solution"
 
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Steady-solution"
+
+\end_inset
+
+.
+ The flow is turbulent but still reaches a steady state solution.
+ 
 \end_layout
 
+\begin_layout Standard
+Fluid flows are highly nonlinear by nature.
+ In the context of CFD this mean that we need to an iterative process to
+ produce a result.
+ Iterations are needed for both steady and unsteady problems.
+ As both the time steps and iterations of a steady state solution are based
+ on previously calculated solution they are mathematically similar.
+ From Figs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Unsteady-solution"
+
 \end_inset
 
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Steady-solution"
 
+\end_inset
+
+ we can see the similarity.
+ 
 \end_layout
 
-\end_inset
-
-
+\begin_layout Standard
+Unsteady simulations are done when we are interested in the changes of flow
+ field in time or when steady state solution is not possible.
+ Many flows don't have steady state solutions and unsteady solution is the
+ only choice.
+ Due to the similarity of the time stepping and iterations, unsteady solvers
+ are often used even if we are only interested steady state solution.
+ They are usually more stable than steady state solvers and with long time
+ steps they may have similar convergence rates.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -729,6 +1130,121 @@ name "fig:Steady-solution"
 \end_layout
 
 \begin_layout Standard
+During solver set up it is important to set up some monitors for you simulation.
+ The best kind of monitors are the values you are interested in.
+ In case of a heat exchanger, the values would often be mean heat transfer
+ coefficient and pressure drop.
+ It is often illustrative to plot those values during iterations or time
+ steps to monitor convergence.
+ In the example in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Pseudo-convergence-of"
+
+\end_inset
+
+ we have a steady state simulation of an heat exchanger.
+ As is typical to complex flows, the steady state simulation never converges
+ but oscillates around a mean.
+ This is often good enough and the solution can be terminated.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/pseudoConvergence.pdf
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Pseudo convergence of steady state solution
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Pseudo-convergence-of"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Most CFD programs use a mathematical concept called residual as a convergence
+ criteria.
+ It is near impossible to know when the solution is good enough from residual
+ and it is recommended to always use some physical quantity instead.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Post-processing
+\end_layout
+
+\begin_layout Standard
+Post processing is the step in which the actual value of the simulation
+ is produced.
+ It is critical to not only be able to produce high quality simulations
+ but to report them also.
+ 
+\end_layout
+
+\begin_layout Standard
+A typical CFD simulation produces gigabytes of detailed data of field values.
+ Typically, only one or two integral values are truly of interest.
+ In case of the motorcycle example, the interesting value could be the drag
+ force.
+  
+\end_layout
+
+\begin_layout Standard
+The detailed information is, however, useful for developing understanding
+ of the flow.
+ It's sometimes easy to spot mistakes from the solution by just looking
+ at the field values.
+ Similarly, it is sometimes very useful to study the qualitative behavior
+ or the simulation.
+ It may give insight to the phenomena that is not available from measurements.
+ See for example the heat exchanger in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Temperature-and-velocity"
+
+\end_inset
+
+.
+ It would be next to impossible the measure the velocity and temperature
+ profiles inside the device and visualization of the measurements would
+ be even more difficult.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -778,48 +1294,16 @@ name "fig:Temperature-and-velocity"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename figures/introduction/pseudoConvergence.pdf
-	lyxscale 20
-	width 50col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Pseudo convergence of steady state solution
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Pseudo-convergence-of"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
+Colorful figures and videos are also great for marketing and explaining
+ your results.
+ 
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Newpage newpage
 \end_inset
 
@@ -837,13 +1321,13 @@ name "sec:Introduction-1"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 This section attempts to give on overview of the Computational Fluid Dynamics
  material discussed on this course.
  Math is avoided and all points will be returned to in greater detail.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 The acronym of Computational Fluid Dynamics, CFD, has many interpretation:
  Colorful Fluid Dynamics, Colors For Directors, Cleverly Forged Data, etc.
  As usual, there is some truth in the joke.
@@ -855,7 +1339,7 @@ The acronym of Computational Fluid Dynamics, CFD, has many interpretation:
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Computational Fluid Dynamics, CFD, has few fundamental limitations for an
  engineer.
  The underlying physics is usually well enough understood to give a near
@@ -869,7 +1353,7 @@ Computational Fluid Dynamics, CFD, has few fundamental limitations for an
  Understanding these models is what makes a CFD expert.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 This course will provide you with the basics of CFD.
  You will be familiar with the main ideas, able to program your own solvers
  for heat conduction cases, use existing CFD programs in simple cases, and
@@ -880,13 +1364,13 @@ This course will provide you with the basics of CFD.
 What is CFD?
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Probably the best place to start studying Computational Fluid Dynamics (CFD)
  is to go to Youtube and search with: CFD, Fluent, or OpenFOAM.
  There should be plenty of instructional videos.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 In industry, the problem geometry is often complicated, see Fig.
  Fig.
  
@@ -906,7 +1390,7 @@ ed geometries are a matter of meshing.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -948,7 +1432,7 @@ key "wiki:moto"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Meshing is a key concept in most CFD methods.
  We will only consider finite volume method here and use it near synonymous
  to CFD.
@@ -965,7 +1449,7 @@ reference "fig:Engine"
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -1007,7 +1491,7 @@ key "wiki:moto"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Meshing is useful because it allows us to solve many simple problems instead
  of one complex problem.
  Each cell and it's immediate neighbors form a local system for which balance
@@ -1031,7 +1515,7 @@ reference "fig:Cell"
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -1072,7 +1556,7 @@ name "fig:Cell"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 The ability to divide the large problem into small problems is the essence
  of numerical solution.
 \end_layout
@@ -1081,7 +1565,7 @@ The ability to divide the large problem into small problems is the essence
 Work flow
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 The first thing to do with any problem is the understanding of relevant
  physical or chemical phenomena.
  It is usually beneficial to do some rough calculations using known correlations
@@ -1092,7 +1576,7 @@ The first thing to do with any problem is the understanding of relevant
  paper on the subject or ask somebody.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Once we are familiar with the problem the actual CFD work begins.
  The work flow is usually divided in three parts: pre-processing, solving,
  and post-processing.
@@ -1102,7 +1586,7 @@ Once we are familiar with the problem the actual CFD work begins.
 Pre-processing 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Pre-processing is everything that needs to be done before the actual numerical
  solver is used.
  The two main components are geometry processing (CAD) and meshing.
@@ -1113,7 +1597,7 @@ Pre-processing is everything that needs to be done before the actual numerical
 Geometry
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 is the staring point of CFD simulation.
  There is basically two different options: you draw the geometry by yourself
  or you get the geometry from someone else.
@@ -1132,7 +1616,7 @@ reference "fig:Geometry-simplification"
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Let us assume that the problem is to solve air resistance of the truck at
  a certain speed.
  For this calculation we need a simplified outer surface of the truck.
@@ -1145,7 +1629,7 @@ Let us assume that the problem is to solve air resistance of the truck at
  the unimportant details .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -1207,7 +1691,7 @@ name "fig:Geometry-simplification"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -1262,7 +1746,7 @@ key "motoWinnerMotors"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Once the truck CAD model is ready, we need to model the actual calculation
  domain.
  For a air resistance calculation the domain would be something like shown
@@ -1277,7 +1761,7 @@ reference "fig:Calculation-domain"
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -1312,7 +1796,7 @@ Calculation domain
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 We'll want to model the air around the truck.
  Not the truck itself.
  We need to model some air in front of the truck and to its sides.
@@ -1325,7 +1809,7 @@ We'll want to model the air around the truck.
 Meshing 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 is the next step after calculation domain is created.
  Meshing is typically the most time consuming part of setting up a CFD simulatio
 n.
@@ -1338,7 +1822,7 @@ n.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 If we were to mesh the inside of a pipe with only one cell across the diameter
  we would essentially doing 1D solution with only one value for velocity
  etc.
@@ -1349,7 +1833,7 @@ If we were to mesh the inside of a pipe with only one cell across the diameter
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 In our car example we need a sufficient number of cells around all the modeled
  geometry details.
  See Fig.
@@ -1379,7 +1863,7 @@ Everything should be made as simple as possible, but not simpler.
  .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -1415,7 +1899,7 @@ Surface mesh (low quality)
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 This far we have only paid attention to the mesh near the car surface.
  As we are interested in the force the air flow causes on the car, the most
  important phenomena happens near the surface.
@@ -1423,7 +1907,7 @@ This far we have only paid attention to the mesh near the car surface.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Great many different meshing strategies exists.
  The main categories are structured and unstructured meshes.
  See Fig.
@@ -1438,7 +1922,7 @@ reference "fig:Structured-and-unstructured"
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -1486,7 +1970,7 @@ Structured and unstructured (low quality) meshes of a 2D wing
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Structural meshes form a block structure where each block is a twisted rectangul
 ar block.
  Unstructured meshes form a more chaotic form.
@@ -1497,7 +1981,7 @@ ar block.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 The individual cells can be of any form, but hexahedron, tetrahedron, and
  polyhedron are the most common ones, see Fig.
  
@@ -1510,7 +1994,7 @@ reference "fig:Cell-types"
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -1548,7 +2032,7 @@ Cell types
 Solver
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 After geometry and mesh have been created it is time to start defining the
  solver settings.
  Each solver is a little different but the same basic concepts apply to
@@ -1560,7 +2044,7 @@ After geometry and mesh have been created it is time to start defining the
 Governing equations
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 are the equations that define the physics and chemistry 
 \begin_inset ERT
 status open
@@ -1585,7 +2069,7 @@ underline{inside}
 Material properties
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 define the behavior of the fluid.
  We need to choose between constant and varying fluid properties and define
  them.
@@ -1596,7 +2080,7 @@ define the behavior of the fluid.
 Turbulence model
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 is almost always needed in industrial applications.
  In some lucky cases the flow is laminar and easy to solve but not usually.
  This course will almost exclusively consider two equation Reynolds averaged
@@ -1604,7 +2088,7 @@ is almost always needed in industrial applications.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 In industrial applications it's not possible to use fine enough mesh and
  time steps to calculate the small scale fluctuation of the flow.
  Therefore we use sub models for the small scale phenomena.
@@ -1613,7 +2097,7 @@ In industrial applications it's not possible to use fine enough mesh and
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 At this stage, it's sufficient to say that if you have no better knowledge,
  always use k-
 \begin_inset Formula $\mathrm{\omega}$
@@ -1626,7 +2110,7 @@ At this stage, it's sufficient to say that if you have no better knowledge,
 Boundary condition
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 define the behavior at the boundary.
  Its common to define a constant velocity or mass flow for inlet.
  Temperature etc.
@@ -1634,7 +2118,7 @@ define the behavior at the boundary.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 In industrial problem a considerable problem may be that the boundary conditions
  are not known.
  This makes reliable CFD solution near impossible.
@@ -1646,7 +2130,7 @@ In industrial problem a considerable problem may be that the boundary conditions
 Discretization method
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 means the numerical details of the solution.
  Discretization is done in space and time.
  An example of discretization method is linear interpolation in which a
@@ -1659,7 +2143,7 @@ means the numerical details of the solution.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 There exists a great many discretization schemes but most common ones are
  similar to linear interpolation and upwind scheme.
  
@@ -1669,14 +2153,14 @@ There exists a great many discretization schemes but most common ones are
 Time stepping 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 is needed for unsteady calculations.
  The basic idea is that we know the field values at one time and make some
  suitable simplification in order to proceed to next time.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Let us consider a rock throwing example for a while.
  The rock is thrown with some know velocity from some known position at
  a known time.
@@ -1688,7 +2172,7 @@ Let us consider a rock throwing example for a while.
  This would called explicit Euler method.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 If we are interested in the unsteady behavior, we need to use a small enough
  time step to capture all the interesting physics.
  A too large time step usually also cause the simulation to break.
@@ -1699,7 +2183,7 @@ If we are interested in the unsteady behavior, we need to use a small enough
 Iteration method
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Even if we are solving a steady state problem we usually need to iterate
  the solution.
  Most fluid related problems are highly nonlinear and require iteration.
@@ -1708,7 +2192,7 @@ Even if we are solving a steady state problem we usually need to iterate
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 A typical trick to keep the process converging is to use under relaxation.
  With under relaxation we don't accept the new solution of out equations
  as they are, but instead use some value between the old and the new result.
@@ -1716,7 +2200,7 @@ A typical trick to keep the process converging is to use under relaxation.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Time stepping and solving of nonlinear equations are remarkably similar
  and time stepping methods are sometimes used for steady state problems
  also.
@@ -1727,7 +2211,7 @@ Time stepping and solving of nonlinear equations are remarkably similar
 Saving the results
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 is necessary for post processing.
  It is, however, often inconvenient to save all the results as this would
  require huge amounts of storage and slow down the solution.
@@ -1740,7 +2224,7 @@ is necessary for post processing.
 Post-processing
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Post-processing is the step in which the interesting numbers are extracted
  from the solution.
  The solution may consist of hundreds of GB:s of velocity, temperature,
@@ -1753,7 +2237,7 @@ Post-processing is the step in which the interesting numbers are extracted
  understanding of the simulation.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 For example, below in Fig.
  
 \begin_inset CommandInset ref
@@ -1770,7 +2254,7 @@ reference "fig:Temperature-and-velocity"
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -1816,13 +2300,13 @@ key "kansi"
 Convergence
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 For a steady state case convergence means that the solution of the nonlinear
  system doesn't chance between iterations.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 For a unsteady case convergence may mean that the solution of one time step
  doesn't change between iterations.
  It may also mean that the solution has converged to a steady state solution
@@ -1830,7 +2314,7 @@ For a unsteady case convergence may mean that the solution of one time step
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 To have a meaningful discussion about convergence a convergence criteria
  is needed.
  The best convergence criteria are based on the physics of the problem.
@@ -1839,7 +2323,7 @@ To have a meaningful discussion about convergence a convergence criteria
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 It is rather typical that a fluid problem doesn't have a steady state solution.
  In Fig.
  
@@ -1854,7 +2338,7 @@ reference "fig:Pseudo-convergence-of"
  to oscillate around a mean but no convergence occurs.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -1889,7 +2373,7 @@ Pseudo convergence of steady state solution
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 It is usually up to user experience to know when the solution is 
 \begin_inset Quotes eld
 \end_inset
@@ -1903,7 +2387,7 @@ good enough
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 It is common to use a math based criteria called residual for convergence.
  The residual doesn't usually have any obvious physical meaning and it is
  near impossible to know when a solution is good enough from the residual.
@@ -1915,7 +2399,7 @@ It is common to use a math based criteria called residual for convergence.
 Mesh independency
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 As stated before, each cell in the mesh only represent a single value in
  a velocity or temperature field.
  In for these discrete number to represent the real continuous physics of
@@ -1925,7 +2409,7 @@ As stated before, each cell in the mesh only represent a single value in
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 A formal grid independency test consists of running a series of simulations
  on finer and finer meshes.
  Once the solution doesn't change we can conclude that the solution is grid
@@ -1935,7 +2419,7 @@ A formal grid independency test consists of running a series of simulations
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 In industry, it is often near impossible to run a formal mesh independency
  test even for a single mesh topology.
  The computational cost increases fast with mesh refining.
@@ -1946,7 +2430,7 @@ In industry, it is often near impossible to run a formal mesh independency
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 It is, however, often practical to first run a simulation on a coarse mesh
  and then use the results of that simulation as a initial value on a finer
  mesh.
@@ -1965,6 +2449,11 @@ Navier-Stokes equation
 
 \begin_layout Subsection
 Other equations
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body

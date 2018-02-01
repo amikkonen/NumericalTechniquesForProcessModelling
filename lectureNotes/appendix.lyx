@@ -76,8 +76,12 @@
 
 \begin_body
 
-\begin_layout Section
+\begin_layout Part*
 \start_of_appendix
+Appendix
+\end_layout
+
+\begin_layout Section
 Math
 \end_layout
 
@@ -87,6 +91,13 @@ Useful math that did not fit in the main text is collected here.
 
 \begin_layout Subsection
 Tensor notation
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Tensor-notation"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
