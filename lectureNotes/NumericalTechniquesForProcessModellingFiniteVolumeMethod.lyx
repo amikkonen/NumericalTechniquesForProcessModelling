@@ -315,7 +315,7 @@ Notes
 \begin_inset Text
 
 \begin_layout Plain Layout
-?
+06.02.2018
 \end_layout
 
 \end_inset
@@ -618,7 +618,7 @@ Contributions
 
 \begin_layout Standard
 Following is a more or less chronological and probably incomplete list of
- people who have contributed to these note by comments, error corrections,
+ people who have contributed to these notes by comments, error corrections,
  etc.
  
 \end_layout
@@ -1848,6 +1848,23 @@ filename "heatConduction.lyx"
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "advectionDiffusion.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Part
 
 \color red
@@ -1861,10 +1878,6 @@ Everything from here on is very much unfinished.
  If you wish to read it anyway, expect all kinds of errors and changes afterward
 s.
  
-\end_layout
-
-\begin_layout Section
-Advection-diffusion
 \end_layout
 
 \begin_layout Section

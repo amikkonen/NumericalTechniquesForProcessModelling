@@ -88,26 +88,31 @@ name "sec:Introduction"
 \end_layout
 
 \begin_layout Standard
-This section given an over view of some of the key concepts of CFD with
- very little theoretical detail.
+This section given an overview of some of the key concepts of CFD with very
+ little theoretical detail.
  Most subject will be considered in more detail later.
 \end_layout
 
 \begin_layout Standard
-Computational fluid dynamics (CFD) offers great flexibility for an engineer.
- It can can give valuable insights into many problems outside the scope
+Computational fluid dynamics (CFD) offers great flexibility for an engineer
+ and can offer valuable insight into complex problems.
+ Industrial machines often have a complex geometry well beyond the scope
  of analytical methods.
- Unlike analytical methods, CFD is not limited to simple geometries and
- can model most geometries encountered by an engineer.
- Varying material properties are also straight forward to model.
- A word of warning is, however, in order.
+ For complex phenomena in industrial scale, such as airplane or power plant
+ design, CFD is often the only viable option as a full scale experiment
+ would be too expensive.
+ 
+\end_layout
+
+\begin_layout Standard
+A word of warning is, however, in order.
 \end_layout
 
 \begin_layout Standard
 The acronym of Computational Fluid Dynamics, CFD, has many interpretation:
  Colorful Fluid Dynamics, Colors For Directors, Cleverly Forged Data, etc.
  As usual, there is some truth in the joke.
- It is very easy to produce false results with CFD.
+ It is very easy to produce good looking false results with CFD.
  Learning how to use CFD programs well enough to produce pretty videos may
  give false confidence.
  With few exceptions, CFD programs need an expert user to be reliable.
@@ -123,7 +128,7 @@ Computational fluid dynamics (CFD) studies fluid flow using computers to
  solve numerical approximations of often complex problems.
  There are many ways to build the approximations, but in this text we will
  study exclusively finite volume method (FVM).
- In FVM we divide the calculation domain in to small pieces called cells.
+ In FVM we divide the calculation domain in to small volumes called cells.
  The cells form a mesh that fill the computational domain, see Fig.
  
 \begin_inset CommandInset ref
@@ -133,7 +138,7 @@ reference "fig:Engine"
 \end_inset
 
 .
- 
+ A typical mesh contains hundreds of thousands or millions of cells.
 \end_layout
 
 \begin_layout Standard
@@ -194,9 +199,13 @@ Mesh might be the most important concept in finite volume method.
 finite
 \bar default
  volume method the control volume has a finite size.
- In analytical methods we would typically let the control volume be infinitesima
-lly small.
- In finite volume method we assume that a single value of a field variable,
+ When solving differential equations analytically we would typically let
+ the control volume be infinitesimally small.
+ 
+\end_layout
+
+\begin_layout Standard
+In finite volume method we assume that a single value of a field variable,
  say pressure, is enough to represent the value of that field inside the
  whole cell.
  In other words, the original continuous field is approximated with a discrete,
@@ -206,7 +215,7 @@ lly small.
 
 \begin_layout Standard
 As the mathematical concepts may quickly become a little confusing without
- a concrete example, let us consider a fully developed turbulent velocity
+ a concrete example, let us consider a fully developed turbulent mean velocity
  profile in a pipe, see Fig.
  
 \begin_inset CommandInset ref
@@ -265,7 +274,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Fully developed turbulent velocity profile in a pipe
+Fully developed turbulent mean velocity profile in a pipe
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Turbulent-flow-velocity"
@@ -322,10 +331,11 @@ reference "fig:Structured-and-unstructured"
 
  we see an unstructured mesh.
  Unstructured meshes have more chaotic structure than structured ones.
- As a rule of a thump one can usually get a better mesh using structured
- meshes is enough effort is spend in the meshing process.
- Unstructured meshes are, however, a lot easier and faster to generate with
- automatic algorithms.
+ As a rule of a thump, one can usually get a better mesh using structured
+ meshes if enough effort is spend in the meshing process.
+ Unstructured meshes are, however, a lot easier and faster to generate.
+ Structured meshes have to be build manually but for unstructured meshes
+ there are many automated algorithms.
  For complex shapes, unstructured meshes are practically the only option.
  The two strategies can be combined.
  One could, for example, use a structured mesh near the wing in Fig.
@@ -336,7 +346,7 @@ reference "fig:Structured-and-unstructured"
 
 \end_inset
 
- and unstructured one else where.
+ and unstructured one elsewhere.
 \end_layout
 
 \begin_layout Standard
@@ -456,101 +466,8 @@ name "fig:Cell-types"
 \end_layout
 
 \begin_layout Standard
-We have been discussing the mesh quality for a while now.
- How does one know if the mesh is good enough? Unfortunately, one can never
- truly know.
- In most cases, the best we can get is an educated guess.
- Fortunately, there are many ways to recognize a low quality mesh.
- 
-\end_layout
-
-\begin_layout Standard
-The first thing to do with any CFD solution is to have critical look at
- the solution on general.
- Is there something obviously unrealistic there? Negative temperature or
- pressure would be obvious indicators of problems.
- Or maybe you can see large 
-\begin_inset Quotes eld
-\end_inset
-
-pixels
-\begin_inset Quotes erd
-\end_inset
-
- with large steps in say, temperature, between neighboring cells.
- This would indicate a too coarse mesh.
- 
-\end_layout
-
-\begin_layout Standard
-A bit more formal method for mesh quality study is the grid independency
- test.
- If the mesh is fine (small cells) enough, the solution does not change
- much with further refinement.
- See Fig.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Mesh-refinement"
-
-\end_inset
-
- for an example of refinement process.
- In practice, a full grid independency test might be infeasible due to high
- computational cost.
- To be fully formal, more than one meshing strategy should be used.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename figures/introduction/meshRefinement/compination.png
-	lyxscale 50
-	width 100text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Mesh refinement
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Mesh-refinement"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-To truly know if a simulation is readable, is to test it with experimental
- data or known analytical solution.
- Usually this is only possible for simple test cases.
- If the test case and the real application are similar enough, it's reasonable
- to assume that if the model works for the test case it will also work for
- the real case.
+Now that we have learned some basics of meshes, let us study the other aspects
+ of CFD as well.
 \end_layout
 
 \begin_layout Subsection
@@ -579,11 +496,11 @@ Post-processing
 \end_layout
 
 \begin_layout Standard
-Simply put, preprocessing is everything you do before opening the actual
- CFD solver programs.
+Simply put, preprocessing is everything that is done before opening the
+ actual CFD solver programs.
  Solver part happens in the CFD solver.
  Post-processing is everything that happens after you close the actual solver.
- 
+ It is common to use different programs for each of these tasks.
 \end_layout
 
 \begin_layout Subsubsection
@@ -594,9 +511,13 @@ Preprocessing
 Preprocessing consist of two main parts: CAD and meshing.
  A CFD solver operates in a mesh.
  Mesh is usually based on a geometry created in a CAD program.
- Some meshing strategies do not need a CAD geometry but in general the two
- are closely linked.
- In order to make a mesh with a suitable level of detail, a CAD model with
+ Some meshing strategies do not need a CAD geometry, but in general the
+ two are closely linked.
+ 
+\end_layout
+
+\begin_layout Standard
+In order to make a mesh with a suitable level of detail, a CAD model with
  suitable level of detail is needed.
  The suitable level of detail depends on a case.
  The main idea is that the CAD geometry and the mesh should contain the
@@ -606,7 +527,7 @@ Preprocessing consist of two main parts: CAD and meshing.
 
 \begin_layout Standard
 The choice of level of detail in the model is far from easy.
- Experience and intuition is needed.
+ Experience and intuition are needed.
  If possible, it's a good practice to look up a scientific paper on a similar
  case or ask from someone with experience.
 \end_layout
@@ -769,13 +690,11 @@ The motorcycle will create a long wake behind it.
 The air flow on top of the bike and to it sides will be mostly unaffected
  by the motorcycle until the flow reaches the wake region.
  The width and height must be suitably sized to contain the wake.
- The example domain seems a little unnecessary high to the author.
- 
 \end_layout
 
 \begin_layout Standard
 Modeling a unnecessarily large domain is computationally expensive and will
- limit the mesh size.
+ force us to use larger cells.
  Again, experience and understanding of the flow phenomena is needed.
  
 \end_layout
@@ -795,10 +714,10 @@ reference "fig:Boundary-contions"
  mesh.
  It is quite common that there is only a rough knowledge of the boundary
  condition.
- It could, for example, that the total inlet mass flow is known but the
+ It could, for example, be that the total inlet mass flow is known but the
  velocity profile is not known.
  In such cases it is convenient to extend the inlet region far upstream
- allowing the velocity profile to develop before it reaches the region of
+ to allow the velocity profile to develop before it reaches the region of
  interest.
  
 \end_layout
@@ -857,9 +776,179 @@ reference "fig:Surface-mesh-details"
 
 \end_inset
 
- there are obvious problems.
+ there are some obvious problems.
  Half of the disk brake, for example, has been cut out of the simulation
  due to too coarse a mesh.
+\end_layout
+
+\begin_layout Standard
+Mesh quality is one of the most important parts of practical CFD.
+ Too coarse a mesh and the model won't be able to represent reality.
+ Too fine a mesh and the required computational resources grow too large.
+ Unfortunately, there is no way to truly know if the mesh is fine enough
+ in a complex case.
+ There are, however, best practices.
+\end_layout
+
+\begin_layout Standard
+A simple and effective method is just to look at the mesh.
+ There might be some obvious errors there.
+ Most CFD programs and meshing tools are also able to report the mesh quality.
+ 
+\end_layout
+
+\begin_layout Standard
+After the solution is ready, it's a good practice to, again, have a critical
+ look at the results.
+ Sometimes there is something obviously wrong there.
+ You may also notice that your initial assessment of the flow was wrong
+ and that you have placed small cells in wrong places.
+ 
+\end_layout
+
+\begin_layout Standard
+The closest one can get to assessing the mesh quality is to run a formal
+ mesh independency test.
+ The basic idea of a mesh independency test is to run a series of simulations
+ with unceasingly fine meshes and see when the results won't change anymore.
+ An example of mesh refinement is shown in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Mesh-refinement"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/introduction/meshRefinement/compination.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mesh refinement
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Mesh-refinement"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Refining the mesh with the same meshing strategy, as is done in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Mesh-refinement"
+
+\end_inset
+
+, is relatively simple as the meshing parameters can be easily adjusted.
+ The results from the coarser meshes can also be used as initial values
+ to speed up the process.
+ 
+\end_layout
+
+\begin_layout Standard
+A formal mesh independency test would include many different meshing strategies.
+ Such a test a very time consuming and often impractical.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+We have been discussing the mesh quality for a while now.
+ How does one know if the mesh is good enough? Unfortunately, one can never
+ truly know.
+ In most cases, the best we can get is an educated guess.
+ There are many ways to recognize a low quality mesh but no way to recognize
+ a high quality mesh.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+The first thing to do with any CFD solution is to have critical look at
+ the solution on general.
+ Is there something obviously unrealistic there? Negative temperature or
+ pressure would be obvious indicators of problems.
+ Or maybe you can see large 
+\begin_inset Quotes eld
+\end_inset
+
+pixels
+\begin_inset Quotes erd
+\end_inset
+
+ with large steps in say, temperature, between neighboring cells.
+ This would indicate a too coarse mesh.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+A bit more formal method for mesh quality study is the grid independency
+ test.
+ If the mesh is fine (small cells) enough, the solution does not change
+ much with further refinement.
+ See Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Mesh-refinement"
+
+\end_inset
+
+ for an example of refinement process.
+ In practice, a full grid independency test might be infeasible due to high
+ computational cost.
+ To be fully formal, more than one meshing strategy should be used.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+To truly know if a simulation is readable, is to test it with experimental
+ data or known analytical solution.
+ Usually this is only possible for simple test cases.
+ If the test case and the real application are similar enough, it's reasonable
+ to assume that if the model works for the test case it will also work for
+ the real case.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -867,8 +956,8 @@ Solver
 \end_layout
 
 \begin_layout Standard
-Understanding a CFD solver requires much more theory than understanding
- the basics of preprocessing and post-processing.
+Understanding a CFD solver requires much more theory than the basics of
+ preprocessing and post-processing.
  We will therefore only give a very short introduction here.
  
 \end_layout
@@ -904,16 +993,22 @@ additional models like chemistry or radiation
 \end_layout
 
 \begin_layout Standard
-Inside the solution domain the physical models we have defined describe
- the flow.
- At the boundary, however, additional information must be given.
- Boundary conditions define the context of the physics we are solving.
+Inside the solution domain the physical models describe the flow.
+ At the boundary, however, additional information is needed.
  Typical boundary conditions are inlet velocity profiles and pressure levels.
- Mathematical concepts such as symmetry are also often used to save computationa
-l results.
- Using symmetry, again, requires understanding of the phenomena.
+ 
+\end_layout
+
+\begin_layout Standard
+Mathematical concepts such as symmetry are also often used to save computational
+ results.
+ Using symmetry requires understanding of the phenomena.
  For example, wakes of symmetrical obstacles are not symmetrical.
- See Fig.
+ 
+\end_layout
+
+\begin_layout Standard
+See Fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -970,10 +1065,11 @@ name "fig:Boundary-contions"
 \begin_layout Standard
 In general, fluid flow problems do not have a steady state solution.
  Some low Reynolds number flows are truly steady state, but usually a steady
- state solution is a mathematical artifact that hopefully represent a mean
- flow.
- In order to save computational resources, it is often preferred to not
- model the fine details of the flow.
+ state solution is a mathematical artifact, that hopefully represent the
+ mean flow.
+ However, the mean properties are often what we are interested in.
+ Solving the fine details would just cost more in computational time and
+ make post processing more difficult.
  With suitable choices of of turbulence model and geometry simplification
  one may get a useful steady state solution of a complex flow.
  
@@ -1003,7 +1099,8 @@ reference "fig:Steady-solution"
 \end_inset
 
 .
- The flow is turbulent but still reaches a steady state solution.
+ The flow is turbulent, but the modeled flow still reaches a steady state
+ solution.
  
 \end_layout
 
@@ -1011,9 +1108,9 @@ reference "fig:Steady-solution"
 Fluid flows are highly nonlinear by nature.
  In the context of CFD this mean that we need to an iterative process to
  produce a result.
- Iterations are needed for both steady and unsteady problems.
+ Iterations are needed for both steady and transient problems.
  As both the time steps and iterations of a steady state solution are based
- on previously calculated solution they are mathematically similar.
+ on previously calculated solution, they are mathematically similar.
  From Figs.
  
 \begin_inset CommandInset ref
@@ -1034,12 +1131,12 @@ reference "fig:Steady-solution"
 \end_layout
 
 \begin_layout Standard
-Unsteady simulations are done when we are interested in the changes of flow
- field in time or when steady state solution is not possible.
+Transient simulations are done when we are interested in the changes of
+ flow field in time or when steady state solution is not possible.
  Many flows don't have steady state solutions and unsteady solution is the
  only choice.
- Due to the similarity of the time stepping and iterations, unsteady solvers
- are often used even if we are only interested steady state solution.
+ Due to the similarity of the time stepping and iterations, transient solvers
+ are also used even if we are only interested steady state solution.
  They are usually more stable than steady state solvers and with long time
  steps they may have similar convergence rates.
  
@@ -1067,7 +1164,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Unsteady solution
+Transient solution
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Unsteady-solution"
@@ -1130,8 +1227,8 @@ name "fig:Steady-solution"
 \end_layout
 
 \begin_layout Standard
-During solver set up it is important to set up some monitors for you simulation.
- The best kind of monitors are the values you are interested in.
+During solver set up, it is important to set up some monitors for you simulation.
+ The best kind of monitors are the physical values you are interested in.
  In case of a heat exchanger, the values would often be mean heat transfer
  coefficient and pressure drop.
  It is often illustrative to plot those values during iterations or time
@@ -1145,9 +1242,9 @@ reference "fig:Pseudo-convergence-of"
 \end_inset
 
  we have a steady state simulation of an heat exchanger.
- As is typical to complex flows, the steady state simulation never converges
+ As is typical to complex flows, the steady state simulation never converges,
  but oscillates around a mean.
- This is often good enough and the solution can be terminated.
+ This is often good enough.
  
 \end_layout
 
@@ -1197,7 +1294,7 @@ name "fig:Pseudo-convergence-of"
 Most CFD programs use a mathematical concept called residual as a convergence
  criteria.
  It is near impossible to know when the solution is good enough from residual
- and it is recommended to always use some physical quantity instead.
+ alone and it is recommended to always use some physical quantity instead.
  
 \end_layout
 
@@ -1208,13 +1305,13 @@ Post-processing
 \begin_layout Standard
 Post processing is the step in which the actual value of the simulation
  is produced.
- It is critical to not only be able to produce high quality simulations
- but to report them also.
+ It is critical to not only be able to produce high quality simulations,
+ but to report the results also.
  
 \end_layout
 
 \begin_layout Standard
-A typical CFD simulation produces gigabytes of detailed data of field values.
+A typical CFD simulation produces gigabytes of detailed data.
  Typically, only one or two integral values are truly of interest.
  In case of the motorcycle example, the interesting value could be the drag
  force.
@@ -1227,7 +1324,7 @@ The detailed information is, however, useful for developing understanding
  It's sometimes easy to spot mistakes from the solution by just looking
  at the field values.
  Similarly, it is sometimes very useful to study the qualitative behavior
- or the simulation.
+ of the simulation.
  It may give insight to the phenomena that is not available from measurements.
  See for example the heat exchanger in Fig.
  
@@ -1239,9 +1336,7 @@ reference "fig:Temperature-and-velocity"
 
 .
  It would be next to impossible the measure the velocity and temperature
- profiles inside the device and visualization of the measurements would
- be even more difficult.
- 
+ profiles inside the device and visualize them.
 \end_layout
 
 \begin_layout Standard

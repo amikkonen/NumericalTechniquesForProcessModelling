@@ -83,8 +83,8 @@ Heat Conduction (diffusion)
 \begin_layout Standard
 
 \shape italic
-The topics discussed in this section may be found in a more elaborated format
- from Versteeg and Malalasekara 2007, Chapter 5.
+The topics discussed in this section may be found in a from Versteeg and
+ Malalasekara 2007, Chapter 5.
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -100,12 +100,6 @@ In this section we learn to implement a finite volume solver for heat conduction
  This will allow us to create our own solvers for heat conduction and to
  understand more complex problems later on.
  
-\end_layout
-
-\begin_layout Standard
-For the same information in more elaborated format and different style,
- see the introduction level text book by Versteeg and Malalasekera, An introduct
-ion to Computational Fluid Dynamics.
 \end_layout
 
 \begin_layout Standard
@@ -169,8 +163,6 @@ key "versteeg2007"
 \begin_layout Standard
 We will start with a 1D problem and only briefly consider 2D and 3D problems
  at the end.
- The extension is straight forward and serves as a great test case for ones
- understanding.
  
 \end_layout
 
@@ -199,8 +191,8 @@ Finite
 
 \begin_layout Standard
 Together the control volumes fill the solution domain.
- We will derive the equations for a single cell at a time and need to define
- some notations at the beginning.
+ We will derive the equations for a single cell at a time.
+ We will start by defining notations first.
  In general, we need information of the cell we are studying and its immediate
  neighbors.
  
@@ -703,7 +695,7 @@ reference "eq:1dHeat"
 \end_layout
 
 \begin_layout Standard
-Now we have a fully discretized the equation for heat conduction! 
+Now we have a fully discretized the equation for heat conduction!
 \end_layout
 
 \begin_layout Standard
@@ -744,7 +736,36 @@ reference "eq:Conduction1Draw"
 \end_layout
 
 \begin_layout Standard
-At this point our equation is ready for a computer but let us make some
+From Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dConductionReadyShort"
+
+\end_inset
+
+ it is easy to see the affect of different terms on 
+\begin_inset Formula $T_{P}$
+\end_inset
+
+.
+ If west side neighbor temperature 
+\begin_inset Formula $T_{W}$
+\end_inset
+
+ increases it will increase temperature 
+\begin_inset Formula $T_{P}$
+\end_inset
+
+ and the contribution is proportional to 
+\begin_inset Formula $\tfrac{a_{W}}{a_{P}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+At this point our equation is ready for a computer, but let us make some
  sanity checks first.
  
 \end_layout
