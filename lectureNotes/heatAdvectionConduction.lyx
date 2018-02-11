@@ -1,0 +1,1051 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\numberwithin{equation}{section}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\paperheight 40cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Heat advection and conduction
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+The topics discussed in this section may be found in a from Versteeg and
+ Malalasekara 2007, Chapter 5.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "versteeg2007"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section we learn to extend our knowledge of finite volume method
+ from pure heat conduction to heat advection.
+ Depending on the source, advection if often called convection.
+ 
+\end_layout
+
+\begin_layout Standard
+The equations in this section are written in terms of heat advection and
+ conduction.
+ The same methods apply to any other advection diffusion problem.
+\end_layout
+
+\begin_layout Standard
+In this section we assume that the velocities at cell faces are known.
+ In later section we will discuss the solution methods concerning Navier
+ Stokes equation but the detailed solution is beyond the scope of this course.
+ However, the methods discussed in this section apply to Navier Stokes solution
+ also and after studying this section you will find many familiar key words
+ from CFD software.
+\end_layout
+
+\begin_layout Subsection
+Governing equation
+\end_layout
+
+\begin_layout Standard
+In this section we will learn to develop equations for one dimensional heat
+ advection conduction problem with internal heat generation.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/heatAdvectionConduction/1dadvectionConduction.png
+	lyxscale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Heat advection and convectionb
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Heat-advection-and"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similarly to the heat conduction problem earlier, we start with energy balance
+ equation for the control volume 
+\begin_inset Formula $P$
+\end_inset
+
+ in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Heat-advection-and"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+(qA)_{w}-(qA)_{e}+\left(\dot{m}h\right)_{w}-\left(\dot{m}h\right)_{e}+\overline{S}\Delta V=0\label{eq:rawAdcectionDiffusion}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where mass flow rate 
+\begin_inset Formula $\dot{m}=\rho uA$
+\end_inset
+
+ and specific enthalpy 
+\begin_inset Formula $h=cT$
+\end_inset
+
+.
+ Velocity is 
+\begin_inset Formula $u$
+\end_inset
+
+, specific heat is 
+\begin_inset Formula $c$
+\end_inset
+
+.
+ Using the methods described in the previous section for conduction and
+ expanding the advection terms we get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+k_{e}A_{e}\frac{T_{E}-T_{P}}{\Delta x}-k_{w}A_{w}\frac{T_{P}-T_{W}}{\Delta x}+\rho_{w}u_{w}A_{w}c_{w}T_{w}-\rho_{e}u_{e}A_{e}c_{e}T_{e}+\overline{S}\Delta V=0\label{eq:advectionDiffusion2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Continuity is worth mentioning here, as it is closely linked to advection.
+ From continuity we get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\dot{m}_{w}-\dot{m}_{e} & =0\\
+\Leftrightarrow\left(\rho uA\right)_{w}-\left(\rho uA\right)_{e} & =0
+\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which states that mass is conserved.
+ Let us now assume that density, velocity, and specific heat is somehow
+ known at the cell faces.
+ This leaves the face temperatures 
+\begin_inset Formula $T_{w}$
+\end_inset
+
+ and 
+\begin_inset Formula $T_{e}$
+\end_inset
+
+ as the only variables requiring further discretization.
+ 
+\end_layout
+
+\begin_layout Standard
+The advection term discretization is one of the most common choices one
+ must do in computational fluid dynamics.
+ It has a large effect on both the accuracy and stability of the model.
+ Great many methods exists.
+\end_layout
+
+\begin_layout Standard
+We will study two methods in detail, the linear interpolation and upwind
+ scheme.
+ Most commonly used methods are a combination of these two or at least very
+ similar.
+ 
+\end_layout
+
+\begin_layout Subsection
+Linear interpolation
+\end_layout
+
+\begin_layout Standard
+We have already discussed linear interpolation in the context of heat conduction
+, see Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:linearInterpolation"
+
+\end_inset
+
+.
+ Linear interpolation is often called central differencing scheme (CDS)
+ in context of computational fluid dynamics.
+ For uniform grid we get for temperature 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}T_{w} & =\frac{T_{W}+T_{P}}{2}\\
+T_{e} & =\frac{T_{E}+T_{P}}{2}
+\end{alignedat}
+\label{eq:Tlinintep}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:advectionDiffusion2"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Tlinintep"
+
+\end_inset
+
+ we get for the inner cells
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{cc}
+k_{e}A_{e}\frac{T_{E}-T_{P}}{\Delta x}-k_{w}A_{w}\frac{T_{P}-T_{W}}{\Delta x}+\rho_{w}u_{w}A_{w}c_{w}\frac{T_{W}+T_{P}}{2}\\
+\qquad\qquad\qquad\qquad-\rho_{e}u_{e}A_{e}c_{e}\frac{T_{E}+T_{P}}{2}+\overline{S}\Delta V=0\\
+\\
+\end{array}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\Leftrightarrow\left(\underbrace{\frac{k_{e}A_{e}}{\Delta x}}_{a_{Ec}}+\underbrace{\frac{k_{w}A_{w}}{\Delta x}}_{a_{Wc}}-\underbrace{\frac{\rho_{w}u_{w}A_{w}c_{w}}{2}}_{a_{Wf}}+\underbrace{\frac{\rho_{e}u_{e}A_{e}c_{e}}{2}}_{a_{Ef}}\right)T_{P}\\
+=\left(\underbrace{\frac{k_{w}A_{w}}{\Delta x}}_{a_{Wc}}+\underbrace{\frac{\rho_{w}u_{w}A_{w}c_{w}}{2}}_{a_{Wf}}\right)T_{W} & +\left(\underbrace{\frac{k_{e}A_{e}}{\Delta x}}_{a_{Ec}}-\underbrace{\frac{\rho_{e}u_{e}A_{e}c_{e}}{2}}_{a_{Ef}}\right)T_{E}+\underbrace{\overline{S}\Delta V}_{S_{u}}
+\end{alignedat}
+\label{eq:LinearInterpolat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where we have used subscripts 
+\begin_inset Formula $c$
+\end_inset
+
+ and 
+\begin_inset Formula $f$
+\end_inset
+
+ to refer to conduction and advection (flow), respectively.
+ If velocity 
+\begin_inset Formula $u$
+\end_inset
+
+ is positive, all coefficients are positive.
+ If velocity is negative, coefficients 
+\begin_inset Formula $a_{Wf}$
+\end_inset
+
+ and 
+\begin_inset Formula $a_{Ef}$
+\end_inset
+
+ are negative.
+ Using the short hand notation for matrix coefficients we get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left(a_{Ec}+a_{Wc}-a_{Wf}+a_{Ef}\right)T_{P}=\left(a_{Wc}+a_{Wf}\right)T_{W}+\left(a_{Ec}-a_{Ef}\right)T_{E}+S_{u}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which is ready for a computer solution.
+\end_layout
+
+\begin_layout Standard
+Even though linear interpolation is second order accurate, see Sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Accuracy"
+
+\end_inset
+
+, it is rarely used in computational fluid dynamics.
+ The two main flaws are the negative coefficients that allow a numerical
+ solution to become unstable and that the nature of advection is not well
+ presented in linear interpolation.
+ Advection moves information from upwind to down wind.
+ The advection term that is discretized with linear interpolation moves
+ information in all directions.
+ 
+\end_layout
+
+\begin_layout Subsection
+Upwind scheme
+\end_layout
+
+\begin_layout Standard
+Upwind scheme is the simplest upwind biased scheme.
+ In upwind scheme we assume that the face value is the same as the node
+ value on the upwind side.
+ For positive velocity this gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}T_{w} & =T_{W}\\
+T_{e} & =T_{P}
+\end{alignedat}
+\label{eq:upwindTpos}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and for negative velocity
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}T_{w} & =T_{P}\\
+T_{e} & =T_{E}
+\end{alignedat}
+\label{eq:upwindTneg}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using the positive velocity upwind scheme and energy balance, Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:advectionDiffusion2"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:upwindTpos"
+
+\end_inset
+
+ we get for the inner cells
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{cc}
+k_{e}A_{e}\frac{T_{E}-T_{P}}{\Delta x}-k_{w}A_{w}\frac{T_{P}-T_{W}}{\Delta x}+\rho_{w}u_{w}A_{w}c_{w}T_{W}\\
+\qquad\qquad\qquad\qquad-\rho_{e}u_{e}A_{e}c_{e}T_{P}+\overline{S}\Delta V=0
+\end{array}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\Leftrightarrow\left(\underbrace{\frac{k_{e}A_{e}}{\Delta x}}_{a_{Ec}}+\underbrace{\frac{k_{w}A_{w}}{\Delta x}}_{a_{Wc}}+\underbrace{\rho_{e}u_{e}A_{e}c_{e}}_{a_{Ef}}\right)T_{P}\\
+=\left(\underbrace{\frac{k_{w}A_{w}}{\Delta x}}_{a_{Wc}}+\underbrace{\rho_{w}u_{w}A_{w}c_{w}}_{a_{Wf}}\right)T_{W} & +\left(\underbrace{\frac{k_{e}A_{e}}{\Delta x}}_{a_{Ec}}\right)T_{E}+\underbrace{\overline{S}\Delta V}_{S_{u}}
+\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For negative velocity we similarly get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{cc}
+k_{e}A_{e}\frac{T_{E}-T_{P}}{\Delta x}-k_{w}A_{w}\frac{T_{P}-T_{W}}{\Delta x}+\rho_{w}u_{w}A_{w}c_{w}T_{P}\\
+\qquad\qquad\qquad\qquad-\rho_{e}u_{e}A_{e}c_{e}T_{E}+\overline{S}\Delta V=0
+\end{array}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\Leftrightarrow\left(\underbrace{\frac{k_{e}A_{e}}{\Delta x}}_{a_{Ec}}+\underbrace{\frac{k_{w}A_{w}}{\Delta x}}_{a_{Wc}}-\underbrace{\rho_{w}u_{w}A_{w}c_{w}}_{a_{Wf}}\right)T_{P}\\
+=\left(\underbrace{\frac{k_{w}A_{w}}{\Delta x}}_{a_{Wc}}\right)T_{W} & +\left(\underbrace{\frac{k_{e}A_{e}}{\Delta x}}_{a_{Ec}}-\underbrace{\rho_{e}u_{e}A_{e}c_{e}}_{a_{Ef}}\right)T_{E}+\underbrace{\overline{S}\Delta V}_{S_{u}}
+\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Keeping in mind the sign of the velocity, all the coefficients are unconditional
+ly positive.
+ Together with some other mathematical properties, this makes upwind scheme
+ very stable.
+ The scheme is also upwind biased and represents the advection phenomena
+ well.
+ 
+\end_layout
+
+\begin_layout Standard
+Because of the very simple assumptions used in upwind scheme, the scheme
+ is only first order accurate, see Sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Accuracy"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Because of the stability of the upwind scheme it is widely used in the early
+ stages of a simulation.
+ Once the simulation has produced a somewhat physical solution, it's easy
+ to change the scheme to a more accurate one.
+\end_layout
+
+\begin_layout Subsection
+Linear upwind
+\end_layout
+
+\begin_layout Standard
+Linear upwind is one of the preferred schemes for advection.
+ It is both second order accurate and upwind biased.
+ Studying it in detail is, however, outside the scope of this course and
+ we will only discuss the main idea here.
+\end_layout
+
+\begin_layout Standard
+With linear upwind scheme, we take the upwind side value and correct it
+ with a linear correction.
+ For positive velocity, on a uniform mesh this gives for the west face
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}T_{w} & =T_{W}+\frac{\mathrm{d}T}{\mathrm{d}x}\frac{\Delta x}{2}\end{alignedat}
+\label{eq:linearUpwind}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There are many ways to estimate the gradient of temperature 
+\begin_inset Formula $\frac{\mathrm{d}T}{\mathrm{d}x}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Linear upwind scheme is second order accurate and upwind biased.
+ Therefore it represents the nature of advection well.
+ It is not, however, as numerically stable as upwind scheme.
+ 
+\end_layout
+
+\begin_layout Standard
+There are great many variations to the basic idea of upwind scheme.
+ Most aim to improve the numerical properties of the scheme, while keeping
+ as much of the accuracy as possible.
+ Remember to check the details when using software packages!
+\end_layout
+
+\begin_layout Subsection
+Numerical properties of advection discretization schemes
+\end_layout
+
+\begin_layout Standard
+We want our numerical schemes to be stable and accurate.
+ Here are some criteria on how the estimate these properties.
+\end_layout
+
+\begin_layout Subsubsection
+Accuracy
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Accuracy"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There is no way to know how accurate a numerical solution is, unless you
+ can compare it to some known solution.
+ However, there are simple methods on how to estimate how fast the numerical
+ solution will become better with a finer mesh.
+ Using the Taylor series expansion about 
+\begin_inset Formula $P$
+\end_inset
+
+ gives with uniform mesh
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+T_{e}=T_{P}+\left(\frac{\mathrm{dT}}{\Delta x}\right)_{P}\frac{\Delta x}{2}+\left(\frac{\mathrm{d^{2}T}}{\Delta x^{2}}\right)_{P}\left(\frac{\Delta x}{2}\right)^{2}+...\label{eq:taylorSeries}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Comparing Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:upwindTpos"
+
+\end_inset
+
+ for upwind scheme, 
+\begin_inset Formula $T_{e}=T_{P}$
+\end_inset
+
+ and Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:taylorSeries"
+
+\end_inset
+
+ we see that upwind scheme is first order accurate.
+ 
+\end_layout
+
+\begin_layout Standard
+Similarly, comparing Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:linearUpwind"
+
+\end_inset
+
+ for linear upwind scheme, 
+\begin_inset Formula $T_{w}=T_{W}+\frac{\mathrm{d}T}{\mathrm{d}x}\frac{\Delta x}{2}$
+\end_inset
+
+ and Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:taylorSeries"
+
+\end_inset
+
+ we see that linear upwind scheme is second order accurate.
+ 
+\end_layout
+
+\begin_layout Standard
+For central differencing, or linear interpolation, we similarly get second
+ order accuracy.
+\end_layout
+
+\begin_layout Subsubsection
+Conservativeness
+\end_layout
+
+\begin_layout Standard
+One of the main advantages of finite volume method in fluid dynamics is
+ that it is conservative by nature.
+ Conservativeness means that a flux leaving one cell through a face must
+ be equal to the flux entering the adjacent cell.
+ This is achieved by consistent representation, using the same method, of
+ the flux in both cells.
+ 
+\end_layout
+
+\begin_layout Standard
+Using a one dimensional heat conduction with three cells and constant boundary
+ fluxes as an example, see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Conservativeness"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/heatAdvectionConduction/1dConservativeness.png
+	lyxscale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Conservativeness
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Conservativeness"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Adding the terms gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left(q_{L}-q_{01}\right)+\left(q_{01}-q_{12}\right)+\left(q_{12}-q_{R}\right)=q_{L}-q_{R}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+as it should.
+ Using central differencing with and assuming constant heat conductivity
+ gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left(q_{L}+k\frac{T_{1}-T_{0}}{\Delta x}\right)+\left(-k\frac{T_{1}-T_{0}}{\Delta x}+k\frac{T_{2}-T_{1}}{\Delta x}\right)+\left(-k\frac{T_{2}-T_{1}}{\Delta x}-q_{R}\right)=q_{L}-q_{R}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can now conclude that the central differencing is conservative for heat
+ conduction.
+\end_layout
+
+\begin_layout Standard
+All the schemes considered here are conservative.
+\end_layout
+
+\begin_layout Subsubsection
+Boundedness
+\end_layout
+
+\begin_layout Standard
+Boundedness mean that in the absence of sources the internal field values
+ should be bounded by boundary values.
+ If, for example, temperature on one boundary is one and zero on another,
+ all temperatures should be between one and zero.
+ Many advection schemes lack this property.
+\end_layout
+
+\begin_layout Standard
+One essential requirement for boundedness is that all the coefficients in
+ a discretized system should have the same sign.
+ Physically this means that if temperature rises in one cell, temperature
+ should also rise in the neighboring cell.
+\end_layout
+
+\begin_layout Standard
+Diagonal dominance is a key factor for iterative solution of a equation
+ system.
+ Even linear systems are usually solved iteratively.
+ Diagonal dominance is defined as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\sum|a_{nb}|}{|a_{P}|}\begin{cases}
+\leq & 1\:\mathrm{at\:all\:cells}\\
+< & 1\:\mathrm{at\:least\:in\:one\:cell}
+\end{cases}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In practice this means that we want big values at the diagonal.
+ This becomes relevant when using nonlinear source terms like radiation.
+ Non-linear source terms are outside the scope of this lecture note, but
+ might be considered later on the course.
+\end_layout
+
+\begin_layout Standard
+Linear interpolation and linear upwind schemes are not bounded.
+ They might produce large over- and undershoots.
+ There are many methods to limit this behavior for linear upwind schemes
+ but they often degenerate it's accuracy.
+ Upwind scheme is bounded.
+ 
+\end_layout
+
+\begin_layout Standard
+Now that we know that all the coefficients of discretized equation should
+ have the same sign, let us have a closer look at the linear interpolation
+ scheme.
+ From Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:LinearInterpolat"
+
+\end_inset
+
+ we see that 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+a_{E}=\underbrace{\frac{k_{e}A_{e}}{\Delta x}}_{a_{Ec}}-\underbrace{\frac{\rho_{e}u_{e}A_{e}c_{e}}{2}}_{a_{Ef}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+because 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+a_{W}=\underbrace{\frac{k_{w}A_{w}}{\Delta x}}_{a_{Wc}}+\underbrace{\frac{\rho_{w}u_{w}A_{w}c_{w}}{2}}_{a_{Wf}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+is unconditionally positive for positive value of velocity 
+\begin_inset Formula $u$
+\end_inset
+
+ we want to have a positive 
+\begin_inset Formula $a_{E}$
+\end_inset
+
+ as well.
+ In other words
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathit{\begin{alignedat}{1}\underbrace{\frac{k_{e}A_{e}}{\Delta x}}_{a_{Ec}}-\underbrace{\frac{\rho_{e}u_{e}A_{e}c_{e}}{2}}_{a_{Ef}} & >0\\
+\Leftrightarrow1-\frac{\rho_{e}u_{e}c_{e}}{2k_{e}/\Delta x} & >0\\
+\Leftrightarrow-\frac{\rho_{e}u_{e}c_{e}}{2k_{e}/\Delta x} & >-1\\
+\Leftrightarrow\mathrm{Pe}=\frac{\rho_{e}u_{e}c_{e}}{k_{e}/\Delta x} & <2
+\end{alignedat}
+}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now we have boundedness criteria for Peclet number 
+\begin_inset Formula $\mathrm{Pe<2}$
+\end_inset
+
+for central differencing scheme.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Transportiveness
+\end_layout
+
+\begin_layout Standard
+The discretization scheme should be able to describe the direction of the
+ flow.
+ Upwind biased schemes do this but linear interpolation does not.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Courant number 
+\end_layout
+
+\begin_layout Standard
+With transient advection calculation maybe the most important parameter
+ for a stable simulation is the Courant number.
+ 
+\end_layout
+
+\begin_layout Standard
+Courant number has many different names but in computational fluid dynamics
+ context it's most often called Courant number.
+ Courant–Friedrichs–Lewy (CFL) condition is also a often used name.
+ Courant number
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{Co}=\frac{u\Delta t}{\Delta x}<1
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+should always be smaller than unity.
+ Imagine a infinitesimally small particle of fluid in the flow.
+ If we want to have some physically meaning full discretization of the path
+ of that particle, we can't allow it to 
+\begin_inset Quotes eld
+\end_inset
+
+skip
+\begin_inset Quotes erd
+\end_inset
+
+ cells.
+ The particle can be allowed to move at maximum distance of one cell size
+ during a time step.
+\end_layout
+
+\begin_layout Standard
+The Courant number gives the maximum allowed time step.
+ It dos not, however, guarantee a accurate simulation.
+ It is possible that a much smaller time step is needed for other reasons.
+ 
+\end_layout
+
+\begin_layout Standard
+If accuracy is not of importance, it is possible to violate the Courant
+ number limitation.
+ This is especially useful when using transient solvers to gain a steady
+ state solution.
+ 
+\end_layout
+
+\begin_layout Subsection
+Boundary conditions
+\end_layout
+
+\begin_layout Subsection
+False diffusion
+\end_layout
+
+\end_body
+\end_document
