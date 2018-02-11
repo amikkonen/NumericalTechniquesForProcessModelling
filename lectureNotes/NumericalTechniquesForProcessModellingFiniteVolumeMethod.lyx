@@ -1851,7 +1851,7 @@ filename "heatConduction.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "advectionDiffusion.lyx"
+filename "heatAdvectionConduction.lyx"
 
 \end_inset
 

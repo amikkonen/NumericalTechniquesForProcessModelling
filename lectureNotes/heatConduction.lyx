@@ -1276,7 +1276,7 @@ reference "fig:Boundary-conditions-1D"
 \begin_inset Formula 
 \begin{equation}
 \begin{array}{cc}
-\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}+\overbrace{\frac{k_{B}A_{B}}{\Delta x/2}}^{S_{P}}\right)}_{a_{P}=a_{W}+S_{P}}T_{P}=\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{W}}T_{W}+\underbrace{\left(\frac{k_{B}A_{B}}{\Delta x/2}\right)T_{B}+\overline{S}\Delta V}_{S_{u}}\\
+\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}+\overbrace{\frac{k_{B}A_{B}}{\Delta x/2}}^{S_{P}}\right)}_{a_{P}=a_{W}+S_{P}}T_{P}=\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{W}}T_{W}+\underbrace{\left(\frac{k_{B}A_{B}}{\Delta x/2}\right)T_{A}+\overline{S}\Delta V}_{S_{u}}\\
 \Leftrightarrow a_{P}T_{P}=a_{W}T_{W}+S_{u}
 \end{array}\label{eq:1dConsductionConstantTRight}
 \end{equation}
@@ -1461,7 +1461,7 @@ We but all the constant values that do not depend on
 \begin_layout Standard
 Let us consider one-dimensional heat conduction where the left boundary
  is set at constant temperature 
-\begin_inset Formula $T_{B}$
+\begin_inset Formula $T_{A}$
 \end_inset
 
  and right boundary is insulated, i.e.
