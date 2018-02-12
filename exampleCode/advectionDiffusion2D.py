@@ -20,6 +20,10 @@ import sparseMatrix
 def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy, 
            advection_scheme):
     
+    print("#"*20)
+    print("ERROR in right boundary!!!!!!!!!")
+    print("#"*20)
+    
     n_tot = nx*ny
     
     # Cell sizes
@@ -66,7 +70,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
             if not sp.isnan(T_xL):
                 # Constant boundary
                 A.add(k,k,2*aCx)
-                b[k] += 2*aCx*T_xL
+                b[k] -= 2*aCx*T_xL
 
         # Add aS to matrix A
         if k not in yMin:
@@ -114,7 +118,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
                         # Constant boundary
                         b[k] += 2*aFx*T_x0
                     else:
-                        raise ValueError("NOT IMPLEMENTED!")
+                        raise NotImplementedError("NOT IMPLEMENTED!")
                 
                 # East
                 if (k + 1) % nx != 0:
@@ -126,7 +130,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
                         # Constant boundary
                         b[k] += 2*aFx*T_xL
                     else:
-                        raise ValueError("NOT IMPLEMENTED!")
+                        raise NotImplementedError("NOT IMPLEMENTED!")
             if uy != 0:                
                 # South
                 if k not in yMin:
@@ -138,7 +142,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
                         # Constant boundary
                         b[k] += 2*aFy*T_y0
                     else:
-                        raise ValueError("NOT IMPLEMENTED!")
+                        raise NotImplementedError("NOT IMPLEMENTED!")
                 # North
                 if k not in yMax:
                     A.add(k,k, aFy)
@@ -149,7 +153,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
                         # Constant boundary
                         b[k] += 2*aFy*T_yL
                     else:
-                        raise ValueError("NOT IMPLEMENTED!")
+                        raise NotImplementedError("NOT IMPLEMENTED!")
                     
     #########################################################################
     # Upwind 
@@ -171,7 +175,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
                         # Constant boundary
                         b[k] += aFx*T_x0
                     else:
-                        raise ValueError("NOT IMPLEMENTED!")
+                        raise NotImplementedError("NOT IMPLEMENTED!")
                 # East
                 if (k + 1) % nx != 0:
                     A.add(k,k, aFx)
@@ -181,7 +185,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
                         # Constant boundary
                         A.add(k,k, aFx)
                     else:
-                        raise ValueError("NOT IMPLEMENTED!")
+                        raise NotImplementedError("NOT IMPLEMENTED!")
 
             if ux < 0:            
                 # West
@@ -193,7 +197,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
                         # Constant boundary
                         A.add(k,k,-aFx)
                     else:
-                        raise ValueError("NOT IMPLEMENTED!")
+                        raise NotImplementedError("NOT IMPLEMENTED!")
                 # East
                 if (k + 1) % nx != 0:
                     A.add(k,k+1, aFx)
@@ -203,7 +207,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
                         # Constant boundary
                         b[k]   -= aFx*T_xL
                     else:
-                        raise ValueError("NOT IMPLEMENTED!")
+                        raise NotImplementedError("NOT IMPLEMENTED!")
             
             if uy > 0:
                 # South
@@ -215,7 +219,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
                         # Constant boundary
                         b[k] += aFy*T_y0
                     else:
-                        raise ValueError("NOT IMPLEMENTED!")
+                        raise NotImplementedError("NOT IMPLEMENTED!")
         
                 # North
                 if k not in yMax:
@@ -226,7 +230,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
                         # Constant boundary
                         A.add(k,k, aFy)
                     else:
-                        raise ValueError("NOT IMPLEMENTED!")
+                        raise NotImplementedError("NOT IMPLEMENTED!")
             if uy < 0: 
                 # South
                 if k not in yMin:
@@ -237,7 +241,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
                         # Constant boundary
                         A.add(k,k,-aFy)
                     else:
-                        raise ValueError("NOT IMPLEMENTED!")
+                        raise NotImplementedError("NOT IMPLEMENTED!")
         
                 # North
                 if k not in yMax:
@@ -248,7 +252,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
                         # Constant boundary
                         b[k]   -= aFy*T_yL
                     else:
-                        raise ValueError("NOT IMPLEMENTED!")
+                        raise NotImplementedError("NOT IMPLEMENTED!")
 
 
 
@@ -282,8 +286,8 @@ def test1Dx():
     T_y0 = sp.nan
     T_yL = sp.nan
 
-#    advection_scheme = "central_differencing"
-    advection_scheme = "upwind"
+    advection_scheme = "central_differencing"
+#    advection_scheme = "upwind"
     
     # Product of heat capacity and density
     crho = 1
@@ -350,7 +354,7 @@ def test1Dy():
 def main():
     
     # Thermal conductivity (W/mK)
-    kt = 0
+    kt = 0.
     # Lenght (m)
     Lx = 1
     Ly = 1
@@ -429,10 +433,97 @@ def main():
     fig.savefig("numericalDiffusion2Dcurves.pdf",figsize=(3.5,2.5))
     
 
+def false_diffusion():
+    
+    # Thermal conductivity (W/mK)
+    kt = 0.
+    # Lenght (m)
+    Lx = 1
+    Ly = 1
+    # Boundary temperatures (C)
+    T_x0 = 1
+    T_xL = 0
+    
+    T_y0 = T_xL
+    T_yL = T_x0
 
+#    advection_scheme = "central_differencing"
+    advection_scheme = "upwind"
+    
+    # Product of heat capacity and density
+    crho = 1
+    
+    # Velocity and Number of control volumes
+#    # Case a
+    nx = 11;  ux = 1
+    ny = nx;  uy = ux
+
+    Tar = solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, 
+                   crho, ux, uy, advection_scheme)
+    
+    plt.matshow(Tar,aspect='equal',
+#                cmap='gray'
+                cmap='jet'
+                )
+    ax = plt.gca()
+    ax.set_xticks(sp.arange(0, nx, 1));
+    ax.set_yticks(sp.arange(0, ny, 1));
+    plt.colorbar(label="T (C)",anchor=(1.0,0.0))
+#    plt.xlabel("x")
+#    plt.ylabel("y")
+    plt.axis('off')
+
+
+    ax.invert_yaxis()
+    for k in range(nx+1):
+        plt.axvline(k-0.5, color='k')
+    for k in range(ny+1):
+        plt.axhline(k-0.5, color='k')        
+    plt.axhline(int(ny/2), color="r")
+    plt.axvline(int(nx/2), color="b")
+    plt.plot([0,10], [10,0], "--k")
+    
+    plt.annotate('', xy=(1,1), xytext=(-1, -1),
+            arrowprops=dict(facecolor='black', shrink=0.01),
+            )
+    plt.text(-1,-2,"u", fontsize=15)
+    plt.text(-1.5,5.5,"T=1 C", fontsize=15, rotation=90)
+    plt.text(11,5.5,"T=0 C", fontsize=15, rotation=90)
+    plt.text(4,-1.5,"T=0 C", fontsize=15, )
+    plt.text(4,11,"T=1 C", fontsize=15, )
+    
+    plt.savefig("numericalDiffusion2D.pdf", figsize=(3.5,2.5))
+
+    fig, axs = plt.subplots(3)
+    dx = Lx / nx
+    dy = Ly / ny
+    x = sp.linspace(dx/2,Lx-dx/2,nx)
+    y = sp.linspace(dy/2,Ly-dy/2,ny)
+    ax = axs[0]
+    ax.plot(x, Tar[int(ny/2)], 'r')
+    ax.set_xlim(x.min(), x.max())
+    ax = axs[1]
+    ax.plot(y, Tar[:,int(nx/2)], "b")
+    ax.set_xlim(y.min(), y.max())
+    ax = axs[2]
+    
+    TnumDiff = []
+    for k in range(nx):
+        TnumDiff.append(Tar[ny-k-1, k])    
+    ax.plot(sp.arange(nx), TnumDiff, "--k", label="numerical")
+    ax.plot([0,int(nx/2),int(nx/2),nx], [T_x0,T_x0,T_xL,T_xL], "-k", label="exact")
+    ax.set_xlim(0, nx)
+    ax.legend(frameon=False)
+    for ax in axs:
+        ax.set_ylim(T_xL-0.1, T_x0+0.1)
+        ax.set_ylabel("T (C)")
+    
+    fig.tight_layout()
+    fig.savefig("numericalDiffusion2Dcurves.pdf",figsize=(3.5,2.5))
 if __name__ == "__main__":
     print("START")
-#    test1Dx()
+    test1Dx()
 #    test1Dy()
-    main()
+#    main()
+#    false_diffusion()
     print("END")

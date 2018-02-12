@@ -1276,7 +1276,7 @@ reference "fig:Boundary-conditions-1D"
 \begin_inset Formula 
 \begin{equation}
 \begin{array}{cc}
-\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}+\overbrace{\frac{k_{B}A_{B}}{\Delta x/2}}^{S_{P}}\right)}_{a_{P}=a_{W}+S_{P}}T_{P}=\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{W}}T_{W}+\underbrace{\left(\frac{k_{B}A_{B}}{\Delta x/2}\right)T_{A}+\overline{S}\Delta V}_{S_{u}}\\
+\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}+\overbrace{\frac{k_{B}A_{B}}{\Delta x/2}}^{S_{P}}\right)}_{a_{P}=a_{W}+S_{P}}T_{P}=\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{W}}T_{W}+\underbrace{\left(\frac{k_{B}A_{B}}{\Delta x/2}\right)T_{B}+\overline{S}\Delta V}_{S_{u}}\\
 \Leftrightarrow a_{P}T_{P}=a_{W}T_{W}+S_{u}
 \end{array}\label{eq:1dConsductionConstantTRight}
 \end{equation}
@@ -2402,6 +2402,13 @@ name "fig:Time-stepping"
 
 \begin_layout Subsection
 2D and 3D cases
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:2D-and-3D"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2525,7 +2532,7 @@ reference "eq:2DrawConduction"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\begin{alignedat}{1}\underbrace{\left(\frac{k_{e}A_{e}}{\Delta x}+\frac{k_{w}A_{w}}{\Delta x}+\frac{k_{s}A_{s}}{\Delta y}+\frac{k_{n}A_{n}}{\Delta y}\right)}_{a_{P}=a_{W}+a_{E}+a_{S}+a_{N}}T_{P} & =\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{w}}T_{W}+\underbrace{\left(\frac{k_{e}A_{e}}{\Delta x}\right)}_{a_{E}}T_{E}\\
+\begin{alignedat}{1}\underbrace{\left(\frac{k_{e}A_{e}}{\Delta x}+\frac{k_{w}A_{w}}{\Delta x}+\frac{k_{s}A_{s}}{\Delta y}+\frac{k_{n}A_{n}}{\Delta y}\right)}_{a_{P}=a_{W}+a_{E}+a_{S}+a_{N}}T_{P} & =\underbrace{\left(\frac{k_{w}A_{w}}{\Delta x}\right)}_{a_{W}}T_{W}+\underbrace{\left(\frac{k_{e}A_{e}}{\Delta x}\right)}_{a_{E}}T_{E}\\
  & \;\;+\underbrace{\left(\frac{k_{s}A_{s}}{\Delta y}\right)}_{a_{S}}T_{S}+\underbrace{\left(\frac{k_{n}A_{n}}{\Delta y}\right)}_{a_{N}}T_{N}\\
  & \;\;+\underbrace{\overline{S}\Delta V}_{S_{u}}
 \end{alignedat}

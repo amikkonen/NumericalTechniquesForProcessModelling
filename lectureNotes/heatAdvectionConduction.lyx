@@ -7,6 +7,7 @@
 \textclass article
 \begin_preamble
 \numberwithin{equation}{section}
+\usepackage{siunitx}
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -626,6 +627,208 @@ There are great many variations to the basic idea of upwind scheme.
 \end_layout
 
 \begin_layout Subsection
+Boundary conditions
+\end_layout
+
+\begin_layout Standard
+Depending on the discretization method, the boundary conditions must be
+ considered differently.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Constant boundary condition for linear interpolation
+\end_layout
+
+\begin_layout Standard
+We will only consider a constant left boundary condition here.
+ A constant right boundary is similar.
+ We use subscript 
+\begin_inset Formula $A$
+\end_inset
+
+ for the left boundary.
+\end_layout
+
+\begin_layout Standard
+Starting from energy balance we get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left(qA\right)_{A}-\left(qA\right)_{e}+\left(\rho uAcT\right)_{A}-\left(\rho uAcT\right)_{e}+\overline{S}\Delta V=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We central differencing for conduction terms and for the east advection
+ .
+ There is no need to do anything for the 
+\begin_inset Formula $A$
+\end_inset
+
+ face term, as it is known.
+ We get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+k_{e}A_{e}\frac{T_{E}-T_{P}}{\Delta x}-k_{A}A_{A}\frac{T_{P}-T_{A}}{\Delta x/2}+\rho_{A}u_{A}A_{A}c_{A}T_{A}-\rho_{e}u_{e}A_{e}c_{e}\frac{T_{E}+T_{P}}{2}+\overline{S}\Delta V=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Rearranging gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\left(\underbrace{\frac{k_{e}A_{e}}{\Delta x}}_{a_{Ec}}+\overbrace{\frac{k_{A}A_{A}}{\Delta x/2}}^{S_{P}}+\underbrace{\frac{\rho_{e}u_{e}A_{e}c_{e}}{2}}_{a_{Ef}}\right)T_{P}\\
+=\left(\underbrace{\frac{k_{e}A_{e}}{\Delta x}}_{a_{Ec}}-\underbrace{\frac{\rho_{e}u_{e}A_{e}c_{e}}{2}}_{a_{Ef}}\right)T_{E} & +\underbrace{\left(\frac{k_{A}A_{A}}{\Delta x/2}\right)T_{A}+\rho_{A}u_{A}A_{A}c_{A}T_{A}+\overline{S}\Delta V}_{S_{u}}
+\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Similarly for the right boundary
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{equation}
+\left(qA\right)_{w}-\left(qA\right)_{B}+\left(\rho uAcT\right)_{w}-\left(\rho uAcT\right)_{B}+\overline{S}\Delta V=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\left(\underbrace{\frac{k_{w}A_{w}}{\Delta x}}_{a_{Wc}}+\overbrace{\frac{k_{B}A_{B}}{\Delta x/2}}^{S_{P}}-\underbrace{\frac{\rho_{w}u_{w}A_{w}c_{w}}{2}}_{a_{Wf}}\right)T_{P}\\
+=\left(\underbrace{\frac{k_{w}A_{w}}{\Delta x}}_{a_{Wc}}\right)T_{W} & +\underbrace{\left(\frac{k_{B}A_{B}}{\Delta x/2}\right)T_{A}-\rho_{B}u_{B}A_{B}c_{B}T_{B}+\overline{S}\Delta V}_{Su}
+\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Constant boundary condition for upwind scheme
+\end_layout
+
+\begin_layout Standard
+We will only consider 
+\series bold
+positive velocities
+\series default
+ here.
+ Negative velocities are considered similarly.
+ We use subscript 
+\begin_inset Formula $A$
+\end_inset
+
+ for the left boundary and subscript 
+\begin_inset Formula $B$
+\end_inset
+
+ for the right boundary.
+\end_layout
+
+\begin_layout Standard
+Starting from energy balance we get for the 
+\series bold
+left boundary
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left(qA\right)_{A}-\left(qA\right)_{e}+\left(\rho uAcT\right)_{A}-\left(\rho uAcT\right)_{e}+\overline{S}\Delta V=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We central differencing for conduction terms and upwind scheme for advection
+ terms gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left(\underbrace{\frac{k_{e}A_{e}}{\Delta x}}_{a_{Ec}}+\overbrace{\frac{k_{A}A_{A}}{\Delta x/2}}^{S_{P}}+\underbrace{\rho_{e}u_{e}A_{e}c_{e}}_{a_{Ef}}\right)T_{P}=\left(\underbrace{\frac{k_{e}A_{e}}{\Delta x}}_{a_{Ec}}\right)T_{E}+\underbrace{\left(\frac{k_{A}A_{A}}{\Delta x/2}\right)T_{A}+\rho_{A}u_{A}A_{A}c_{A}T_{A}+\overline{S}\Delta V}_{S_{u}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similarly, for the 
+\series bold
+right boundary
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left(qA\right)_{w}-\left(qA\right)_{B}+\left(\rho uAcT\right)_{w}-\left(\rho uAcT\right)_{B}+\overline{S}\Delta V=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left(\underbrace{\frac{k_{w}A_{w}}{\Delta x}}_{a_{Wc}}+\overbrace{\frac{k_{B}A_{B}}{\Delta x/2}}^{S_{P}}+\rho_{B}u_{B}A_{B}c_{B}\right)T_{P}=\left(\underbrace{\frac{k_{w}A_{w}}{\Delta x}}_{a_{wc}}+\underbrace{\rho_{w}u_{w}A_{w}c_{w}}_{a_{Wf}}\right)T_{W}+\underbrace{\left(\frac{k_{B}A_{B}}{\Delta x/2}\right)T_{B}+\overline{S}\Delta V}_{S_{u}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For negative velocity, a similar procedure applies.
+\end_layout
+
+\begin_layout Subsection
 Numerical properties of advection discretization schemes
 \end_layout
 
@@ -999,7 +1202,7 @@ Courant number has many different names but in computational fluid dynamics
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\mathrm{Co}=\frac{u\Delta t}{\Delta x}<1
+\mathrm{Co}=\frac{u\Delta t}{\Delta x}<1\label{eq:Courant}
 \end{equation}
 
 \end_inset
@@ -1039,12 +1242,372 @@ If accuracy is not of importance, it is possible to violate the Courant
  
 \end_layout
 
-\begin_layout Subsection
-Boundary conditions
+\begin_layout Standard
+When solving for more complicated physics there are often other limitations
+ to time step that are similar to Courant number.
+ If, for example, we are solving for super sonic flow with shock waves,
+ it is usually bad for the solver if a shock wave can travel through a cell
+ in a single time step.
+ 
 \end_layout
 
 \begin_layout Subsection
 False diffusion
+\end_layout
+
+\begin_layout Standard
+The basic idea of using a upwind scheme is to use the node value from upwind
+ side to as the face value.
+ The value might be corrected somehow but that is not relevant here.
+ If the velocity vector and face normal vector are perfectly aligned, it
+ is clear what the 
+\begin_inset Quotes eld
+\end_inset
+
+upwind
+\begin_inset Quotes erd
+\end_inset
+
+ node means.
+ When they do not align, it is not so clear.
+ See Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Non-aligning-face"
+
+\end_inset
+
+, where is the upwind node for north face? How about east face? For both
+ questions the best available answer is node 
+\begin_inset Formula $P$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+In practice, this is solved by taking the vector sum of the velocity and
+ the face normal vector.
+ If, for example, the face normal vector 
+\begin_inset Formula $\boldsymbol{n}=[1,0]^{\mathit{\mathrm{T}}}$
+\end_inset
+
+and velocity vector 
+\begin_inset Formula $\boldsymbol{u}=[1,1]^{\mathrm{T}}$
+\end_inset
+
+we get
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{n\cdot u=}[1,0]^{\mathrm{T}}=u_{x}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+and the contribution to energy balance is 
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{equation}
+\rho_{e}u_{e}A_{e}c_{e}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/heatAdvectionConduction/upwind2d.png
+	lyxscale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Non aligning face normals and velocity vector
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Non-aligning-face"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Because node 
+\begin_inset Formula $P$
+\end_inset
+
+ is now the upwind node for two different faces, it will also contribute
+ to the advection terms for both faces as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}a_{Nf} & =\rho_{n}A_{n}c_{n}\boldsymbol{n\cdot u}\\
+a_{Ef} & =\rho_{e}A_{e}c_{e}\boldsymbol{n\cdot u}
+\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\boldsymbol{n}$
+\end_inset
+
+ is the surface normal vector.
+ This causes the heat to spread, by advection, into directions where the
+ advection velocity is not moving.
+ This phenomena is very similar to diffusion, and is often called false
+ diffusion or numerical diffusion.
+\end_layout
+
+\begin_layout Standard
+For the previous reason it is important that the mesh face normals align
+ with the flow as much as possible.
+ 
+\end_layout
+
+\begin_layout Standard
+A common example of an obvious false diffusion is a rectangular mesh with
+ constant boundary conditions as shown in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:False-diffusion"
+
+\end_inset
+
+.
+ We have pure advection, i.e.
+ 
+\begin_inset Formula $k=\SI{100}{W/mK}$
+\end_inset
+
+ and the velocity is in 
+\begin_inset Formula $45^{\circ}$
+\end_inset
+
+angle to the face normals.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/heatAdvectionConduction/numericalDiffusion2D.pdf
+	lyxscale 20
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/heatAdvectionConduction/numericalDiffusion2Dcurves.pdf
+	lyxscale 20
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+False diffusion
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:False-diffusion"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is clear that an exact solution would just move the temperatures from
+ left and bottom boundaries inside the domain.
+ At the diagonal there would be a sharp boundary and all values would be
+ either ones or zeros.
+ 
+\end_layout
+
+\begin_layout Standard
+The false diffusion looks almost exactly like real diffusion and we do not
+ get a sharp boundary form numerical solution.
+ This is best visualized in the bottom graph in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:False-diffusion"
+
+\end_inset
+
+ for the diagonal values.
+ If we were to rotate the mesh by 
+\begin_inset Formula $45^{\circ}$
+\end_inset
+
+, we would get an sharp boundary.
+\end_layout
+
+\begin_layout Standard
+False diffusion is closely related to meshing.
+ If we are able to arrange the rectangular cells used in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:False-diffusion"
+
+\end_inset
+
+ so that their face normal align to flow, there is no numerical diffusion.
+ If, on the other hand, the face normal have a 
+\begin_inset Formula $45^{\circ}$
+\end_inset
+
+ angle with flow, the solution is as bad as possible.
+ 
+\end_layout
+
+\begin_layout Standard
+Using triangular cells, it is not possible to perfectly align the faces
+ with the flow.
+ But on the other hand, it is not possible to align the faces as badly as
+ in the worst case scenario with rectangular cells.
+ The more 
+\begin_inset Quotes eld
+\end_inset
+
+chaotic
+\begin_inset Quotes erd
+\end_inset
+
+ manner by witch the triangular cell faces are aligned, makes both very
+ good alignment and very bad alignment impossible.
+\end_layout
+
+\begin_layout Standard
+As a rule of the thump, it is a good idea to use rectangular cells if you
+ are able to align the faces with the flow.
+ If you are not able to do so, it's better to use something else.
+ 
+\end_layout
+
+\begin_layout Subsection
+Transient 
+\end_layout
+
+\begin_layout Standard
+The procedure of adding transient terms to advection conduction problem
+ is exactly the same as for pure conduction problem.
+ We will not repeat the process here.
+ 
+\end_layout
+
+\begin_layout Standard
+When solving for transient case, one must remember the Courant number constraint
+, Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Courant"
+
+\end_inset
+
+, for stability.
+ Also, Courant number only defines the largest possible time step for stability.
+ For accuracy we may need a much smaller time step.
+\end_layout
+
+\begin_layout Subsection
+2D and 3D cases
+\end_layout
+
+\begin_layout Standard
+Similarly to pure heat conduction considered in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:2D-and-3D"
+
+\end_inset
+
+, more dimensions add more terms to the heat balance equation.
+ The methods remain the same.
+ It is recommended to derive the equations and program a solver by yourself.
+ It might take a while, but afterwards you can be confident that you understand
+ the material discussed this far.
 \end_layout
 
 \end_body

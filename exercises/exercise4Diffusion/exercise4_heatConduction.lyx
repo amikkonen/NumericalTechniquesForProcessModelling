@@ -136,7 +136,7 @@ Consider a source-free heat conduction in a insulated rod.
  
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:Problem-sketch"
+reference "fig:Problem-sketch-2"
 
 \end_inset
 
@@ -165,7 +165,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename problem1.png
+	filename ../exercise5advectionDiffusion/problem1.png
 	lyxscale 20
 	width 50col%
 
@@ -181,7 +181,7 @@ status open
 Problem sketch
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:Problem-sketch"
+name "fig:Problem-sketch-2"
 
 \end_inset
 
@@ -276,7 +276,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename problem3.png
+	filename ../exercise5advectionDiffusion/problem3.png
 	lyxscale 20
 	width 50col%
 
@@ -292,7 +292,7 @@ status open
 Problem sketch
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:Problem-sketch-1"
+name "fig:Problem-sketch-1-1"
 
 \end_inset
 

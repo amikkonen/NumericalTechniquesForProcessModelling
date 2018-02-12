@@ -15,6 +15,7 @@
     linkcolor=black,
     urlcolor=black
 }
+\usepackage{siunitx}
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -209,6 +210,20 @@ pagenumbering{roman}
 
 \begin_layout Section*
 License
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAl
+ike 4.0 International License.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
