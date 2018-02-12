@@ -350,16 +350,16 @@ def test1Dy():
 def main():
     
     # Thermal conductivity (W/mK)
-    kt = 0.1
+    kt = 0
     # Lenght (m)
-    Lx = 2
+    Lx = 1
     Ly = 1
     # Boundary temperatures (C)
-    T_x0 = 0
-    T_xL = 1
+    T_x0 = 1
+    T_xL = 0
     
-    T_y0 = 0
-    T_yL = 1
+    T_y0 = T_xL
+    T_yL = T_x0
 
 #    advection_scheme = "central_differencing"
     advection_scheme = "upwind"
@@ -369,13 +369,16 @@ def main():
     
     # Velocity and Number of control volumes
 #    # Case a
-    nx = 10; ux = 0.1
-    ny = 5;  uy = 0
+    nx = 11;  ux = 1
+    ny = nx;  uy = ux
 
     Tar = solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, 
                    crho, ux, uy, advection_scheme)
     
-    plt.matshow(Tar,aspect='equal')
+    plt.matshow(Tar,aspect='equal',
+#                cmap='gray'
+                cmap='jet'
+                )
     ax = plt.gca()
     ax.set_xticks(sp.arange(0, nx, 1));
     ax.set_yticks(sp.arange(0, ny, 1));
@@ -387,14 +390,49 @@ def main():
         plt.axvline(k+0.5, color='k')
     for k in range(ny):
         plt.axhline(k+0.5, color='k')        
+    plt.axhline(int(ny/2), color="r")
+    plt.axvline(int(nx/2), color="b")
+    plt.plot([0,10], [10,0], "--k")
+    
+    plt.annotate('', xy=(1,1), xytext=(-1, -1),
+            arrowprops=dict(facecolor='black', shrink=0.01),
+            )
+    plt.text(-1,-2,"u", fontsize=15)
+    
+    plt.savefig("numericalDiffusion2D.pdf", figsize=(3.5,2.5))
 
-
+    fig, axs = plt.subplots(3)
+    dx = Lx / nx
+    dy = Ly / ny
+    x = sp.linspace(dx/2,Lx-dx/2,nx)
+    y = sp.linspace(dy/2,Ly-dy/2,ny)
+    ax = axs[0]
+    ax.plot(x, Tar[int(ny/2)], 'r')
+    ax.set_xlim(x.min(), x.max())
+    ax = axs[1]
+    ax.plot(y, Tar[:,int(nx/2)], "b")
+    ax.set_xlim(y.min(), y.max())
+    ax = axs[2]
+    
+    TnumDiff = []
+    for k in range(nx):
+        TnumDiff.append(Tar[ny-k-1, k])    
+    ax.plot(sp.arange(nx), TnumDiff, "--k", label="numerical")
+    ax.plot([0,int(nx/2),int(nx/2),nx], [T_x0,T_x0,T_xL,T_xL], "-k", label="exact")
+    ax.set_xlim(0, nx)
+    ax.legend(frameon=False)
+    for ax in axs:
+        ax.set_ylim(T_xL-0.1, T_x0+0.1)
+        ax.set_ylabel("T (C)")
+    
+    fig.tight_layout()
+    fig.savefig("numericalDiffusion2Dcurves.pdf",figsize=(3.5,2.5))
     
 
 
 if __name__ == "__main__":
     print("START")
 #    test1Dx()
-    test1Dy()
-#    main()
+#    test1Dy()
+    main()
     print("END")
