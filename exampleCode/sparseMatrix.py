@@ -27,6 +27,9 @@ class SparseMatrixA(object):
                                (self.val, [self.row, self.col])
                               ))
     
+    def todense(self):
+        return self.finalize().todense()
+    
     def solve(self,b, A=None):
         if A is None:
             A = self.finalize()
