@@ -98,24 +98,23 @@ key "versteeg2007"
 
 \begin_layout Standard
 In this section we learn to extend our knowledge of finite volume method
- from pure heat conduction to heat advection.
+ from pure heat conduction to combined heat advection and conduction.
  Depending on the source, advection if often called convection.
  
 \end_layout
 
 \begin_layout Standard
-The equations in this section are written in terms of heat advection and
- conduction.
+The equations in this section are written in terms of heat.
  The same methods apply to any other advection diffusion problem.
 \end_layout
 
 \begin_layout Standard
 In this section we assume that the velocities at cell faces are known.
- In later section we will discuss the solution methods concerning Navier
- Stokes equation but the detailed solution is beyond the scope of this course.
+ We will leave the solution methods for Navier Stokes equations for later
+ section.
  However, the methods discussed in this section apply to Navier Stokes solution
- also and after studying this section you will find many familiar key words
- from CFD software.
+ and after studying this section you will find many familiar key words from
+ CFD software.
 \end_layout
 
 \begin_layout Subsection
@@ -123,8 +122,8 @@ Governing equation
 \end_layout
 
 \begin_layout Standard
-In this section we will learn to develop equations for one dimensional heat
- advection conduction problem with internal heat generation.
+In this section, we will learn to develop equations for one dimensional
+ heat advection conduction problem with internal heat generation.
  
 \end_layout
 
@@ -149,7 +148,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Heat advection and convectionb
+Heat advection and convection
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Heat-advection-and"
@@ -198,7 +197,7 @@ reference "fig:Heat-advection-and"
 \end_layout
 
 \begin_layout Standard
-where mass flow rate 
+where mass flow rate is 
 \begin_inset Formula $\dot{m}=\rho uA$
 \end_inset
 
@@ -211,7 +210,7 @@ where mass flow rate
 \begin_inset Formula $u$
 \end_inset
 
-, specific heat is 
+, specific heat capasity is 
 \begin_inset Formula $c$
 \end_inset
 
@@ -261,23 +260,24 @@ which states that mass is conserved.
 \begin_inset Formula $T_{e}$
 \end_inset
 
- as the only variables requiring further discretization.
+ as the only variables requiring further study.
  
 \end_layout
 
 \begin_layout Standard
-The advection term discretization is one of the most common choices one
- must do in computational fluid dynamics.
+The advection term discretization scheme is one of the choices that must
+ be done almost every time computational fluid dynamics is used.
  It has a large effect on both the accuracy and stability of the model.
- Great many methods exists.
+ Great many methods exists in the literature and in the software.
 \end_layout
 
 \begin_layout Standard
 We will study two methods in detail, the linear interpolation and upwind
  scheme.
- Most commonly used methods are a combination of these two or at least very
- similar.
- 
+ Most of commonly used methods are some kind of combinations of these two
+ main ideas, or at least very similar.
+ We will also shortly explain the main idea of linear upwind scheme, which
+ is one of the most popular advection schemes.
 \end_layout
 
 \begin_layout Subsection
@@ -297,7 +297,11 @@ reference "eq:linearInterpolation"
 .
  Linear interpolation is often called central differencing scheme (CDS)
  in context of computational fluid dynamics.
- For uniform grid we get for temperature 
+ 
+\end_layout
+
+\begin_layout Standard
+For uniform grid we get for face temperatures
 \end_layout
 
 \begin_layout Standard
@@ -402,10 +406,28 @@ where we have used subscripts
 
 \begin_layout Standard
 which is ready for a computer solution.
+ Note the negative terms 
+\begin_inset Formula $-a_{Wf}$
+\end_inset
+
+ and 
+\begin_inset Formula $-a_{Ef}$
+\end_inset
+
+.
+ Negative terms risk unboundedness, see Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Boundedness"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-Even though linear interpolation is second order accurate, see Sec.
+Even though linear interpolation for advection is second order accurate,
+ see Sec.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -467,7 +489,11 @@ T_{e} & =T_{E}
 \end_layout
 
 \begin_layout Standard
-Using the positive velocity upwind scheme and energy balance, Eqs.
+Using the upwind scheme with 
+\series bold
+positive velocity
+\series default
+ and energy balance, Eqs.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -482,7 +508,7 @@ reference "eq:upwindTpos"
 
 \end_inset
 
- we get for the inner cells
+, we get for the inner cells
 \end_layout
 
 \begin_layout Standard
@@ -513,7 +539,26 @@ k_{e}A_{e}\frac{T_{E}-T_{P}}{\Delta x}-k_{w}A_{w}\frac{T_{P}-T_{W}}{\Delta x}+\r
 \end_layout
 
 \begin_layout Standard
-For negative velocity we similarly get
+For 
+\series bold
+negative velocity
+\series default
+, using Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:advectionDiffusion2"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:upwindTneg"
+
+\end_inset
+
+, we similarly get 
 \end_layout
 
 \begin_layout Standard
@@ -544,18 +589,19 @@ k_{e}A_{e}\frac{T_{E}-T_{P}}{\Delta x}-k_{w}A_{w}\frac{T_{P}-T_{W}}{\Delta x}+\r
 \end_layout
 
 \begin_layout Standard
+With suitable max/min operators it possible to write the positive and negative
+ velocity cases in the same equation.
+\end_layout
+
+\begin_layout Standard
 Keeping in mind the sign of the velocity, all the coefficients are unconditional
 ly positive.
  Together with some other mathematical properties, this makes upwind scheme
  very stable.
  The scheme is also upwind biased and represents the advection phenomena
  well.
- 
-\end_layout
-
-\begin_layout Standard
-Because of the very simple assumptions used in upwind scheme, the scheme
- is only first order accurate, see Sec.
+ However, because of the very simple assumptions used in upwind scheme,
+ the scheme is only first order accurate, see Sec.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -586,7 +632,7 @@ Linear upwind is one of the preferred schemes for advection.
 \end_layout
 
 \begin_layout Standard
-With linear upwind scheme, we take the upwind side value and correct it
+With linear upwind scheme, we take the upwind node value and correct it
  with a linear correction.
  For positive velocity, on a uniform mesh this gives for the west face
 \end_layout
@@ -613,17 +659,18 @@ There are many ways to estimate the gradient of temperature
 \end_layout
 
 \begin_layout Standard
-Linear upwind scheme is second order accurate and upwind biased.
- Therefore it represents the nature of advection well.
- It is not, however, as numerically stable as upwind scheme.
- 
+Linear upwind scheme is not as numerically stable as upwind scheme.
+ Without additional limiters it tends to produce over and undershoots.
 \end_layout
 
 \begin_layout Standard
-There are great many variations to the basic idea of upwind scheme.
+Because of the good accuracy and stability issues there are great many variation
+s of the method.
  Most aim to improve the numerical properties of the scheme, while keeping
- as much of the accuracy as possible.
- Remember to check the details when using software packages!
+ as much second order accuracy as possible.
+ Remember to check the details when using software packages! Small differences
+ in advection term discretization may be the difference between converging
+ and diverging simulations.
 \end_layout
 
 \begin_layout Subsection
@@ -631,9 +678,10 @@ Boundary conditions
 \end_layout
 
 \begin_layout Standard
-Depending on the discretization method, the boundary conditions must be
- considered differently.
- 
+The boundary conditions must be discretized in a consistent manner with
+ the inner cells.
+ Here we study constant value boundary conditions for linear interpolation
+ and upwind scheme.
 \end_layout
 
 \begin_layout Subsubsection
@@ -666,8 +714,8 @@ Starting from energy balance we get
 \end_layout
 
 \begin_layout Standard
-We central differencing for conduction terms and for the east advection
- .
+Conduction terms are handled as explained in previous sections.
+ We use central differencing for the east face advection.
  There is no need to do anything for the 
 \begin_inset Formula $A$
 \end_inset
@@ -781,7 +829,7 @@ left boundary
 \end_layout
 
 \begin_layout Standard
-We central differencing for conduction terms and upwind scheme for advection
+Using central differencing for conduction terms and upwind scheme for advection
  terms gives
 \end_layout
 
@@ -797,7 +845,16 @@ We central differencing for conduction terms and upwind scheme for advection
 \end_layout
 
 \begin_layout Standard
-Similarly, for the 
+The known face 
+\begin_inset Formula $A$
+\end_inset
+
+ value can be used directly for the face 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ Similarly, for the 
 \series bold
 right boundary
 \end_layout
@@ -822,6 +879,18 @@ right boundary
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Note that the known value 
+\series bold
+
+\begin_inset Formula $T_{B}$
+\end_inset
+
+ is not used for advection at the outlet face
+\series default
+! 
 \end_layout
 
 \begin_layout Standard
@@ -893,7 +962,11 @@ reference "eq:taylorSeries"
 \end_inset
 
  we see that upwind scheme is first order accurate.
- 
+ This means that the error will decrease linearly with decreasing cell size.
+ Note, however, that such mathematical properties should not be taken too
+ literally.
+ Even if the error usually decreases linearly, it does not always do so.
+ This behavior also only occurs with fine enough mesh.
 \end_layout
 
 \begin_layout Standard
@@ -918,11 +991,11 @@ reference "eq:taylorSeries"
 \end_inset
 
  we see that linear upwind scheme is second order accurate.
- 
+ In other words, halving the cell size should reduce the error to one fourth.
 \end_layout
 
 \begin_layout Standard
-For central differencing, or linear interpolation, we similarly get second
+For linear interpolation, or central differencing, we similarly get second
  order accuracy.
 \end_layout
 
@@ -935,14 +1008,15 @@ One of the main advantages of finite volume method in fluid dynamics is
  that it is conservative by nature.
  Conservativeness means that a flux leaving one cell through a face must
  be equal to the flux entering the adjacent cell.
- This is achieved by consistent representation, using the same method, of
- the flux in both cells.
- 
+ As the cell faces are linked together, the same applies for the whole domain
+ if there are no sources.
+ This is achieved by consistent representation of the flux in both cells.
+ Consistent representation means using the same discretization.
 \end_layout
 
 \begin_layout Standard
-Using a one dimensional heat conduction with three cells and constant boundary
- fluxes as an example, see Fig.
+Using a one dimensional source less heat conduction with three cells and
+ constant boundary fluxes, see Fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -950,7 +1024,7 @@ reference "fig:Conservativeness"
 
 \end_inset
 
-.
+, as an example.
  
 \end_layout
 
@@ -1028,22 +1102,31 @@ as it should.
 \end_layout
 
 \begin_layout Standard
-We can now conclude that the central differencing is conservative for heat
- conduction.
+All the terms rising from the central differencing cancel out and we are
+ left with the boundary fluxes.
+ In other words, central differencing is conservative for heat conduction.
 \end_layout
 
 \begin_layout Standard
-All the schemes considered here are conservative.
+Similar considerations would show us that all the schemes studied here are
+ conservative.
 \end_layout
 
 \begin_layout Subsubsection
 Boundedness
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Boundedness"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 Boundedness mean that in the absence of sources the internal field values
  should be bounded by boundary values.
- If, for example, temperature on one boundary is one and zero on another,
+ If, for example, temperature on one boundary is one and zero on the other,
  all temperatures should be between one and zero.
  Many advection schemes lack this property.
 \end_layout
@@ -1167,8 +1250,13 @@ Now we have boundedness criteria for Peclet number
 \begin_inset Formula $\mathrm{Pe<2}$
 \end_inset
 
-for central differencing scheme.
- 
+ for central differencing scheme.
+ If 
+\begin_inset Formula $\mathrm{Pe>2}$
+\end_inset
+
+, a high temperature in one cell might decrease the temperature of its neighbor.
+ This is obviously wrong.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1187,16 +1275,10 @@ Courant number
 \end_layout
 
 \begin_layout Standard
-With transient advection calculation maybe the most important parameter
- for a stable simulation is the Courant number.
- 
-\end_layout
-
-\begin_layout Standard
 Courant number has many different names but in computational fluid dynamics
  context it's most often called Courant number.
  Courant–Friedrichs–Lewy (CFL) condition is also a often used name.
- Courant number
+ Courant number is defined as 
 \end_layout
 
 \begin_layout Standard
@@ -1211,9 +1293,9 @@ Courant number has many different names but in computational fluid dynamics
 \end_layout
 
 \begin_layout Standard
-should always be smaller than unity.
+and should always be smaller than unity.
  Imagine a infinitesimally small particle of fluid in the flow.
- If we want to have some physically meaning full discretization of the path
+ If we want to have some physically meaningful discretization of the path
  of that particle, we can't allow it to 
 \begin_inset Quotes eld
 \end_inset
@@ -1225,6 +1307,8 @@ skip
  cells.
  The particle can be allowed to move at maximum distance of one cell size
  during a time step.
+ Courant number is one of the most important parameters for transient simulation
+ stability.
 \end_layout
 
 \begin_layout Standard
@@ -1235,20 +1319,21 @@ The Courant number gives the maximum allowed time step.
 \end_layout
 
 \begin_layout Standard
-If accuracy is not of importance, it is possible to violate the Courant
- number limitation.
+It is sometimes possible to violate Courant number limitations if we are
+ not interest in the transient phenomena and the case is stable enough.
  This is especially useful when using transient solvers to gain a steady
  state solution.
  
 \end_layout
 
 \begin_layout Standard
-When solving for more complicated physics there are often other limitations
+When solving for more complicated physics, there are often other limitations
  to time step that are similar to Courant number.
  If, for example, we are solving for super sonic flow with shock waves,
- it is usually bad for the solver if a shock wave can travel through a cell
- in a single time step.
- 
+ it is usually needed to use a similar limitation for shock wave propagation
+ speed (sonic speed).
+ Limitations like this may be force us to use very small time steps or additiona
+l stabilizers.
 \end_layout
 
 \begin_layout Subsection
@@ -1258,7 +1343,8 @@ False diffusion
 \begin_layout Standard
 The basic idea of using a upwind scheme is to use the node value from upwind
  side to as the face value.
- The value might be corrected somehow but that is not relevant here.
+ The value might be corrected somehow but but the basic idea is the same
+ in all upwind schemes.
  If the velocity vector and face normal vector are perfectly aligned, it
  is clear what the 
 \begin_inset Quotes eld
@@ -1383,7 +1469,7 @@ Because node
 \end_inset
 
  is now the upwind node for two different faces, it will also contribute
- to the advection terms for both faces as 
+ to the advection terms for both faces 
 \end_layout
 
 \begin_layout Standard
@@ -1404,7 +1490,7 @@ where
 \begin_inset Formula $\boldsymbol{n}$
 \end_inset
 
- is the surface normal vector.
+ is the surface normal vector (different vector for different faces).
  This causes the heat to spread, by advection, into directions where the
  advection velocity is not moving.
  This phenomena is very similar to diffusion, and is often called false
@@ -1430,7 +1516,7 @@ reference "fig:False-diffusion"
 .
  We have pure advection, i.e.
  
-\begin_inset Formula $k=\SI{100}{W/mK}$
+\begin_inset Formula $k=\SI{0}{W/mK}$
 \end_inset
 
  and the velocity is in 
@@ -1504,8 +1590,8 @@ It is clear that an exact solution would just move the temperatures from
 \end_layout
 
 \begin_layout Standard
-The false diffusion looks almost exactly like real diffusion and we do not
- get a sharp boundary form numerical solution.
+The false diffusion looks very similar to real diffusion and we do not get
+ a sharp boundary from the numerical solution.
  This is best visualized in the bottom graph in Fig.
  
 \begin_inset CommandInset ref
@@ -1515,11 +1601,12 @@ reference "fig:False-diffusion"
 \end_inset
 
  for the diagonal values.
- If we were to rotate the mesh by 
+ If we would to rotate the mesh by 
 \begin_inset Formula $45^{\circ}$
 \end_inset
 
-, we would get an sharp boundary.
+ to align with the velocity, we would get an sharp boundary and a near perfect
+ solution to this simple problem.
 \end_layout
 
 \begin_layout Standard
@@ -1554,7 +1641,7 @@ chaotic
 \begin_inset Quotes erd
 \end_inset
 
- manner by witch the triangular cell faces are aligned, makes both very
+ manner by which the triangular cell faces are aligned, makes both very
  good alignment and very bad alignment impossible.
 \end_layout
 
@@ -1562,7 +1649,7 @@ chaotic
 As a rule of the thump, it is a good idea to use rectangular cells if you
  are able to align the faces with the flow.
  If you are not able to do so, it's better to use something else.
- 
+ Polyhedra cells are gaining popularity over tetrahedron at the moment.
 \end_layout
 
 \begin_layout Subsection
@@ -1603,11 +1690,22 @@ reference "subsec:2D-and-3D"
 
 \end_inset
 
-, more dimensions add more terms to the heat balance equation.
+, more dimensions simply add more terms to the heat balance equation.
  The methods remain the same.
- It is recommended to derive the equations and program a solver by yourself.
+ 
+\end_layout
+
+\begin_layout Standard
+For the motivated it is recommended to derive the equations and program
+ a solver by yourself.
  It might take a while, but afterwards you can be confident that you understand
  the material discussed this far.
+ With this skill level, you will be able to solve many industrial problems.
+ Even if such problems are easily solved with existing software packages,
+ it is sometimes beneficial to write a custom code that does exactly what
+ you want.
+ This allows you to simplify the problem and use much more efficient solution
+ methods.
 \end_layout
 
 \end_body

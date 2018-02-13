@@ -7,6 +7,7 @@
 \textclass article
 \begin_preamble
 \numberwithin{equation}{section}
+\numberwithin{figure}{section}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -149,7 +150,7 @@ Tampere University of Technology
 \begin_inset Newline newline
 \end_inset
 
-Version 0.1
+Version 0.2
 \begin_inset Newline newline
 \end_inset
 
@@ -339,7 +340,7 @@ Notes
 \begin_inset Text
 
 \begin_layout Plain Layout
-Chapters 1-2
+Sections 1-2
 \end_layout
 
 \end_inset
@@ -368,7 +369,7 @@ Chapters 1-2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.2
 \end_layout
 
 \end_inset
@@ -377,7 +378,7 @@ Chapters 1-2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+13.02.2018
 \end_layout
 
 \end_inset
@@ -386,7 +387,7 @@ Chapters 1-2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+Section 3
 \end_layout
 
 \end_inset
@@ -395,7 +396,7 @@ Chapters 1-2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+Changed figure numbering scheme
 \end_layout
 
 \end_inset
