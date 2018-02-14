@@ -174,7 +174,7 @@ The key concept for nearly all numerical solutions is discretization of
  
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:Discretization"
+reference "fig:Discretization-and-terminology"
 
 \end_inset
 
@@ -216,7 +216,7 @@ We use letter
  
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:Discretization"
+reference "fig:Faces-and-distances"
 
 \end_inset
 
@@ -233,9 +233,8 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figures/heatConduction/placeholder/Diffusion1dMesh.png
+	filename figures/heatConduction/1dDiscretization.png
 	lyxscale 20
-	width 60text%
 
 \end_inset
 
@@ -246,17 +245,10 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Control volumes and nodes
+Discretization and terminology 
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:Discretization"
-
-\end_inset
-
- 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "versteeg2007"
+name "fig:Discretization-and-terminology"
 
 \end_inset
 
@@ -317,9 +309,8 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figures/heatConduction/placeholder/1dDiskretointi.png
+	filename figures/heatConduction/1dFacesAndDistances.png
 	lyxscale 20
-	width 60text%
 
 \end_inset
 
@@ -335,13 +326,6 @@ Faces and distances
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Faces-and-distances"
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "versteeg2007"
 
 \end_inset
 
@@ -1014,7 +998,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figures/heatConduction/placeholder/boundaries1D.png
+	filename figures/heatConduction/1dBoundaryA.png
 	lyxscale 20
 	width 80col%
 
@@ -1027,7 +1011,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Boundary conditions 1D
+Left boundary
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Boundary-conditions-1D"
