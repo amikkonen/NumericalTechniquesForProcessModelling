@@ -1000,7 +1000,6 @@ status open
 \begin_inset Graphics
 	filename figures/heatConduction/1dBoundaryA.png
 	lyxscale 20
-	width 80col%
 
 \end_inset
 
