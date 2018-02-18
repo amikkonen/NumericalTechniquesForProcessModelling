@@ -277,6 +277,62 @@ TODO! Two different single indexes
 \end_layout
 
 \begin_layout Subsection
+Navier-Stokes with tensor notations
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Navier-Stokes-with-tensor"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\rho u_{i}}{\partial t}+\frac{\partial\left(\rho u_{j}u_{i}\right)}{\partial x_{j}}=\frac{\partial\tau_{ij}}{\partial x_{j}}-\frac{\partial p}{\partial x_{i}}+f_{i}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{alignat}{1}
+\tau_{ij} & =\mu\text{\left(\frac{\partial u_{i}}{\partial x_{j}}+\frac{\partial u_{j}}{\partial x_{j}}\right)+\left(-\frac{2}{3}\mu+\kappa\right)\frac{\partial u_{j}}{\partial x_{j}}\delta_{ij} }\\
+ & =2D_{ij}\mu\text{+\left(-\frac{2}{3}\mu+\kappa\right)\frac{\partial u_{j}}{\partial x_{j}}\delta_{ij} }
+\end{alignat}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\rho u_{i}}{\partial t}+\frac{\partial\left(\rho u_{j}u_{i}\right)}{\partial x_{j}}=\frac{\partial}{\partial x_{j}}\left(\mu\text{\left(\frac{\partial u_{i}}{\partial x_{j}}+\frac{\partial u_{j}}{\partial x_{j}}\right) }\right)-\frac{\partial p}{\partial x_{i}}+f_{i}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial u_{i}}{\partial t}+\frac{\partial\left(u_{j}u_{i}\right)}{\partial x_{j}}=\frac{\partial}{\partial x_{j}}\left(\nu\text{\left(\frac{\partial u_{i}}{\partial x_{j}}+\frac{\partial u_{j}}{\partial x_{j}}\right) }\right)-\frac{1}{\rho}\frac{\partial p}{\partial x_{i}}+f_{i}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 Common operators
 \end_layout
 

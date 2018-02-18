@@ -1,0 +1,719 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\numberwithin{equation}{section}
+\usepackage{siunitx}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\paperheight 40cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Fluid flow
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+Some of the topics discussed in this section may be found from Versteeg
+ and Malalasekara 2007, Chapter 6.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "versteeg2007"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section we learn the basics of solution methods for practical fluid
+ flow problems.
+ In previous section we studied diffusion and advection problems in fine
+ enough detail to implement our own solvers.
+ Unfortunately, such a detailed presentation is outside our time limits
+ here.
+ Most of the methods discussed for diffusion and advection, however, are
+ directly generalizable to Navier-Stokes equations and enough pointers are
+ given for a motivated student to learn the implementation by oneself.
+ 
+\end_layout
+
+\begin_layout Standard
+The main goal of this section is to give a student enough understanding
+ of the solution methods relevant to fluid flow problems to understand the
+ options provided by software packages.
+\end_layout
+
+\begin_layout Standard
+This section considers single phase, non-reacting incompressible and compressibl
+e flows without turbulence models.
+ 
+\end_layout
+
+\begin_layout Standard
+For a compressible fluid flow problem we need at least the momentum equations,
+ continuity equation, energy equation, and the equation of state.
+ Sometimes these are collectively called Navier-Stokes equations.
+ Sometimes the momentum equation and the continuity equations are called
+ the Navier-Stokes equations.
+ And sometimes just the momentum equations are called Navier-Stokes equations.
+ To avoid misunderstanding, we will avoid the Navier-Stokes label here.
+ 
+\end_layout
+
+\begin_layout Subsection
+Notations
+\end_layout
+
+\begin_layout Standard
+During this section we move from the one dimensional problems to three dimension
+s.
+ As the full sets of equations quickly become cumbersome, we will be using
+ vector notations.
+ Some of the equations are also collected to the Appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Navier-Stokes-with-tensor"
+
+\end_inset
+
+ using tensor notations.
+ A quick introduction to vector notations is given here.
+\end_layout
+
+\begin_layout Paragraph
+Gradient, 
+\begin_inset Formula $\nabla\boldsymbol{u}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Gradient tells the rate of change of the variable.
+ Usually the change is relative to spacial coordinates.
+ Gradient is often taken from both scalar and vector values.
+ A familiar example is the heat flux from Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dHeat"
+
+\end_inset
+
+.
+ Heat flux depends on the rate of change of temperature.
+\end_layout
+
+\begin_layout Standard
+For a scalar 
+\begin_inset Formula $\phi$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{grad(\phi)=\nabla\phi=\partial_{i}\phi=\frac{\partial\phi}{\partial x_{i}}}=\left(\frac{\partial\phi}{\partial x},\frac{\partial\phi}{\partial y},\frac{\partial\phi}{\partial z}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+For a vector 
+\begin_inset Formula $\boldsymbol{u}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{grad(\boldsymbol{u})=\nabla\boldsymbol{u}=\partial_{i}u_{j}=\frac{\partial u_{j}}{\partial x_{i}}}=\begin{pmatrix}\frac{\partial u_{1}}{\partial x} & \frac{\partial u_{2}}{\partial x} & \frac{\partial u_{3}}{\partial x}\\
+\frac{\partial u_{1}}{\partial y} & \frac{\partial u_{2}}{\partial y} & \frac{\partial u_{3}}{\partial y}\\
+\frac{\partial u_{1}}{\partial z} & \frac{\partial u_{2}}{\partial z} & \frac{\partial u_{3}}{\partial z}
+\end{pmatrix}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A gradient from a scalar produces a vector.
+ A gradient of vector produces a tensor.
+\end_layout
+
+\begin_layout Paragraph
+Divergence, 
+\begin_inset Formula $\nabla\cdot\boldsymbol{u}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Divergence is one of the most common operators in fluid dynamics.
+ In the context of finite volume method, it tells the difference of fluxes
+ entering and leaving the control volume.
+ For example, in the one dimensional heat conduction in Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dHeat"
+
+\end_inset
+
+, we take the divergence heat fluxes.
+ 
+\end_layout
+
+\begin_layout Standard
+Mathematically, divergence can be though as a dot product of gradient operator
+ and the vector
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{div}\mathbf{u}=\frac{\partial u_{i}}{\partial x_{i}}=\nabla\cdot\mathbf{u}=\left(\frac{\partial}{\partial x},\frac{\partial}{\partial y},\frac{\partial}{\partial z}\right)\cdot\left(u,v,w\right)=\frac{\partial u_{1}}{\partial x}+\frac{\partial u_{2}}{\partial x}+\frac{\partial u_{3}}{\partial x}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Divergence of a vector results in a scalar.
+\end_layout
+
+\begin_layout Paragraph
+Laplacian
+\end_layout
+
+\begin_layout Standard
+Laplacian is a common operator in fluid dynamics because it closely relates
+ to diffusion.
+ Laplacian is a divergence of gradient
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{laplacian}(\mathbf{u})=\Delta\mathbf{u}=\nabla^{2}\mathbf{u}=\nabla\cdot\nabla\mathbf{u}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We have given this operator a name because it is so common.
+ For example, in the one dimensional heat equation, Eq.
+ Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1dHeat"
+
+\end_inset
+
+, we have a Laplacian.
+\end_layout
+
+\begin_layout Subsection
+Governing equations
+\end_layout
+
+\begin_layout Standard
+The governing equations are understood in a broad sense here to include
+ the transport equations and fluid properties.
+ We only discuss the equations here, the solution methods will be discussed
+ later.
+\end_layout
+
+\begin_layout Subsubsection
+Continuity equation
+\end_layout
+
+\begin_layout Standard
+Mass conservation is one of the key consents in nature.
+ For fluid flow it translates into a continuity equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boxed{\frac{\partial\rho}{\partial t}+\nabla\cdot\left(\rho\mathbf{u}\right)=0}\label{eq:rho_continuity}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For incompressible fluid density remains constant and Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:rho_continuity"
+
+\end_inset
+
+ simplifies to
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boxed{\nabla\cdot\boldsymbol{u=}0}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Momentum equations
+\end_layout
+
+\begin_layout Standard
+Similarly to mass, momentum must also be conserved.
+ Momentum equation for fluid flow reads
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\rho\mathbf{u}}{\partial t}+\begin{alignedat}{1}\nabla\cdot\left(\rho\mathbf{uu}\right)=\mathbf{\nabla}\cdot\bm{\tau}-\nabla p+\mathbf{f}_{b}\end{alignedat}
+\label{eq:NSmomentum}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where for Newtonian fluids the shear rate tensor is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\bm{\tau} & =\mu\underbrace{\left(\nabla\mathbf{u}+\left(\nabla\mathbf{u}\right)^{T}\right)}_{2\mathbf{D}}+(-\frac{2}{3}\mu+\kappa)\left(\nabla\cdot\mathbf{u}\right)\mathbf{I}\\
+ & =2\mu\mathbf{D}+(-\frac{2}{3}\mu+\kappa)\left(\nabla\cdot\mathbf{u}\right)\mathbf{I}
+\end{alignedat}
+\label{eq:tau}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $p$
+\end_inset
+
+, 
+\begin_inset Formula $\mathbf{f}_{b}$
+\end_inset
+
+, 
+\begin_inset Formula $\mu$
+\end_inset
+
+, 
+\begin_inset Formula $\kappa$
+\end_inset
+
+, and 
+\begin_inset Formula $\mathbf{D}$
+\end_inset
+
+ are, absolute pressure, body force, dynamic viscosity, bulk viscosity,
+ and strain-rate, respectively.
+\end_layout
+
+\begin_layout Standard
+We usually leave the terms 
+\begin_inset Formula $(-\frac{2}{3}\mu+\kappa)\left(\nabla\cdot\mathbf{u}\right)\mathbf{I}$
+\end_inset
+
+ out as they are small for most subsonic flows.
+ For incompressible flows 
+\begin_inset Formula $\nabla\cdot\mathbf{u}=0$
+\end_inset
+
+ and the terms a exactly zero.
+ With these simplifications the Navier-Stokes equation becomes
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boxed{\frac{\partial\rho\mathbf{u}}{\partial t}+\begin{alignedat}{1}\nabla\cdot\left(\rho\mathbf{uu}\right)=\mathbf{\nabla}\cdot\left(\mu\left(\nabla\mathbf{u}+\left(\nabla\mathbf{u}\right)^{T}\right)\right)-\nabla p+\mathbf{f}_{b}\end{alignedat}
+}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For incompressible flow, this further simplifies to 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\mathbf{u}}{\partial t}+\begin{alignedat}{1}\nabla\cdot\left(\boldsymbol{uu}\right)=\mathbf{\nabla}\cdot\left(\nu\left(\nabla\mathbf{u}\right)\right)-\frac{1}{\rho}\nabla p+\frac{\mathbf{f}_{b}}{\rho}\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and with constant viscosity 
+\begin_inset Formula $\nu=\mu/\rho$
+\end_inset
+
+ into 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boxed{\frac{\partial\mathbf{u}}{\partial t}+\begin{alignedat}{1}\nabla\cdot\left(\boldsymbol{uu}\right)=\mathbf{\nu\nabla^{2}}\boldsymbol{u}-\frac{1}{\rho}\nabla p+\frac{\mathbf{f}_{b}}{\rho}\end{alignedat}
+}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that there are great many slight variations of the momentum or Navier-Stoke
+s equations in the literature.
+ Insignificant terms are often omitted without mention.
+ Make certain you know witch version you need!
+\end_layout
+
+\begin_layout Subsubsection
+Energy equation
+\end_layout
+
+\begin_layout Standard
+The energy equation states the energy conservation and reads
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\rho h}{\partial t}+\nabla\cdot(\rho\mathbf{u}h)+\frac{\partial\rho K}{\partial t}+\nabla\cdot(\rho\mathbf{u}K)-\frac{\partial p}{\partial t}=\nabla\cdot(\alpha\nabla h)+\nabla\cdot(\mathbf{\bm{\tau}\cdot u})+\rho r+\rho\mathbf{g}\cdot\mathbf{u}\label{eq:NSenergy}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $h$
+\end_inset
+
+, 
+\begin_inset Formula $K=\frac{1}{2}\mid\mathbf{u}\mid^{2}$
+\end_inset
+
+, 
+\begin_inset Formula $\alpha,$
+\end_inset
+
+ and 
+\begin_inset Formula $r$
+\end_inset
+
+ are, specific enthalpy, specific kinetic energy, thermal diffusivity, and
+ specific heat source, respectively.
+\end_layout
+
+\begin_layout Standard
+The energy equation is almost always simplified considerably.
+ A common form reads
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boxed{\frac{\partial\rho h}{\partial t}+\nabla\cdot(\rho\mathbf{U}h)=\nabla^{2}(\alpha h)+S_{h}+\rho\mathbf{g}\cdot\mathbf{U}}\label{eq:energy}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:energy"
+
+\end_inset
+
+ we can notice the similarity between the vector notation and the one dimensiona
+l problem we solved before.
+ The first term 
+\begin_inset Formula $\frac{\partial\rho h}{\partial t}$
+\end_inset
+
+ describe the changes in time.
+ The second term 
+\begin_inset Formula $\nabla\cdot(\rho\mathbf{U}h)$
+\end_inset
+
+ describes advection.
+ The third term 
+\begin_inset Formula $\nabla^{2}(\alpha h)$
+\end_inset
+
+ is conduction and 
+\begin_inset Formula $S_{h}$
+\end_inset
+
+ is heat source.
+ The last term 
+\begin_inset Formula $\rho\mathbf{g}\cdot\mathbf{U}$
+\end_inset
+
+ relates to work done against gravitation and is significant, for example,
+ in natural convection.
+\end_layout
+
+\begin_layout Subsubsection
+General transport equation
+\end_layout
+
+\begin_layout Standard
+As can be seen from the previous equations, most of the transport equations
+ have a very similar form.
+ They have the time derivative term, advection term, diffusion term, and
+ source term.
+ It is often convenient to use a general transport equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boxed{\frac{\partial\rho\phi}{\partial t}+\nabla\cdot(\rho\mathbf{U}\phi)=\nabla^{2}(\Gamma\phi)+S_{\phi}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is the transported variable and 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ is it's diffusion coefficient.
+ General transport equation is most often used for passive scalars.
+ A passive scalar is transported by the flow but does not affect the flow
+ in any way.
+ Examples of passive scalar use cases are small amounts of small particles
+ or temperature.
+\end_layout
+
+\begin_layout Subsubsection
+Equation of state
+\end_layout
+
+\begin_layout Standard
+Equation of state is needed to link density, pressure, and temperature together.
+ Most common equation of state is the ideal gas equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}pV & =NR_{u}T\\
+\Leftrightarrow\rho & =\frac{p}{RT}
+\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+but the equation of state naturally depends on the fluid.
+\end_layout
+
+\begin_layout Subsubsection
+Fluid properties
+\end_layout
+
+\begin_layout Standard
+If there are considerable temperature of pressure changes in the system,
+ it is reasonable to expect significant changes in fluid properties.
+ The most common fluid properties are the fluid viscosity 
+\begin_inset Formula $\nu$
+\end_inset
+
+ or 
+\begin_inset Formula $\mu$
+\end_inset
+
+ and heat diffusivity 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+ If we are running a incompressible fluid simulation we also may need the
+ density.
+ 
+\end_layout
+
+\begin_layout Standard
+Even though fluid properties are readily available for common fluids and
+ can be changed inside the program with minimal user interaction, it is
+ usually good to avoid varying fluid properties if possible.
+ If the changes are small and do not affect the results, they may still
+ make the solution much slower.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Additional physics
+\end_layout
+
+\begin_layout Standard
+Great many things can be added to the basic fluid flow problems considered
+ here.
+ Chemical reactions, multi component or phase flows, phase changes etc.
+ are all readily added to the system.
+ Each layer of complication, however, add to the computational cost.
+ With complex systems it is also often hard to measure the accuracy of the
+ model as there are so many parameters with only roughly understood effects
+ on the solution.
+ Even while solving complex systems, it is usually a good practice to start
+ with a simple one.
+\end_layout
+
+\begin_layout Subsection
+Solution methods for compressible flow
+\end_layout
+
+\begin_layout Subsection
+Solution methods for incompressible flow
+\end_layout
+
+\begin_layout Subsubsection
+Pressure decoupling
+\end_layout
+
+\begin_layout Subsection
+Coupled and segregated solvers
+\end_layout
+
+\begin_layout Subsection
+Serial and parallel solvers
+\end_layout
+
+\end_body
+\end_document
