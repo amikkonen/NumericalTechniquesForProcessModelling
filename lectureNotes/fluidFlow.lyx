@@ -314,6 +314,38 @@ The governing equations are understood in a broad sense here to include
 \end_layout
 
 \begin_layout Subsubsection
+Coupled equations
+\end_layout
+
+\begin_layout Standard
+Previously, we only considered one equation at a time, the energy equation.
+ For a more general fluid flow problem we, however, have multiple equation
+ to solve.
+ For incompressible flow we have three momentum equation and the continuity
+ equation.
+ For compressible flow we also have the energy equation and equation of
+ state.
+ 
+\end_layout
+
+\begin_layout Standard
+All of these equation must be valid simultaneously.
+ Usually, one unknown variable, say the x-component of velocity vector,
+ is solved from one equation and then the next unknown from the next one.
+ This often requires a lot of iteration.
+ 
+\end_layout
+
+\begin_layout Standard
+All the equations can also be solved simultaneously by building them all
+ in a single matrix.
+ The non-linear terms still require iteration.
+ This kind of solution often requires much less iterations to converge,
+ but is more complicated.
+ 
+\end_layout
+
+\begin_layout Subsubsection
 Continuity equation
 \end_layout
 
@@ -532,7 +564,7 @@ The energy equation is almost always simplified considerably.
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\boxed{\frac{\partial\rho h}{\partial t}+\nabla\cdot(\rho\mathbf{U}h)=\nabla^{2}(\alpha h)+S_{h}+\rho\mathbf{g}\cdot\mathbf{U}}\label{eq:energy}
+\boxed{\frac{\partial\rho h}{\partial t}+\nabla\cdot(\rho\mathbf{u}h)=\nabla\cdot(\alpha\nabla h)+S_{h}+\rho\mathbf{g}\cdot\mathbf{u}}\label{eq:energy}
 \end{equation}
 
 \end_inset
@@ -557,7 +589,7 @@ l problem we solved before.
 
  describe the changes in time.
  The second term 
-\begin_inset Formula $\nabla\cdot(\rho\mathbf{U}h)$
+\begin_inset Formula $\nabla\cdot(\rho\mathbf{u}h)$
 \end_inset
 
  describes advection.
@@ -571,7 +603,7 @@ l problem we solved before.
 
  is heat source.
  The last term 
-\begin_inset Formula $\rho\mathbf{g}\cdot\mathbf{U}$
+\begin_inset Formula $\rho\mathbf{g}\cdot\mathbf{u}$
 \end_inset
 
  relates to work done against gravitation and is significant, for example,
@@ -593,7 +625,7 @@ As can be seen from the previous equations, most of the transport equations
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\boxed{\frac{\partial\rho\phi}{\partial t}+\nabla\cdot(\rho\mathbf{U}\phi)=\nabla^{2}(\Gamma\phi)+S_{\phi}}
+\boxed{\frac{\partial\rho\phi}{\partial t}+\nabla\cdot(\rho\mathbf{u}\phi)=\nabla\cdot(\Gamma\nabla\phi)+S_{\phi}}
 \end{equation}
 
 \end_inset
@@ -633,6 +665,7 @@ Equation of state is needed to link density, pressure, and temperature together.
 \begin{alignedat}{1}pV & =NR_{u}T\\
 \Leftrightarrow\rho & =\frac{p}{RT}
 \end{alignedat}
+\label{eq:state}
 \end{equation}
 
 \end_inset
@@ -695,24 +728,804 @@ Great many things can be added to the basic fluid flow problems considered
  with a simple one.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Equation summary
+\end_layout
+
+\begin_layout Standard
+Typical versions of the compressible and incompressible flow equations are
+ summarized here.
+ Make sure you understand the simplifications!
+\end_layout
+
+\begin_layout Subsubsection
+Compressible flow
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\rho\mathbf{u}}{\partial t}+\begin{alignedat}{1}\nabla\cdot\left(\rho\mathbf{uu}\right)=\mathbf{\nabla}\cdot\left(\mu\left(\nabla\mathbf{u}+\left(\nabla\mathbf{u}\right)^{T}\right)\right)-\nabla p+\mathbf{f}_{b}\end{alignedat}
+\label{eq:compMomentum}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\rho h}{\partial t}+\nabla\cdot(\rho\mathbf{u}h)=\nabla\cdot(\alpha\nabla h)+S_{h}+\rho\mathbf{g}\cdot\mathbf{u}\label{eq:compEnergy}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\rho}{\partial t}+\nabla\cdot\left(\rho\mathbf{u}\right)=0\label{eq:compConti}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\rho=\frac{p}{RT}\label{eq:compIDeal}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Incompressible flow
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\mathbf{u}}{\partial t}+\begin{alignedat}{1}\nabla\cdot\left(\boldsymbol{uu}\right)=\mathbf{\nu\nabla^{2}}\boldsymbol{u}-\frac{1}{\rho}\nabla p+\frac{\mathbf{f}_{b}}{\rho}\end{alignedat}
+\label{eq:incompMom}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\nabla\cdot\boldsymbol{u=}0\label{eq:incomCont}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Non-linear advection term
+\end_layout
+
+\begin_layout Standard
+When comparing Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:compMomentum"
+
+\end_inset
+
+-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:incomCont"
+
+\end_inset
+
+ and the advection-diffusion equations considered before we notice a lot
+ of familiar terms.
+ 
+\end_layout
+
+\begin_layout Standard
+The energy equation, Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:compEnergy"
+
+\end_inset
+
+, is the same equation as the one we have been dealing with in advection
+ diffusion problems.
+ Now it has just been written in vector form to allow three dimensions.
+ We also have added the gravity related source term 
+\begin_inset Formula $\rho\mathbf{g}\cdot\mathbf{u}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The continuity equation, Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:compConti"
+
+\end_inset
+
+, consists of a time derivative terms and a divergence term.
+ Both are familiar from heat examples before.
+ The equation of the state, Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:compIDeal"
+
+\end_inset
+
+, is an algebraic equation and requires no special attention.
+ 
+\end_layout
+
+\begin_layout Standard
+The difficulties arise from the non-linear advection term in momentum equations,
+ Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:compMomentum"
+
+\end_inset
+
+.
+ Expect for the momentum advection term 
+\begin_inset Formula $\nabla\cdot\left(\rho\mathbf{uu}\right)$
+\end_inset
+
+, all the terms in Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:compMomentum"
+
+\end_inset
+
+-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:incomCont"
+
+\end_inset
+
+ are linear for constant fluid properties.
+ The way to tackle the non-linear advection terms is straight forward, we
+ linearize it.
+ The details vary, but the basic idea is always to replace one of the velocities
+ 
+\begin_inset Formula $\boldsymbol{u}$
+\end_inset
+
+ with a known velocity 
+\begin_inset Formula $\hat{\boldsymbol{u}}$
+\end_inset
+
+from previous time step or iteration.
+ The advection term becomes
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\nabla\cdot\left(\rho\mathbf{uu}\right)\approx\nabla\cdot\left(\underbrace{\rho\mathbf{\hat{u}}}_{\mathrm{advecting}}\overbrace{\boldsymbol{u}}^{\mathrm{advected}}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and after successful iteration process the velocities are close enough.
+ It is conventional to call the velocity 
+\begin_inset Formula $\hat{\boldsymbol{u}}$
+\end_inset
+
+ advecting velocity and 
+\begin_inset Formula $\boldsymbol{u}$
+\end_inset
+
+advected velocity, even as there is naturally no difference between the
+ velocities.
+ 
+\end_layout
+
+\begin_layout Standard
+One important detail is that the advecting and advected velocities often
+ need different discretization to produce a converging system.
+ The advecting term is usually discretized with central differencing and
+ the advected term with upwind or similar.
+ 
+\end_layout
+
+\begin_layout Standard
+In most software packages there is only one discretization option for the
+ advection term and means the discretization of the advected velocity.
+ The advected term is often interpolated linearly and there might be a option
+ called interpolation in the software package for this.
+ Note that unless you are able to see the source code, details like these
+ are often left untold.
+ 
+\end_layout
+
+\begin_layout Standard
+The advection term is often given in a non-conservative form 
+\begin_inset Formula $\boldsymbol{u}\cdot\nabla\boldsymbol{u}$
+\end_inset
+
+.
+ This form can be derived by using the product rule and continuity.
+ Using the product rule the time derivative and advection term in momentum
+ equation Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:compMomentum"
+
+\end_inset
+
+ becomes
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\frac{\partial\rho\mathbf{u}}{\partial t}+\begin{alignedat}{1}\nabla\cdot\left(\rho\mathbf{uu}\right)\end{alignedat}
+ & =\underbrace{\rho\frac{\partial}{\partial t}\boldsymbol{u}+\boldsymbol{u}\frac{\partial}{\partial t}\rho}_{\mathrm{time\:derivative}}+\underbrace{\rho\boldsymbol{u}\cdot\nabla\boldsymbol{u}+\boldsymbol{u}\nabla\cdot\left(\rho\boldsymbol{u}\right)}_{\mathrm{advection}}\\
+ & =\rho\left(\frac{\partial}{\partial t}\boldsymbol{u}+\boldsymbol{u}\cdot\nabla\boldsymbol{u}\right)+\boldsymbol{u}\underbrace{\left(\frac{\partial}{\partial t}\rho+\nabla\cdot\left(\rho\boldsymbol{u}\right)\right)}_{\mathrm{continuity=0}}\\
+ & =\rho\left(\frac{\partial}{\partial t}\boldsymbol{u}+\boldsymbol{u}\cdot\nabla\boldsymbol{u}\right)
+\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this form the linearization is usually done be taking the gradient from
+ the known values as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{u}\cdot\nabla\boldsymbol{u}\approx\boldsymbol{u}\cdot\nabla\hat{\boldsymbol{u}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The practice of using interpolation for one of the terms 
+\begin_inset Formula $\nabla\hat{\boldsymbol{u}}$
+\end_inset
+
+ and upwind like scheme for the other (
+\begin_inset Formula $\boldsymbol{u}$
+\end_inset
+
+) might also be easier to see from this form.
+\end_layout
+
 \begin_layout Subsection
 Solution methods for compressible flow
+\end_layout
+
+\begin_layout Standard
+Solving for compressible flow equations is more straight forward, even if
+ not necessarily easier, that incompressible flow equations.
+ We will first briefly discuss the compressible flow solution.
+\end_layout
+
+\begin_layout Standard
+When solving for compressible flow we usually have six equations to solve
+ and six unknowns.
+ Excluding the fluid properties like viscosity.
+ Therefore the system is closed and can be solved.
+ In practice, however, the solution easily becomes unstable or does not
+ converge.
+ There is no single best way for solving the equations.
+ Instead, there are many known way that often work in certain kind of problems.
+ Consult manuals and scientific papers on how to choose the correct methods.
+\end_layout
+
+\begin_layout Standard
+Usually, the momentum equations, Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:compMomentum"
+
+\end_inset
+
+, are solved for for velocities and the energy equation, Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:compEnergy"
+
+\end_inset
+
+, for temperature.
+ 
+\end_layout
+
+\begin_layout Standard
+The continuity equation can be solved directly for density.
+ Then the solved temperature and density are used to solve for pressure
+ using the equation of state.
+ It is, however, more common to solve the continuity equation for pressure
+ in subsonic flows.
+ This is often done using techniques similar to those used for incompressible
+ flows.
+ Supersonic or transient flows require special methods to remain stable.
+ The governing equations 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:rho_continuity"
+
+\end_inset
+
+ - 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:state"
+
+\end_inset
+
+ are perfectly capable to describe compressible flow, but the solution is
+ more difficult than for subsonic flows.
 \end_layout
 
 \begin_layout Subsection
 Solution methods for incompressible flow
 \end_layout
 
-\begin_layout Subsubsection
-Pressure decoupling
+\begin_layout Standard
+It is often beneficial to solve the incompressible versions of flow equations.
+ For low Mach number flows, the density changes are often small, and will
+ not affect the flow much.
+ As the changes in density are small, the equations for density become stiff
+ and hard to solve numerically.
+ As a rule of the thump, the compressibility effect can be ignored if Mach
+ number 
+\begin_inset Formula $\mathrm{Ma}<0.3$
+\end_inset
+
+.
+ This, of course, depends on the case.
+ For example large temperature gradients may have significant effects on
+ density.
+\end_layout
+
+\begin_layout Standard
+Ignoring the fluid properties, we now have four equations and four unknown
+ variables.
+ The system is closed.
+ The pressure, however, presents a problem.
+ 
+\end_layout
+
+\begin_layout Standard
+The momentum equations are, again, used to solve for the velocities.
+ After this we only have the continuity equation to use for pressure.
+ With incompressible flow equation, however, the pressure is not present
+ in the continuity equation.
+ 
+\end_layout
+
+\begin_layout Standard
+The problem is usually solved by first solving the velocities from momentum
+ equations and then substituting the momentum equation into continuity equation.
+ With suitable simplifications this yields a pressure field that satisfies
+ continuity.
+ 
+\end_layout
+
+\begin_layout Standard
+The intuitive translation of the math is that if too much material us flowing
+ into a cell, increase the pressure.
+ If too little material is flowing into a cell, decrease the pressure.
+ The math operates on discretized equations and an explanation can be found
+ from 
+\shape italic
+Versteeg and Malalasekara 2007, Chapter 6.4 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "versteeg2007"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The most common algorithm that operates by first solving the velocities
+ from momentum equations and then fixing the pressure and velocity to fit
+ continuity by substituting the momentum equation to continuity equation
+ is SIMPLE.
+ SIMPLER and SIMPLEC are very similar to SIMPLE but contain more terms.
+ This makes the SIMPLER and SIMPLEC more complicated than SIMPLE but also
+ usually makes converge in less steps.
+ 
+\end_layout
+
+\begin_layout Standard
+PISO is another very similar algorithm.
+ PISO was originally developed for transient flows, but is often used for
+ steady state solutions also.
+\end_layout
+
+\begin_layout Standard
+SIMPLE scheme and its relatives SIMPLEC and SIMPLER all require under relaxation
+ to remain stable.
+ Under relaxation is yet another word for linear interpolation.
+ We interpolate the next solution from the newly calculated one, and the
+ old solutions as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+u=\alpha u_{new}+\left(1-\alpha\right)u_{old}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is the under relaxation and should be chosen between zero and unity.
+ 
+\end_layout
+
+\begin_layout Subsection
+Pressure-velocity coupling
+\end_layout
+
+\begin_layout Standard
+Historically, pressure decoupling was a major problem with fluid flow solutions.
+ Pressure decoupling occurs when using linear interpolation for pressure
+ without any corrections.
+ The decoupling is easily demonstrated with a simple example as shown in
+ Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Pressure-decouling"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/fluidFlow/decoupling.png
+	lyxscale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Pressure decoupling 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Pressure-decouling"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With an oscillating pressure field with uniform mesh and 
+\begin_inset Formula $p_{W}=p_{E}$
+\end_inset
+
+ the face pressures are interpolated equal and there will be no pressure
+ source term 
+\begin_inset Formula $\nabla p_{P}\approx\left(p_{e}-p_{w}\right)/\mathrm{d}x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+There are two main strategies for tackling this problem.
+ One is to use staggered grids, in which pressure and velocity is solved
+ using different meshes.
+ This method is accurate as it requires no interpolation of fields.
+ On the other hand it is more complex and requires more memory for the two
+ meshes.
+ As far as the author aware, the PRESTO! scheme in FLUENT uses a staggered
+ grid.
+ 
+\end_layout
+
+\begin_layout Standard
+The second, and more common, method is to apply a correction to the linearly
+ interpolated pressure.
+ The most famous correction is the Rhie and Chow interpolation method.
+ For details, see for example 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rhieChowOpenFOAM"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The pressure velocity coupling and associated problems are the main reason
+ we do not program our own fluid flow solver on this course.
+ It is, however, possible to choose a practice case in which the pressure
+ gradient is known or uniform.
+ In this kind of problems the pressure-velocity coupling can be ignored.
+ 
+\end_layout
+
+\begin_layout Subsection
+Boundary conditions
+\end_layout
+
+\begin_layout Standard
+All the fields in the governing equations require boundary conditions.
+ We will limit ourself to the incompressible case here and only talk about
+ pressure and velocity boundary conditions.
+ 
+\end_layout
+
+\begin_layout Standard
+There are great many different boundary conditions for different cases.
+ We will only consider two primitive boundary condition, the fixed value
+ and zero gradient, here.
+ Many more complicated boundary conditions are similar to at least one of
+ these.
+ For example, a constant mass flow boundary condition is very similar to
+ fixed velocity boundary condition but allows the velocity profile to develop
+ into a more physically reasonable form.
+ Unless you actually know the velocity profile, it is usually better to
+ use a constant mass flow boundary condition to fixed velocity to avoid
+ non-physical solution near the boundary.
+\end_layout
+
+\begin_layout Standard
+One should never define a fixed value boundary condition for both the velocity
+ and pressure at the same boundary.
+ This combination is very unstable.
+ 
+\end_layout
+
+\begin_layout Standard
+It is usually preferable to define fixed velocity, or similar, boundary
+ condition to the upstream boundary.
+ Information moves much faster downs stream in the flow and exploiting this
+ results in faster convergence.
+ Pressure information travels instantly in incompressible flow and very
+ fast in compressible flow.
+ 
+\end_layout
+
+\begin_layout Standard
+At least for the author, non-sense boundary conditions are the most common
+ reason for crashing simulations.
+ 
 \end_layout
 
 \begin_layout Subsection
 Coupled and segregated solvers
 \end_layout
 
-\begin_layout Subsection
-Serial and parallel solvers
+\begin_layout Standard
+Most often, the governing equations are solved individually, in series.
+ This is called a segregated solution.
+ A segregated solution for a compressible flow problem would be something
+ like the following
+\end_layout
+
+\begin_layout Enumerate
+Solve linearized x-momentum equation for 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ 
+\begin_inset Formula $A_{u}u=b_{u}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Solve linearized y-momentum equation for 
+\begin_inset Formula $v$
+\end_inset
+
+.
+ 
+\begin_inset Formula $A_{v}v=b_{v}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Solve linearized z-momentum equation for 
+\begin_inset Formula $w$
+\end_inset
+
+.
+ 
+\begin_inset Formula $A_{w}u=b_{w}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Solve energy equation for 
+\begin_inset Formula $T$
+\end_inset
+
+.
+ 
+\begin_inset Formula $A_{T}T=b_{T}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Solve continuity equation for 
+\begin_inset Formula $\rho$
+\end_inset
+
+.
+ 
+\begin_inset Formula $A_{\rho}p=b_{\rho}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Solve pressure from equation of state.
+\end_layout
+
+\begin_layout Enumerate
+Repeat steps 1-6 until convergence is reached.
+\end_layout
+
+\begin_layout Standard
+The iteration typically takes a lot of steps unless a very good initial
+ guess is available.
+ If we are solving a transient case, the previous time step serves as a
+ good initial guess and the iteration is much faster.
+\end_layout
+
+\begin_layout Standard
+It is also possible to combine all or some of the solution steps into a
+ single step.
+ If we were, for example, to solve all the velocity components, the temperature
+ and the density in a single step the resulting linear system would be similar
+ to (not complete)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}\left[A_{u}\right]\\
+ & \left[A_{y}\right]\\
+ &  & \left[A_{w}\right]\\
+ &  &  & \left[A_{T}\right]\\
+ &  &  &  & \left[A_{\rho}\right]
+\end{bmatrix}\begin{bmatrix}\left[u\right]\\
+\left[v\right]\\
+\left[w\right]\\
+\left[T\right]\\
+\left[\rho\right]
+\end{bmatrix}=\begin{bmatrix}\left[b_{u}\right]\\
+\left[b_{v}\right]\\
+\left[b_{w}\right]\\
+\left[b_{T}\right]\\
+\left[b_{\rho}\right]
+\end{bmatrix}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where each term inside [] is a matrix or vector similar to that in the segregate
+d solution.
+ Note that now there would be also extra coefficients linking the parts
+ together.
+ 
+\series bold
+These extra terms are not shown in the matrix above.
+
+\series default
+ 
+\end_layout
+
+\begin_layout Standard
+The resulting system is much larger than the ones used in segregated solution.
+ It requires more memory and takes longer to solve.
+ Depending on the problem, a coupled solution 
+\shape italic
+may
+\shape default
+ be much faster than segregated one.
+ 
 \end_layout
 
 \end_body

@@ -1914,32 +1914,11 @@ s.
 \end_layout
 
 \begin_layout Section
-Navier-Stokes
-\end_layout
-
-\begin_layout Subsection
-The NS equation
-\end_layout
-
-\begin_layout Subsection
-Compressible vs.
- incompressible
-\end_layout
-
-\begin_layout Subsection
-Pressure coupling
-\end_layout
-
-\begin_layout Subsection
-Boundary conditions
+Turbulence
 \end_layout
 
 \begin_layout Section
 Mesh
-\end_layout
-
-\begin_layout Section
-Turbulence
 \end_layout
 
 \begin_layout Standard
