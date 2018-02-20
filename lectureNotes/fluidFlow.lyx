@@ -104,31 +104,18 @@ In this section we learn the basics of solution methods for practical fluid
  Unfortunately, such a detailed presentation is outside our time limits
  here.
  Most of the methods discussed for diffusion and advection, however, are
- directly generalizable to Navier-Stokes equations and enough pointers are
- given for a motivated student to learn the implementation by oneself.
+ directly generalizable to Navier-Stokes equations.
  
 \end_layout
 
 \begin_layout Standard
 The main goal of this section is to give a student enough understanding
- of the solution methods relevant to fluid flow problems to understand the
- options provided by software packages.
+ of the solution methods to read the manuals of software packages.
 \end_layout
 
 \begin_layout Standard
 This section considers single phase, non-reacting incompressible and compressibl
 e flows without turbulence models.
- 
-\end_layout
-
-\begin_layout Standard
-For a compressible fluid flow problem we need at least the momentum equations,
- continuity equation, energy equation, and the equation of state.
- Sometimes these are collectively called Navier-Stokes equations.
- Sometimes the momentum equation and the continuity equations are called
- the Navier-Stokes equations.
- And sometimes just the momentum equations are called Navier-Stokes equations.
- To avoid misunderstanding, we will avoid the Navier-Stokes label here.
  
 \end_layout
 
@@ -149,7 +136,7 @@ reference "subsec:Navier-Stokes-with-tensor"
 \end_inset
 
  using tensor notations.
- A quick introduction to vector notations is given here.
+ A quick introduction to the notations is given here.
 \end_layout
 
 \begin_layout Paragraph
@@ -243,7 +230,7 @@ reference "eq:1dHeat"
 
 \end_inset
 
-, we take the divergence heat fluxes.
+, we take the divergence of heat fluxes.
  
 \end_layout
 
@@ -291,7 +278,6 @@ Laplacian is a common operator in fluid dynamics because it closely relates
 \begin_layout Standard
 We have given this operator a name because it is so common.
  For example, in the one dimensional heat equation, Eq.
- Eq.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -300,6 +286,139 @@ reference "eq:1dHeat"
 \end_inset
 
 , we have a Laplacian.
+ Inside computer codes, Laplacian is usually also given a special treatment
+ for speed and readability.
+\end_layout
+
+\begin_layout Subsection
+Finite volume method more mathematically
+\end_layout
+
+\begin_layout Standard
+In the previous sections we avoided math when using finite volume method.
+ We derived our discretized equations from balance equations for a control
+ volume.
+ We did this for simplicity, and because we will not have time to derive
+ the disc
+\end_layout
+
+\begin_layout Standard
+We will not derive discretized equations for the fluid flow because of time
+ limits.
+ We, however, need to be able to recognize the terms and have a rough understand
+ing on how to discretize them.
+ Here will will work through one dimensional examples.
+\end_layout
+
+\begin_layout Paragraph
+Divergence, 
+\begin_inset Formula $\nabla\cdot\boldsymbol{u}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The formal finite volume discretization start with taking a volume integral
+ of the function.
+ In one dimensions divergence is simply a gradient
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\frac{\mathrm{d}u}{\mathrm{d}x}\mathrm{d}V
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The volume integral is then changed to surface integral using the Gauss
+ divergence theorem.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\frac{\mathrm{d}u}{\mathrm{d}x}\mathrm{d}V=\int_{S}\boldsymbol{n}\cdot\boldsymbol{u}\mathrm{d}S
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\boldsymbol{n}$
+\end_inset
+
+ is surface normal unit vector.
+ The surface integral can further be divided as a sum operation for all
+ the faces
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\frac{\mathrm{d}u}{\mathrm{d}x}\mathrm{d}V=\int_{S}\boldsymbol{n}\cdot\frac{\mathrm{d}p}{\mathrm{d}x}\mathrm{d}S=\sum\boldsymbol{n}\cdot\boldsymbol{u}A
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For one dimensional case this results in
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\frac{\mathrm{d}u}{\mathrm{d}x}\mathrm{d}V=\int_{S}\boldsymbol{n}\cdot\frac{\mathrm{d}u}{\mathrm{d}x}\mathrm{d}S=\sum\boldsymbol{n}\cdot uA=u_{e}A_{e}-u_{w}A_{w}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which is similar to what we have been using this far.
+ A three dimensional case would simply add more faces and terms.
+\end_layout
+
+\begin_layout Paragraph
+Gradient, 
+\begin_inset Formula $\nabla\boldsymbol{u}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In one dimensions, a gradient is the same thing as a divergence.
+ The analysis applies.
+\end_layout
+
+\begin_layout Paragraph
+Laplacian
+\end_layout
+
+\begin_layout Standard
+The Laplacian is a combination of divergence and gradient.
+ A worked example in one dimension is already given in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Same-thing-in"
+
+\end_inset
+
+ for one dimensional heat conduction.
 \end_layout
 
 \begin_layout Subsection
@@ -311,13 +430,14 @@ The governing equations are understood in a broad sense here to include
  the transport equations and fluid properties.
  We only discuss the equations here, the solution methods will be discussed
  later.
-\end_layout
+\begin_inset Note Note
+status open
 
 \begin_layout Subsubsection
 Coupled equations
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Previously, we only considered one equation at a time, the energy equation.
  For a more general fluid flow problem we, however, have multiple equation
  to solve.
@@ -328,7 +448,7 @@ Previously, we only considered one equation at a time, the energy equation.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 All of these equation must be valid simultaneously.
  Usually, one unknown variable, say the x-component of velocity vector,
  is solved from one equation and then the next unknown from the next one.
@@ -336,7 +456,7 @@ All of these equation must be valid simultaneously.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 All the equations can also be solved simultaneously by building them all
  in a single matrix.
  The non-linear terms still require iteration.
@@ -345,13 +465,18 @@ All the equations can also be solved simultaneously by building them all
  
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 Continuity equation
 \end_layout
 
 \begin_layout Standard
-Mass conservation is one of the key consents in nature.
- For fluid flow it translates into a continuity equation
+Mass conservation is one of the key concepts in nature.
+ For fluid flow, it translates into a continuity equation
 \end_layout
 
 \begin_layout Standard
@@ -448,8 +573,8 @@ where
 \begin_inset Formula $\mathbf{D}$
 \end_inset
 
- are, absolute pressure, body force, dynamic viscosity, bulk viscosity,
- and strain-rate, respectively.
+ are, pressure, body force, dynamic viscosity, bulk viscosity, and strain-rate,
+ respectively.
 \end_layout
 
 \begin_layout Standard
@@ -463,7 +588,7 @@ We usually leave the terms
 \end_inset
 
  and the terms a exactly zero.
- With these simplifications the Navier-Stokes equation becomes
+ With these simplifications the momentum equation becomes
 \end_layout
 
 \begin_layout Standard
@@ -494,7 +619,7 @@ For incompressible flow, this further simplifies to
 \end_layout
 
 \begin_layout Standard
-and with constant viscosity 
+and with constant kinematic viscosity 
 \begin_inset Formula $\nu=\mu/\rho$
 \end_inset
 
@@ -514,8 +639,8 @@ and with constant viscosity
 \end_layout
 
 \begin_layout Standard
-Note that there are great many slight variations of the momentum or Navier-Stoke
-s equations in the literature.
+Note that there are great many slight variations of the momentum equations
+ in the literature.
  Insignificant terms are often omitted without mention.
  Make certain you know witch version you need!
 \end_layout
@@ -594,7 +719,7 @@ l problem we solved before.
 
  describes advection.
  The third term 
-\begin_inset Formula $\nabla^{2}(\alpha h)$
+\begin_inset Formula $\nabla\cdot(\alpha\nabla h)$
 \end_inset
 
  is conduction and 
@@ -656,7 +781,7 @@ Equation of state
 
 \begin_layout Standard
 Equation of state is needed to link density, pressure, and temperature together.
- Most common equation of state is the ideal gas equation
+ The most common equation of state is the ideal gas equation
 \end_layout
 
 \begin_layout Standard
@@ -716,16 +841,21 @@ Additional physics
 \end_layout
 
 \begin_layout Standard
-Great many things can be added to the basic fluid flow problems considered
+Great many addition can be made to the basic fluid flow problem considered
  here.
  Chemical reactions, multi component or phase flows, phase changes etc.
  are all readily added to the system.
- Each layer of complication, however, add to the computational cost.
+ 
+\end_layout
+
+\begin_layout Standard
+Each layer of complication, however, adds to the computational cost.
  With complex systems it is also often hard to measure the accuracy of the
- model as there are so many parameters with only roughly understood effects
- on the solution.
- Even while solving complex systems, it is usually a good practice to start
- with a simple one.
+ model as there are so many parameters.
+ It would be ideal to some how isolate or the parts of the simulation from
+ each other for validation.
+ In practice, this may be very difficult.
+ It still a good practice to start as simple as possible.
 \end_layout
 
 \begin_layout Standard
@@ -845,7 +975,7 @@ reference "eq:incomCont"
 
 \end_inset
 
- and the advection-diffusion equations considered before we notice a lot
+ and the advection-diffusion equations considered before, we notice a lot
  of familiar terms.
  
 \end_layout
@@ -893,7 +1023,7 @@ reference "eq:compIDeal"
 \end_layout
 
 \begin_layout Standard
-The difficulties arise from the non-linear advection term in momentum equations,
+The differences arise from the non-linear advection term in momentum equations,
  Eq.
  
 \begin_inset CommandInset ref
@@ -923,7 +1053,11 @@ reference "eq:incomCont"
 \end_inset
 
  are linear for constant fluid properties.
- The way to tackle the non-linear advection terms is straight forward, we
+ 
+\end_layout
+
+\begin_layout Standard
+The way to tackle the non-linear advection terms is straight forward, we
  linearize it.
  The details vary, but the basic idea is always to replace one of the velocities
  
@@ -934,7 +1068,7 @@ reference "eq:incomCont"
 \begin_inset Formula $\hat{\boldsymbol{u}}$
 \end_inset
 
-from previous time step or iteration.
+ from previous time step or iteration.
  The advection term becomes
 \end_layout
 
@@ -950,7 +1084,7 @@ from previous time step or iteration.
 \end_layout
 
 \begin_layout Standard
-and after successful iteration process the velocities are close enough.
+and after successful iteration process the two velocities are close enough.
  It is conventional to call the velocity 
 \begin_inset Formula $\hat{\boldsymbol{u}}$
 \end_inset
@@ -959,8 +1093,8 @@ and after successful iteration process the velocities are close enough.
 \begin_inset Formula $\boldsymbol{u}$
 \end_inset
 
-advected velocity, even as there is naturally no difference between the
- velocities.
+advected velocity.
+ This convention arises from the analogy to general advection problem.
  
 \end_layout
 
@@ -974,22 +1108,24 @@ One important detail is that the advecting and advected velocities often
 
 \begin_layout Standard
 In most software packages there is only one discretization option for the
- advection term and means the discretization of the advected velocity.
+ advection term and this option means the discretization of the advected
+ velocity.
  The advected term is often interpolated linearly and there might be a option
- called interpolation in the software package for this.
+ called interpolation in the software package.
  Note that unless you are able to see the source code, details like these
  are often left untold.
  
 \end_layout
 
 \begin_layout Standard
-The advection term is often given in a non-conservative form 
+Especially for the incompressible case, the advection term is often given
+ in a non-conservative form 
 \begin_inset Formula $\boldsymbol{u}\cdot\nabla\boldsymbol{u}$
 \end_inset
 
 .
  This form can be derived by using the product rule and continuity.
- Using the product rule the time derivative and advection term in momentum
+ Using the product rule, the time derivative and advection terms in momentum
  equation Eq.
  
 \begin_inset CommandInset ref
@@ -1017,7 +1153,7 @@ reference "eq:compMomentum"
 \end_layout
 
 \begin_layout Standard
-In this form the linearization is usually done be taking the gradient from
+In this form, the linearization is usually done be taking the gradient from
  the known values as
 \end_layout
 
@@ -1041,7 +1177,7 @@ The practice of using interpolation for one of the terms
 \begin_inset Formula $\boldsymbol{u}$
 \end_inset
 
-) might also be easier to see from this form.
+) might be easier to see from this form.
 \end_layout
 
 \begin_layout Subsection
@@ -1055,15 +1191,18 @@ Solving for compressible flow equations is more straight forward, even if
 \end_layout
 
 \begin_layout Standard
-When solving for compressible flow we usually have six equations to solve
- and six unknowns.
- Excluding the fluid properties like viscosity.
+When solving for compressible flow with constant fluid properties like viscosity
+, we usually have six equations to solve and six variables.
  Therefore the system is closed and can be solved.
- In practice, however, the solution easily becomes unstable or does not
- converge.
+ 
+\end_layout
+
+\begin_layout Standard
+In practice, however, the solution easily becomes unstable or does not converge.
  There is no single best way for solving the equations.
- Instead, there are many known way that often work in certain kind of problems.
- Consult manuals and scientific papers on how to choose the correct methods.
+ Instead, there are many known ways that often work in certain kinds of
+ problems.
+ Consult manuals and scientific papers on how to choose the correct method.
 \end_layout
 
 \begin_layout Standard
@@ -1091,11 +1230,29 @@ reference "eq:compEnergy"
 The continuity equation can be solved directly for density.
  Then the solved temperature and density are used to solve for pressure
  using the equation of state.
- It is, however, more common to solve the continuity equation for pressure
+ 
+\end_layout
+
+\begin_layout Standard
+It is, however, more common to solve the continuity equation for pressure
  in subsonic flows.
  This is often done using techniques similar to those used for incompressible
  flows.
- Supersonic or transient flows require special methods to remain stable.
+ see Sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Solution-methods-for"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Supersonic or transient flows require special methods to remain stable.
+ The pressure shocks form discontinuous jumps into the solution.
  The governing equations 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1116,13 +1273,24 @@ reference "eq:state"
 
 \begin_layout Subsection
 Solution methods for incompressible flow
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Solution-methods-for"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 It is often beneficial to solve the incompressible versions of flow equations.
  For low Mach number flows, the density changes are often small, and will
  not affect the flow much.
- As the changes in density are small, the equations for density become stiff
+ 
+\end_layout
+
+\begin_layout Standard
+As the changes in density are small, the equations for density become stiff
  and hard to solve numerically.
  As a rule of the thump, the compressibility effect can be ignored if Mach
  number 
@@ -1144,7 +1312,8 @@ Ignoring the fluid properties, we now have four equations and four unknown
 \end_layout
 
 \begin_layout Standard
-The momentum equations are, again, used to solve for the velocities.
+Similarly to the compressible flow case, the momentum equations are used
+ to solve for the velocities.
  After this we only have the continuity equation to use for pressure.
  With incompressible flow equation, however, the pressure is not present
  in the continuity equation.
@@ -1153,18 +1322,29 @@ The momentum equations are, again, used to solve for the velocities.
 
 \begin_layout Standard
 The problem is usually solved by first solving the velocities from momentum
- equations and then substituting the momentum equation into continuity equation.
- With suitable simplifications this yields a pressure field that satisfies
- continuity.
+ equations with an old pressure field.
+ This solution will not satisfy continuity.
+\end_layout
+
+\begin_layout Standard
+The momentum equations are then substituted into the continuity equation.
+ With suitable simplifications this yields a correction to pressure field
+ and velocity field.
+ The corrected fields will satisfy continuity.
+\end_layout
+
+\begin_layout Standard
+The intuitive translation of the math is that, if too much material is flowing
+ into a cell, increase the pressure.
+ If too little material is flowing into a cell, decrease the pressure.
+ And then fix the velocities accordingly.
  
 \end_layout
 
 \begin_layout Standard
-The intuitive translation of the math is that if too much material us flowing
- into a cell, increase the pressure.
- If too little material is flowing into a cell, decrease the pressure.
- The math operates on discretized equations and an explanation can be found
- from 
+The math operates on discretized equations and would take a long while to
+ work through here.
+ An explanation can be found, for example, from 
 \shape italic
 Versteeg and Malalasekara 2007, Chapter 6.4 
 \begin_inset CommandInset citation
@@ -1178,20 +1358,29 @@ key "versteeg2007"
 \end_layout
 
 \begin_layout Standard
-The most common algorithm that operates by first solving the velocities
- from momentum equations and then fixing the pressure and velocity to fit
- continuity by substituting the momentum equation to continuity equation
- is SIMPLE.
- SIMPLER and SIMPLEC are very similar to SIMPLE but contain more terms.
- This makes the SIMPLER and SIMPLEC more complicated than SIMPLE but also
- usually makes converge in less steps.
+The most common algorithm that operates in the explained manner is called
+ SIMPLE.
+ During the derivation of SIMPLE, some rather crude simplifications are
+ made.
+\end_layout
+
+\begin_layout Standard
+SIMPLER and SIMPLEC are very similar to SIMPLE but less simplification are
+ made.
+ This makes the SIMPLER and SIMPLEC more complicated and computationally
+ expensive than SIMPLE, but also makes to usually converge in less steps.
  
 \end_layout
 
 \begin_layout Standard
-PISO is another very similar algorithm.
+PISO is another very similar algorithm to SIMPLE.
  PISO was originally developed for transient flows, but is often used for
  steady state solutions also.
+\end_layout
+
+\begin_layout Standard
+All the methods should converge to the same values.
+ The only differences are in derivation and convergence rates.
 \end_layout
 
 \begin_layout Standard
@@ -1223,12 +1412,22 @@ where
 \end_layout
 
 \begin_layout Subsection
-Pressure-velocity coupling
+Pressure interpolation
+\end_layout
+
+\begin_layout Standard
+In the momentum equations, we now have a new source terms, the pressure
+ gradient, 
+\begin_inset Formula $-\nabla p$
+\end_inset
+
+.
+ This terms requires some special attention.
 \end_layout
 
 \begin_layout Standard
 Historically, pressure decoupling was a major problem with fluid flow solutions.
- Pressure decoupling occurs when using linear interpolation for pressure
+ Pressure decoupling occurs when linear interpolation is used for pressure
  without any corrections.
  The decoupling is easily demonstrated with a simple example as shown in
  Fig.
@@ -1290,7 +1489,7 @@ With an oscillating pressure field with uniform mesh and
 
  the face pressures are interpolated equal and there will be no pressure
  source term 
-\begin_inset Formula $\nabla p_{P}\approx\left(p_{e}-p_{w}\right)/\mathrm{d}x$
+\begin_inset Formula $-\nabla p$
 \end_inset
 
 .
@@ -1300,18 +1499,84 @@ With an oscillating pressure field with uniform mesh and
 There are two main strategies for tackling this problem.
  One is to use staggered grids, in which pressure and velocity is solved
  using different meshes.
- This method is accurate as it requires no interpolation of fields.
+ See Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Staggered-grid.-Scalar"
+
+\end_inset
+
+ for an example.
+ 
+\end_layout
+
+\begin_layout Standard
+This method is accurate as it requires no interpolation of fields.
  On the other hand it is more complex and requires more memory for the two
  meshes.
  As far as the author aware, the PRESTO! scheme in FLUENT uses a staggered
- grid.
+ grid approach.
+ Historically, staggered grid was very important.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/fluidFlow/Staggered_grid_schema.png
+	lyxscale 20
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Staggered grid.
+ Scalar variables on the left and vector variables on the right.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Staggered-grid.-Scalar"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wiki:staggered"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 The second, and more common, method is to apply a correction to the linearly
  interpolated pressure.
  The most famous correction is the Rhie and Chow interpolation method.
+ The correction remove the decoupling and smooth oscillating pressure fields.
  For details, see for example 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1346,10 +1611,14 @@ All the fields in the governing equations require boundary conditions.
 There are great many different boundary conditions for different cases.
  We will only consider two primitive boundary condition, the fixed value
  and zero gradient, here.
- Many more complicated boundary conditions are similar to at least one of
+ 
+\end_layout
+
+\begin_layout Standard
+Many more complicated boundary conditions are similar to at least one of
  these.
  For example, a constant mass flow boundary condition is very similar to
- fixed velocity boundary condition but allows the velocity profile to develop
+ fixed velocity boundary condition, but allows the velocity profile to develop
  into a more physically reasonable form.
  Unless you actually know the velocity profile, it is usually better to
  use a constant mass flow boundary condition to fixed velocity to avoid
@@ -1449,7 +1718,7 @@ Solve continuity equation for
 
 .
  
-\begin_inset Formula $A_{\rho}p=b_{\rho}$
+\begin_inset Formula $A_{\rho}\rho=b_{\rho}$
 \end_inset
 
 
@@ -1507,8 +1776,8 @@ It is also possible to combine all or some of the solution steps into a
 \begin_layout Standard
 where each term inside [] is a matrix or vector similar to that in the segregate
 d solution.
- Note that now there would be also extra coefficients linking the parts
- together.
+ Note that now there would be also extra coefficients linking, for example
+ velocity x-component to all the other velocities and pressure.
  
 \series bold
 These extra terms are not shown in the matrix above.
@@ -1525,7 +1794,73 @@ The resulting system is much larger than the ones used in segregated solution.
 may
 \shape default
  be much faster than segregated one.
+ Or not.
+ Again, the correct choice depends on the case.
+\end_layout
+
+\begin_layout Subsection
+Parallel solvers
+\end_layout
+
+\begin_layout Standard
+In modern computational fluid dynamics, we often solve very large systems.
+ Some vary basic understanding on parallel computation is in order.
+\end_layout
+
+\begin_layout Standard
+Different solvers operate differently, and the following mostly mostly considers
+ OpenFOAM.
+ Other finite volume method based solvers are probably similar.
+\end_layout
+
+\begin_layout Standard
+Parallelization of the linear systems solvers is difficult and usually not
+ done.
+ Parallelization is done on the mesh level by dividing the mesh into parts.
+ Each part is then solved separately, in separate matrices, on different
+ cores.
+ The mesh interfaces between mesh parts is handled with interfaces similar
+ to boundary conditions.
+\end_layout
+
+\begin_layout Standard
+The parallelization at mesh level provides a very simple and effective paralleli
+zation in large systems.
+ If you use OpenFOAM to solve a large system with 100 cores, it will solve
+ it near 100 faster than only using one core.
+ The key word, however, is 
+\shape italic
+large
+\shape default
+.
  
+\end_layout
+
+\begin_layout Standard
+In order for information to flow from one mesh part to another, there must
+ be communication between the parts.
+ If there are a lot of parts in a small system, there will be a lot of communica
+tion compared to the actual computation.
+ This communication can choke the solver.
+ Therefore, it is not reasonable to always use as many cores as available.
+ 
+\end_layout
+
+\begin_layout Standard
+It is not possible to know how how a certain case parallelizes without testing.
+ As a rule of the thump, each core should have at least 50000 cells.
+ Note that this number may be orders of magnitudes off in some cases.
+\end_layout
+
+\begin_layout Standard
+Other parallelization methods also exists.
+\end_layout
+
+\begin_layout Standard
+The previous analysis only applies to parallelization in space.
+ In time, parallelization is not of much use.
+ The previous time step must be known before we can proceed to the next
+ one.
 \end_layout
 
 \end_body

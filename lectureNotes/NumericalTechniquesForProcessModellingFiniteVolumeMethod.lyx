@@ -90,11 +90,7 @@
 \begin_inset VSpace -3cm
 \end_inset
 
-Numerical Techniques for Process Modelling
-\begin_inset Newline newline
-\end_inset
-
-Part I:
+Numerical Techniques for Process Modeling
 \begin_inset Newline newline
 \end_inset
 
@@ -150,7 +146,7 @@ Tampere University of Technology
 \begin_inset Newline newline
 \end_inset
 
-Version 0.2.x
+Version 0.3
 \begin_inset Newline newline
 \end_inset
 
@@ -416,7 +412,7 @@ Changed figure numbering scheme
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.3
 \end_layout
 
 \end_inset
@@ -425,7 +421,7 @@ Changed figure numbering scheme
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+20.02.2018
 \end_layout
 
 \end_inset
@@ -434,7 +430,7 @@ Changed figure numbering scheme
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+Section 4
 \end_layout
 
 \end_inset
