@@ -639,6 +639,21 @@ and with constant kinematic viscosity
 \end_layout
 
 \begin_layout Standard
+or, in non-conservative form
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\mathbf{u}}{\partial t}+\begin{alignedat}{1}\boldsymbol{u}\cdot\nabla\boldsymbol{u}=\mathbf{\nu\nabla^{2}}\boldsymbol{u}-\frac{1}{\rho}\nabla p+\frac{\mathbf{f}_{b}}{\rho}\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Note that there are great many slight variations of the momentum equations
  in the literature.
  Insignificant terms are often omitted without mention.

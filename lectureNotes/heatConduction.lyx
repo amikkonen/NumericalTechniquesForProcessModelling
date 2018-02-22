@@ -824,6 +824,13 @@ reference "eq:1dConductionReadyShort"
 
 \begin_layout Subsubsection
 Same thing in math
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Same-thing-in"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
