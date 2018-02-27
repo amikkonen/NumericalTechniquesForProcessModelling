@@ -13,9 +13,9 @@ from scipy.interpolate import interp1d
 def dimmless_blasius(eta_max=10, n=1000):
     
     def odefun(eta, F):
-        f1 = F[0]
-        f2 = F[1]
-        f3 = F[2]
+        f1 = F[0] # f
+        f2 = F[1] # fp
+        f3 = F[2] # fpp
         return sp.vstack([f2,
                          f3,
                          -0.5 * f1 * f3])

@@ -20,10 +20,6 @@ import sparseMatrix
 def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy, 
            advection_scheme):
     
-    print("#"*20)
-    print("ERROR in right boundary!!!!!!!!!")
-    print("#"*20)
-    
     n_tot = nx*ny
     
     # Cell sizes
@@ -70,7 +66,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
             if not sp.isnan(T_xL):
                 # Constant boundary
                 A.add(k,k,2*aCx)
-                b[k] -= 2*aCx*T_xL
+                b[k] += 2*aCx*T_xL
 
         # Add aS to matrix A
         if k not in yMin:
@@ -128,7 +124,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
                     # NaN for zerogradient
                     if not sp.isnan(T_xL):
                         # Constant boundary
-                        b[k] += 2*aFx*T_xL
+                        b[k] -= 2*aFx*T_xL
                     else:
                         raise NotImplementedError("NOT IMPLEMENTED!")
             if uy != 0:                
@@ -151,7 +147,7 @@ def solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, crho, ux, uy,
                     # NaN for zerogradient
                     if not sp.isnan(T_yL):
                         # Constant boundary
-                        b[k] += 2*aFy*T_yL
+                        b[k] -= 2*aFy*T_yL
                     else:
                         raise NotImplementedError("NOT IMPLEMENTED!")
                     
@@ -281,7 +277,7 @@ def test1Dx():
     Ly = 1
     # Boundary temperatures (C)
     T_x0 = 1
-    T_xL = 0
+    T_xL = 0.5
     
     T_y0 = sp.nan
     T_yL = sp.nan
@@ -294,7 +290,7 @@ def test1Dx():
     
     # Velocity and Number of control volumes
 #    # Case a
-    nx = 5;  ux = -0.1
+    nx = 5;  ux = 0.1
     ny = 5;  uy = 0
 
     Tar = solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, 
@@ -323,10 +319,10 @@ def test1Dy():
     T_xL = sp.nan
     
     T_y0 = 1
-    T_yL = 0
+    T_yL = 0.5
 
-#    advection_scheme = "central_differencing"
-    advection_scheme = "upwind"
+    advection_scheme = "central_differencing"
+#    advection_scheme = "upwind"
     
     # Product of heat capacity and density
     crho = 1
@@ -334,7 +330,7 @@ def test1Dy():
     # Velocity and Number of control volumes
 #    # Case a
     nx = 5; ux = 0
-    ny = 5;  uy = -0.1
+    ny = 5;  uy = 0.1
 
     Tar = solver(nx, ny, kt, Lx, Ly, T_x0, T_xL, T_y0, T_yL, 
                    crho, ux, uy, advection_scheme)
@@ -522,8 +518,8 @@ def false_diffusion():
     fig.savefig("numericalDiffusion2Dcurves.pdf",figsize=(3.5,2.5))
 if __name__ == "__main__":
     print("START")
-    test1Dx()
-#    test1Dy()
+#    test1Dx()
+    test1Dy()
 #    main()
 #    false_diffusion()
     print("END")
