@@ -39,7 +39,7 @@ def dimmless_blasius(eta_max=10, n=1000):
     return eta, fp
     
 
-def blasius_plate(U, x, y, nu, eta_max=7, n=10000):
+def blasius_plate(U, x, y, nu, eta_max=7, n=1000):
     eta_1d, fp_1d = dimmless_blasius(eta_max, n)
     fp_interp =  interp1d(eta_1d, fp_1d,
                           bounds_error=False,
@@ -58,13 +58,13 @@ if __name__ == "__main__":
     nu = 15.11e-6 # air at 20C
     
     
-    eta_max=10
+    eta_max=7
     n = 1000
     
     Re = U*x.max() / nu
     print("Re", Re)
     
-    u = blasius_plate(U, x, y, nu, n)
+    u = blasius_plate(U, x, y, nu, eta_max, n)
     
     for k in range(len(x)):
         plt.plot(u[:,k],y, '-')
