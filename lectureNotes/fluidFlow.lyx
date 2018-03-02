@@ -79,6 +79,13 @@
 
 \begin_layout Section
 Fluid flow
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Fluid-flow"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -630,7 +637,7 @@ and with constant kinematic viscosity
 \begin_inset Formula 
 \begin{equation}
 \boxed{\frac{\partial\mathbf{u}}{\partial t}+\begin{alignedat}{1}\nabla\cdot\left(\boldsymbol{uu}\right)=\mathbf{\nu\nabla^{2}}\boldsymbol{u}-\frac{1}{\rho}\nabla p+\frac{\mathbf{f}_{b}}{\rho}\end{alignedat}
-}
+}\label{eq:incompressibleConstantNuNS}
 \end{equation}
 
 \end_inset
@@ -646,6 +653,7 @@ or, in non-conservative form
 \begin_inset Formula 
 \begin{equation}
 \frac{\partial\mathbf{u}}{\partial t}+\begin{alignedat}{1}\boldsymbol{u}\cdot\nabla\boldsymbol{u}=\mathbf{\nu\nabla^{2}}\boldsymbol{u}-\frac{1}{\rho}\nabla p+\frac{\mathbf{f}_{b}}{\rho}\end{alignedat}
+\label{eq:incompressibleConstantNuNSNonConservative}
 \end{equation}
 
 \end_inset

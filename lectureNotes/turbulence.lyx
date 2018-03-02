@@ -1,0 +1,623 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\numberwithin{equation}{section}
+\usepackage{siunitx}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\paperheight 40cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Turbulence
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+Some of the topics discussed in this section may be found from Versteeg
+ and Malalasekara 2007, Chapter 3.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "versteeg2007"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section we will learn the basic concepts of turbulence modeling
+ in computational fluid dynamics.
+ We will concentrate on the methods with most practical usage, the Reynolds
+ averaged Navier-Stokes (RANS) models with two transport equations.
+ 
+\end_layout
+
+\begin_layout Standard
+During the time of writing, turbulence models are under intense academical
+ study.
+ The lines between conventional approaches to turbulence modeling are blurring,
+ as more and more models use some combination of RANS and LES.
+ I would expect one form or another of these new hybrid models to become
+ a dominant turbulence model in the near future.
+ At the moment, I am most interested in 
+\begin_inset Formula $k-\omega$
+\end_inset
+
+-SST SAS, as it requires minimal additional effort from the user.
+ 
+\end_layout
+
+\begin_layout Standard
+However, we will not discuss these more advanced models here.
+ Instead, I will give a simple rule of a thump: if you do not know what
+ to do, use 
+\begin_inset Formula $k-\omega$
+\end_inset
+
+-SST.
+\end_layout
+
+\begin_layout Subsection
+Introduction to turbulence
+\end_layout
+
+\begin_layout Standard
+All flows will become turbulence with sufficiently large Reynolds number
+ ,
+\begin_inset Formula $\mathrm{Re}=\frac{UL}{\nu}$
+\end_inset
+
+.
+ In the low Reynolds number range, the viscosity effects are strong enough
+ to dissipate the fluctuations arising from the non-linear nature of momentum
+ advection.
+ With higher Reynolds number, the momentum of the fluctuations becomes too
+ powerful for the viscosity to dissipate.
+ This creates eddies in the flow.
+ The eddies interact with the mean flow and with each other creating a highly
+ non-linear and chaotic behavior.
+ This chaos is generally described as turbulence.
+ Note, however, that there is no generally accepted definition for turbulence
+ and the word might be used differently in different contexts.
+\end_layout
+
+\begin_layout Standard
+For our purposes it is convenient to divide the instantaneous velocity 
+\begin_inset Formula $u$
+\end_inset
+
+ into mean 
+\begin_inset Formula $U$
+\end_inset
+
+ and fluctuating parts 
+\begin_inset Formula $u'$
+\end_inset
+
+ as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+u=U+u'\label{eq:Reynold decomposition}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+this is called Reynolds decomposition.
+ See Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Reynolds-decomposition"
+
+\end_inset
+
+.
+ Other quantities, such as temperature, have a similar fluctuation and are
+ similarly decomposes.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/turbulence/turbulence.pdf
+	lyxscale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Reynolds decomposition
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Reynolds-decomposition"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The mean flow feeds energy to the large eddies by 
+\shape italic
+vortex stretching
+\shape default
+.
+ And the large eddies feed energy to the smaller ones by vortex stretching.
+ This process forms an 
+\shape italic
+energy cascade 
+\shape default
+which transfer energy from the large eddies to small eddies.
+ The lower bound for this process is dictated by viscous dissipation.
+ Once 
+\shape italic
+Kolmogorov microscales
+\shape default
+ are reached, the viscous dissipation becomes as strong as the inertia effects,
+ 
+\begin_inset Formula $\mathrm{\mathrm{\mathrm{\mathrm{\mathrm{Re_{\eta}=u\eta/\nu=1}}}}},$
+\end_inset
+
+and the eddy energy is dissipated into heat.
+ The energy cascade is shown in Fig.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/turbulence/Schematic-illustration-of-the-energy-spectrum-of-turbulent-velocity-cascade.png
+	lyxscale 20
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Energy cascade 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Energy-cascade"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wiki:energyCascade"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The large scale eddies are highly isotropic.
+ The mean flow is component is usually dominant to the fluctuations.
+ The velocity fluctuations have three components and the component aligning
+ to the mean flow is usually larger than the other two.
+ If there is a wall nearby, the component normal to the wall becomes small.
+\end_layout
+
+\begin_layout Standard
+The small scales, however, are dominated by local phenomena and are isotropic.
+ The energy cascade was studied by Kolmogorov and it is widely accepted
+ to have a certain, well known, shape.
+ 
+\end_layout
+
+\begin_layout Standard
+Many turbulence models are based on these two concepts: energy cascade and
+ isotropic small scale turbulence.
+ Using turbulence models, it is not necessary to model the small scale phenomena.
+ The details and the 
+\begin_inset Quotes eld
+\end_inset
+
+cut wave number
+\begin_inset Quotes erd
+\end_inset
+
+ are different in each model.
+\end_layout
+
+\begin_layout Subsection
+Model categories
+\end_layout
+
+\begin_layout Subsubsection
+Direct numerical simulation - DNS
+\end_layout
+
+\begin_layout Standard
+Direct numerical simulation (DNS) is conceptually the most simple approach
+ to turbulence modeling.
+ It uses no additional models to the governing equations descried in Section
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Fluid-flow"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+In order to directly model all the scales of turbulence down to Kolmogorov
+ microscales, a very fine mesh and very small time step are needed.
+ This makes DNS extremely computationally expensive.
+ 
+\end_layout
+
+\begin_layout Standard
+DNS is mostly as a academical tool in turbulence modeling.
+ A high quality DNS model gives near exact information about the flow.
+ The detailed information helps researchers to develop better turbulence
+ models.
+\end_layout
+
+\begin_layout Subsubsection
+Large eddy simulation - LES
+\end_layout
+
+\begin_layout Standard
+Large eddy simulation (LES) is the intermediate step between direct simulation
+ (DNS) and Reynolds averaging (RANS).
+ As name states, the large eddies are solved directly, like in DNS, but
+ the small eddies are modeled with additional simplifications.
+ In order to solve the large eddies, LES simulations must always be transient
+ and 3D.
+ 
+\end_layout
+
+\begin_layout Standard
+Spacial filtering is the essence of LES.
+ The eddies that are larger than the filtering threshold are modeled directly,
+ and the eddies that are smaller are filtered out and modeled.
+ 
+\end_layout
+
+\begin_layout Standard
+The models for the small eddies are called subgrid models.
+ There are many different subgrid models.
+ Some subgrid models are similar to the RANS models discussed later.
+ Some are mathematically more abstract filters with no obvious physical
+ meaning.
+\end_layout
+
+\begin_layout Standard
+LES does not require as fine a mesh as DNS or as small a time step because
+ the smallest scales are modeled with subgrid models.
+ The computational expenses are, however, still very high in most applications.
+ The requirement to directly solve the large eddies becomes very expensive
+ near walls as a very fine mesh is needed.
+ 
+\end_layout
+
+\begin_layout Standard
+To avoid the fine mesh near wall, many models combine LES and RANS models.
+ LES equations are solved far from the wall and RANS equations near the
+ walls.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Reynolds averaged Navier-Stokes (RANS)
+\end_layout
+
+\begin_layout Standard
+Reynolds averaging is the most common method today.
+ The most notable difference between RANS to LES and DNS is the cheapness.
+ RANS can be run in steady state and in 2D.
+ The requirements for mesh and time step are much more relaxed than in LES.
+ The cheapness, however, comes with less reliability.
+ The RANS models are typically created and optimized for some specific case.
+ They might work very well in that case but fail miserably in others.
+\end_layout
+
+\begin_layout Standard
+Because RANS modeling is the industry standard at the moment, we will concentrat
+e to RANS models in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:RANS-equations"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+RANS equations
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:RANS-equations"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Reynolds averaged Navier-Stokes equations are derived by first taking a
+ average of the Navier-Stokes equations over time.
+ Using incomprehensible flow equation with constant viscosity, Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:incompressibleConstantNuNSNonConservative"
+
+\end_inset
+
+ as an example we get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\frac{1}{\Delta t}\int_{t}^{t+\Delta t}\rho\left(\frac{\partial u}{\partial t}+\frac{\partial\left(u_{j}u_{i}\right)}{\partial x_{j}}\right) & \mathrm{d}t=\frac{1}{\Delta t}\int_{t}^{t+\Delta t}\left(\mu\frac{\partial^{2}u_{i}}{\partial x_{j}\text{²}}-\frac{\partial p}{\partial x_{i}}+f_{i}\right)\mathrm{d}t\\
+\rho\left(\frac{\partial U}{\partial t}+\frac{\partial\left(U_{j}U_{i}\right)}{\partial x_{j}}\right) & +\underbrace{\frac{\partial\left(\rho\overline{u_{i}'u_{j}^{\prime}}\right)}{\partial x_{j}}}_{\text{Reynolds stress}}=\mu\frac{\partial^{2}U_{i}}{\partial x_{j}\text{²}}-\frac{\partial P}{\partial x_{i}}+F_{i}\\
+\rho\left(\frac{\partial U}{\partial t}+\frac{\partial\left(U_{j}U_{i}\right)}{\partial x_{j}}\right) & =\frac{\partial}{\partial x_{j}}\left(\mu\frac{\partial U_{i}}{\partial x_{j}}-\underbrace{\rho\overline{u_{i}'u_{j}^{\prime}}}_{\text{Reynolds stress}}\right)-\frac{\partial P}{\partial x_{i}}+F_{i}
+\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $U$
+\end_inset
+
+ is the Reynolds averaged velocity, 
+\begin_inset Formula $u'$
+\end_inset
+
+ is velocity fluctuation, 
+\begin_inset Formula $P$
+\end_inset
+
+ and 
+\begin_inset Formula $F$
+\end_inset
+
+ are Reynolds averaged pressure and force.
+ Reynolds averaging is defined in Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Reynold decomposition"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Note that the structure of Reynolds averaged Navier-Stokes equations is
+ exactly the same as non-averaged, expect for the Reynolds stress term 
+\begin_inset Formula $\rho\overline{u_{i}'u_{j}^{\prime}}$
+\end_inset
+
+.
+ Now, let us spend a moment studying the math of averaging.
+\end_layout
+
+\begin_layout Standard
+For linear terms, the time average is simply the Reynolds averaged value.
+ For example pressure
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\frac{1}{\Delta t}\int_{t}^{t+\Delta t}\left(\frac{\partial p}{\partial x_{i}}\right)\mathrm{d}t=\overline{\frac{\partial p}{\partial x_{i}}}=\overline{\frac{\partial\left(P+p'\right)}{\partial x_{i}}}=\overline{\frac{\partial P}{\partial x_{i}}}+\underbrace{\overline{\frac{\partial p'}{\partial x_{i}}}}_{=0}=\overline{\frac{\partial P}{\partial x_{i}}}=\frac{\partial P}{\partial x_{i}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For the non linear momentum advection term, however, a extra term is needed
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{cc}
+\frac{1}{\Delta t}\int_{t}^{t+\Delta t}\left(\rho\frac{\partial\left(u_{j}u_{i}\right)}{\partial x_{j}}\right)\mathrm{d}t=\rho\overline{\frac{\partial\left(u_{j}u_{i}\right)}{\partial x_{j}}}=\rho\overline{\frac{\partial\left(\left(U_{j}+u'_{j}\right)\left(U_{i}+u'_{i}\right)\right)}{\partial x_{j}}}\\
+=\rho\overline{\frac{\partial\left(U_{j}U_{i}+U_{j}u_{i}'+U_{i}u_{j}'+u_{j}'u_{i}'\right)}{\partial x_{j}}}=\rho\overline{\frac{\partial\left(U_{j}U_{i}+u_{j}'u_{i}'\right)}{\partial x_{j}}}\\
+=\rho\overline{\frac{\partial\left(U_{j}U_{i}\right)}{\partial x_{j}}}+\rho\overline{\frac{\partial\left(u_{j}'u_{i}'\right)}{\partial x_{j}}}=\rho\frac{\partial\left(U_{j}U_{i}\right)}{\partial x_{j}}+\rho\frac{\partial\left(\overline{u_{j}'u_{i}'}\right)}{\partial x_{j}}
+\end{array}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For 
+\series bold
+scalar transport equations
+\series default
+, a similar extra term appears.
+ 
+\end_layout
+
+\begin_layout Standard
+For 
+\series bold
+compressible flow equations
+\series default
+, the time averaging leads to some inconvenient math problems.
+ To avoid this, Favre averaging is used instead.
+ The end results is very similar, and we will not repeat the analysis here.
+\end_layout
+
+\begin_layout Paragraph
+Reynolds stress
+\end_layout
+
+\begin_layout Paragraph
+Boussinesq hypotesis 
+\end_layout
+
+\begin_layout Subsubsection
+Linear eddy viscosity models
+\end_layout
+
+\begin_layout Subsubsection
+Nonlinear eddy viscosity models
+\end_layout
+
+\begin_layout Subsubsection
+Reynolds stress model (RSM) 
+\end_layout
+
+\begin_layout Subsection
+k-
+\begin_inset Formula $\mathrm{\epsilon}$
+\end_inset
+
+ models
+\end_layout
+
+\begin_layout Subsection
+k-
+\begin_inset Formula $\mathrm{\omega}$
+\end_inset
+
+ models
+\end_layout
+
+\begin_layout Subsection
+Wall functions
+\end_layout
+
+\end_body
+\end_document

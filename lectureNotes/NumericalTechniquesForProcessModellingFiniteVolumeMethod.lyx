@@ -17,6 +17,7 @@
     urlcolor=black
 }
 \usepackage{siunitx}
+%\usepackage{txfonts}
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -146,7 +147,7 @@ Tampere University of Technology
 \begin_inset Newline newline
 \end_inset
 
-Version 0.3
+Version 0.3.x
 \begin_inset Newline newline
 \end_inset
 
@@ -448,7 +449,7 @@ Section 4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+CC BY-NC-SA 4.0
 \end_layout
 
 \end_inset
@@ -477,7 +478,7 @@ Section 4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+Section 5
 \end_layout
 
 \end_inset
@@ -1894,6 +1895,23 @@ filename "fluidFlow.lyx"
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "turbulence.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Part
 
 \color red
@@ -1910,11 +1928,31 @@ s.
 \end_layout
 
 \begin_layout Section
-Turbulence
+Mesh
 \end_layout
 
-\begin_layout Section
-Mesh
+\begin_layout Subsection
+yplus
+\end_layout
+
+\begin_layout Subsection
+wall functions
+\end_layout
+
+\begin_layout Subsection
+mesh independency
+\end_layout
+
+\begin_layout Subsection
+extrapolation
+\end_layout
+
+\begin_layout Subsection
+types of meshes
+\end_layout
+
+\begin_layout Subsection
+error types
 \end_layout
 
 \begin_layout Standard
