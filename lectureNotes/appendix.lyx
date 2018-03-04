@@ -452,6 +452,163 @@ Gauss divergence theorem
 
 \end_layout
 
+\begin_layout Section*
+Full k-
+\begin_inset Formula $\omega$
+\end_inset
+
+-SST
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Full-k--SST"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial(\rho k)}{\partial t}+\frac{\partial(\rho U_{j}k)}{\partial x_{j}}=\tilde{P}_{k}-\beta^{*}\rho k\omega+\frac{\partial}{\partial x_{i}}\left[(\mu+\sigma_{k}\mu_{t})\frac{\partial k}{\partial x_{i}}\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial(\rho\omega)}{\partial t}+\frac{\partial(\rho U_{i}\omega)}{\partial x_{i}}=\frac{\alpha\tilde{P_{k}}}{\nu_{t}}-\beta\rho\omega^{2}+\frac{\partial}{\partial x_{i}}\left[(\mu+\sigma_{\omega}\mu)\frac{\partial\omega}{\partial x_{i}}\right]+2(1-F_{1})\rho\sigma_{\omega2}\frac{1}{\omega}\frac{\partial k}{\partial x_{i}}\frac{\partial\omega}{\partial x_{i}}\label{eq:omegaEq-1-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mu_{t}=\frac{\rho a_{1}k}{\max(a_{1}\omega,SF_{2})}\label{eq:mut-1-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+S=\sqrt{2S_{ij}S_{ij}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+S_{ij}=\frac{1}{2}\left(\partial_{j}U_{i}+\partial_{i}U_{j}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\text{\tilde{P}=\min(P,10 \beta^{*} \rho\omega k )}\label{eq:Ptilde-1-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}P & =\mu_{t}\partial_{j}U_{i}(\partial_{j}U_{i}+\partial_{i}U_{j})\\
+ & =\mu_{t}grad(U)2S_{ij}\\
+\\
+\\
+\end{alignedat}
+\label{eq:P-1-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+CD_{k\omega}=\max(2\rho\sigma_{\omega2}\frac{1}{\omega}\frac{\partial k}{\partial x_{j}}\frac{\partial\omega}{\partial x_{j}},10^{-10})\label{eq:MenterCDKOmega-1-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F_{1}=\tanh(arg_{1}^{4})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+arg_{1}=\min\left[\max\left(\frac{\sqrt{k}}{\beta^{*}\omega y},\frac{500\nu}{y^{2}\omega}\right),\frac{4\rho\sigma_{\omega2}k}{CD_{k\omega}y^{2}}\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F_{2}=tanh(arg_{2}^{2})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+arg_{2}=\max\left(\frac{2\sqrt{k}}{\beta^{*}\omega y},\frac{500\nu}{y^{2}\omega}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
@@ -479,6 +636,17 @@ An Introduction to Computational Fluid Dynamics: The Finite Volume Method,
  Versteeg, H.K.
  and Malalasekera, W.
  2007
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+For further study
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Computational Methods for Fluid Dynamics 3rd Edition, Joel H.
+ Ferziger, Mmilovan Peric
 \end_layout
 
 \end_deeper
@@ -513,6 +681,20 @@ https://en.wikipedia.org/wiki
 
 \end_deeper
 \begin_layout Itemize
+General CFD resources
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+https://www.cfd-online.com/Wiki/
+\end_layout
+
+\begin_layout Itemize
+https://www.cfd-online.com/Forums/
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 For advanced studies in OpenFOAM
 \end_layout
 
@@ -535,29 +717,163 @@ Programs, programming, libraries etc.
 \end_layout
 
 \begin_layout Itemize
+Python
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Anaconda
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Probably the easiest entry point for Windows users
+\end_layout
+
+\begin_layout Itemize
+Contains most of the scientific libraries you are ever going to need
+\end_layout
+
+\begin_layout Itemize
+For Linux users, I would recommend using your favorite package manager (apt)
+ or PIP.
+\end_layout
+
+\begin_layout Itemize
 https://anaconda.org/
 \end_layout
 
+\end_deeper
+\begin_layout Itemize
+Spyder(3) 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The authors favorite integrated development environment (IDE)
+\end_layout
+
+\begin_layout Itemize
+Especially designed for scientific use
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Scipy, Numpy, Matplotlib,...
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The most common scientific libraries in Python
+\end_layout
+
+\begin_layout Itemize
+Probably more than enough for a beginner
+\end_layout
+
+\begin_layout Itemize
+If you need symbolic math, look into Sympy
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+PIP 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Pythons own package manager.
+ Similar to Play Store etc.
+ Linux package managers.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+OpenFOAM
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Open source, mature, FVM based CFD software
+\end_layout
+
+\begin_layout Itemize
+Many different versions available, at the moment I would recommend 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+http://www.openfoam.com/
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Others
+\end_layout
+
+\begin_deeper
 \begin_layout Itemize
 http://www.openfoam.org/
 \end_layout
 
 \begin_layout Itemize
-http://www.openfoam.com/
+http://openfoamwiki.net/index.php/Installation/Linux/foam-extend-4.0/Ubuntu
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+ANSYS
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Commercial software containing CFD modules
+\end_layout
+
+\begin_layout Itemize
+Free, limited, edition available for students
 \end_layout
 
 \begin_layout Itemize
 http://www.ansys.com/
 \end_layout
 
+\end_deeper
+\begin_layout Itemize
+FEniCS
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Open source, easy to use FEM library for programming your own solvers in
+ Python
+\end_layout
+
+\begin_layout Itemize
+excellent documentation and interface
+\end_layout
+
 \begin_layout Itemize
 https://fenicsproject.org/
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+FiPy
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Open source FVM library for programming your own solver in Python
 \end_layout
 
 \begin_layout Itemize
 https://www.ctcms.nist.gov/fipy/index.html
 \end_layout
 
+\end_deeper
 \begin_layout Section*
 \begin_inset Note Note
 status open

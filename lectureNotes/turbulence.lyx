@@ -97,6 +97,12 @@ key "versteeg2007"
 \end_layout
 
 \begin_layout Standard
+For compact, well organized, information, I would especially recommend cfd-onlin
+e (https://www.cfd-online.com/Wiki/Turbulence).
+ 
+\end_layout
+
+\begin_layout Standard
 In this section we will learn the basic concepts of turbulence modeling
  in computational fluid dynamics.
  We will concentrate on the methods with most practical usage, the Reynolds
@@ -127,6 +133,24 @@ However, we will not discuss these more advanced models here.
 \end_inset
 
 -SST.
+\end_layout
+
+\begin_layout Subsection
+Disclaimer
+\end_layout
+
+\begin_layout Standard
+Turbulence modeling is a much studied subject that still lack a generally
+ accepted solution.
+ It is rather impossible to give generally accepted definitions on as there
+ are very few.
+ Different authors disagree on naming conventions and definitions.
+ 
+\end_layout
+
+\begin_layout Standard
+However, this section attempts to give a general insight into most common
+ turbulence models without going too much into the details.
 \end_layout
 
 \begin_layout Subsection
@@ -482,6 +506,7 @@ reference "eq:incompressibleConstantNuNSNonConservative"
 \rho\left(\frac{\partial U}{\partial t}+\frac{\partial\left(U_{j}U_{i}\right)}{\partial x_{j}}\right) & +\underbrace{\frac{\partial\left(\rho\overline{u_{i}'u_{j}^{\prime}}\right)}{\partial x_{j}}}_{\text{Reynolds stress}}=\mu\frac{\partial^{2}U_{i}}{\partial x_{j}\text{²}}-\frac{\partial P}{\partial x_{i}}+F_{i}\\
 \rho\left(\frac{\partial U}{\partial t}+\frac{\partial\left(U_{j}U_{i}\right)}{\partial x_{j}}\right) & =\frac{\partial}{\partial x_{j}}\left(\mu\frac{\partial U_{i}}{\partial x_{j}}-\underbrace{\rho\overline{u_{i}'u_{j}^{\prime}}}_{\text{Reynolds stress}}\right)-\frac{\partial P}{\partial x_{i}}+F_{i}
 \end{alignedat}
+\label{eq:RANS}
 \end{equation}
 
 \end_inset
@@ -579,24 +604,424 @@ compressible flow equations
  The end results is very similar, and we will not repeat the analysis here.
 \end_layout
 
-\begin_layout Paragraph
-Reynolds stress
-\end_layout
+\begin_layout Standard
+The Reynolds averaged momentum equations, Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:RANS"
 
-\begin_layout Paragraph
-Boussinesq hypotesis 
-\end_layout
+\end_inset
 
-\begin_layout Subsubsection
-Linear eddy viscosity models
-\end_layout
+, are very similar to the original equations, Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:incompressibleConstantNuNSNonConservative"
 
-\begin_layout Subsubsection
-Nonlinear eddy viscosity models
+\end_inset
+
+.
+ Now, however, we have one extra term, the Reynolds stress 
+\begin_inset Formula $\rho\overline{u_{i}'u_{j}^{\prime}}$
+\end_inset
+
+.
+ This causes a closure problem as the Reynolds stress cannot be directly
+ calculated from the other quantities.
+ This creates a need for turbulence models.
+ 
 \end_layout
 
 \begin_layout Subsubsection
 Reynolds stress model (RSM) 
+\end_layout
+
+\begin_layout Standard
+Reynolds stress models are the most direct models using the Reynolds averaged
+ form.
+ Extending the Reynolds stress tensor we get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+-\rho\overline{u_{i}'u_{j}^{\prime}}=\begin{bmatrix}-\rho\overline{u'u'} & -\rho\overline{u'v'} & -\rho\overline{u'w'}\\
+-\rho\overline{v'u'} & -\rho\overline{v'v'} & -\rho\overline{v'w'}\\
+-\rho\overline{w'u'} & -\rho\overline{w'v'} & -\rho\overline{w'w'}
+\end{bmatrix}\label{eq:ReynodldsStressTenosr}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which is symmetric, (
+\begin_inset Formula $-\rho\overline{u'w'}=-\rho\overline{w'u'}$
+\end_inset
+
+ etc.) and contains six free terms.
+ 
+\end_layout
+
+\begin_layout Standard
+Reynolds stress models attempt to model these six terms separately.
+ In addition, some form of turbulence dissipation term is modeled.
+ This gives rise to 
+\series bold
+seven new transport equations
+\series default
+, all with their own optimized parameters.
+ 
+\end_layout
+
+\begin_layout Standard
+Reynolds stress models fit some cases well, but in general, simpler models
+ are preferred.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Boussinesq eddy viscosity hypothesis 
+\end_layout
+
+\begin_layout Standard
+To simplify the closure problem with Reynolds stress 
+\begin_inset Formula $\rho\overline{u_{i}'u_{j}^{\prime}}$
+\end_inset
+
+ the Boussinesq eddy viscosity hypothesis, often called Boussinesq hypothesis,
+ is often used.
+ The Boussinesq hypothesis states that we can solve the Reynolds stress
+ from analogy to viscous stress by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\rho\overline{u_{i}'u_{j}^{\prime}} & \approx2\mu_{t}S_{ij}-\frac{2}{3}\rho k\delta_{ij}\\
+ & =\mu_{t}\left(\frac{\partial U_{i}}{\partial x_{j}}+\frac{\partial U_{j}}{\partial x_{i}}-\frac{2}{3}\frac{\partial U_{k}}{\partial x_{k}}\delta_{ij}\right)-\frac{2}{3}\rho k\delta_{ij}
+\end{alignedat}
+\label{eq:buossinesqCOmp}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+for incompressible flow 
+\begin_inset Formula $\frac{2}{3}\frac{\partial U_{k}}{\partial x_{k}}\delta_{ij}=0$
+\end_inset
+
+ and we get 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\rho\overline{u_{i}'u_{j}^{\prime}} & \approx2\mu_{t}S-\frac{2}{3}\rho k\delta_{ij}\\
+ & =\mu_{t}\left(\frac{\partial U_{i}}{\partial x_{j}}+\frac{\partial U_{j}}{\partial x_{i}}\right)-\frac{2}{3}\rho k\delta_{ij}
+\end{alignedat}
+\label{eq:boussinesq}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\mu_{t}$
+\end_inset
+
+ is turbulent viscosity and 
+\begin_inset Formula $k$
+\end_inset
+
+ is turbulent kinetic energy, see Sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:k--models"
+
+\end_inset
+
+.
+ Note the remarkable similarity between Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:buossinesqCOmp"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:boussinesq"
+
+\end_inset
+
+ to Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:tau"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The turbulent viscosity 
+\begin_inset Formula $\mu_{t}$
+\end_inset
+
+ is artifact arising from the Boussinesq hypothesis.
+ It is not 
+\begin_inset Quotes eld
+\end_inset
+
+real
+\begin_inset Quotes erd
+\end_inset
+
+ and it is not a fluid property like viscosity 
+\begin_inset Formula $\mu$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+However, turbulent viscosity and Boussinesq hypothesis have proven very
+ useful.
+ The reason for this is that real viscosity and turbulent viscosity often
+ have a similar effect on the 
+\bar under
+mean
+\bar default
+ flow flow field.
+ 
+\end_layout
+
+\begin_layout Standard
+Viscosity transports information by diffusion giving rise to a smooth field.
+ The small eddies of a turbulent flow perform a similar transport and smoothing
+ effect on a 
+\bar under
+time averaged
+\bar default
+ flow field.
+ 
+\end_layout
+
+\begin_layout Standard
+It is very important to remember that when using RANS, we are calculating
+ 
+\bar under
+time averaged flow fields
+\bar default
+.
+\end_layout
+
+\begin_layout Standard
+The mean problem with Boussinesq hypothesis is that it renders the turbulence
+ isotropic.
+ Real turbulence is anisotropic.
+ 
+\end_layout
+
+\begin_layout Standard
+The Boussinesq hypothesis is a linear eddy viscosity model.
+ It is so similar to the viscous stress that viscosity and turbulent viscosity
+ are often combined to into a effective viscosity as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mu_{eff}=\mu+\mu_{t}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which can often be substituted for for viscosity when using RANS modeling.
+ The term 
+\begin_inset Formula $-\frac{2}{3}\rho k\delta_{ij}$
+\end_inset
+
+ is often ignored in the literature.
+ This omission is a mystery to the author.
+\end_layout
+
+\begin_layout Standard
+Non-linear models also exist, and often have a form similar to 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $-\rho\overline{u_{i}'u_{j}'}=2\mu_{t}f(S_{ij},\Omega_{ij},...)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $S_{ij}$
+\end_inset
+
+ is the mean strain rate similar to Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:buossinesqCOmp"
+
+\end_inset
+
+,
+\begin_inset Formula $\Omega_{ij}$
+\end_inset
+
+ is the mean vorticity and 
+\begin_inset Formula $f$
+\end_inset
+
+ is some non-linear function.
+\end_layout
+
+\begin_layout Standard
+The Boussinesq hypothesis leaves us with another closure problem, the turbulent
+ viscosity 
+\begin_inset Formula $\mu_{t}$
+\end_inset
+
+ is not defined.
+ Great many variations to calculate turbulent viscosity exists, but the
+ two equation models are most common at the moment.
+ We will study two example: standard k-
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ and k-
+\begin_inset Formula $\omega$
+\end_inset
+
+-SST.
+ 
+\end_layout
+
+\begin_layout Standard
+Note that the turbulent viscosity 
+\begin_inset Formula $\mu_{t}$
+\end_inset
+
+ is usually the only contribution from the turbulence model to the RANS
+ equations.
+\end_layout
+
+\begin_layout Subsection
+Two equation models
+\end_layout
+
+\begin_layout Standard
+Most common RANS models are two equation models.
+ They have two new transport equations, one for turbulent velocity scale
+ and one for length scale.
+ 
+\end_layout
+
+\begin_layout Standard
+The usual choice for time scale is turbulent kinetic energy 
+\begin_inset Formula 
+\[
+k=\frac{1}{2}\left(u'\text{²}+v'\text{²}+w'\text{²}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The usual choices for time scale are turbulent kinetic energy dissipation
+ per per unit mass 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ and specific turbulence dissipation 
+\begin_inset Formula $\omega\sim\frac{\epsilon}{k}$
+\end_inset
+
+.
+ The exact correspondence between 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ and 
+\begin_inset Formula $\omega$
+\end_inset
+
+ varies from model to model and author to author.
+ 
+\end_layout
+
+\begin_layout Standard
+The length scale 
+\begin_inset Formula $l$
+\end_inset
+
+ and velocity scale 
+\begin_inset Formula $v$
+\end_inset
+
+ are used to define turbulent viscosity as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\nu_{t}=C_{\mu}vl=C_{\mu}\frac{k\text{²}}{\epsilon}=C_{\mu}\frac{k}{\omega}\label{eq:nut}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $C_{\mu}$
+\end_inset
+
+is a dimensionless constant.
+ Note, again, that the exact definitions of Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:nut"
+
+\end_inset
+
+ vary.
+\end_layout
+
+\begin_layout Standard
+I would advice high criticism on turbulence models in the literature.
+ Error are typical and the naming conventions vary.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -605,6 +1030,99 @@ k-
 \end_inset
 
  models
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:k--models"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Standard k-
+\begin_inset Formula $\mathrm{\epsilon}$
+\end_inset
+
+ model is mostly of historical interest.
+ k-
+\begin_inset Formula $\mathrm{\omega}$
+\end_inset
+
+-SST and other similar models perform almost always as well or better than
+ standard k-
+\begin_inset Formula $\mathrm{\epsilon}$
+\end_inset
+
+ model.
+ The standard k-
+\begin_inset Formula $\mathrm{\epsilon}$
+\end_inset
+
+ model is, however, easy to understand and many newer models are very similar.
+ k-
+\begin_inset Formula $\mathrm{\epsilon}$
+\end_inset
+
+ models form a large family, giving very different results in different
+ cases.
+\end_layout
+
+\begin_layout Standard
+The transport equations are
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\underbrace{\frac{\partial\rho k}{\partial t}}_{\text{time derivative}}+\underbrace{\frac{\partial\rho ku_{i}}{\partial x_{i}}}_{\text{advection}} & =\underbrace{\frac{\partial}{\partial x_{j}}\left[\left(\mu+\frac{\mu_{t}}{\sigma_{k}}\right)\frac{\partial k}{\partial x_{j}}\right]}_{\text{diffusion}}+\underbrace{2\mu_{t}S_{ij}\cdot S_{ij}}_{\text{production}}-\underbrace{\rho\epsilon}_{\text{dissipation}}\\
+\underbrace{\frac{\partial\rho\epsilon}{\partial t}}_{\text{time derivative}}+\underbrace{\frac{\partial\rho\epsilon u_{i}}{\partial x_{i}}}_{\text{advection}} & =\underbrace{\frac{\partial}{\partial x_{j}}\left[\left(\mu+\frac{\mu_{t}}{\sigma_{\epsilon}}\right)\frac{\partial\epsilon}{\partial x_{j}}\right]}_{\text{diffusion}}+\underbrace{C_{1\epsilon}\frac{\epsilon}{k}2\mu_{t}S_{ij}\cdot S_{ij}}_{\text{production}}-\underbrace{C_{2\epsilon}\rho\frac{\epsilon\text{²}}{k}}_{\text{dissipation}}\\
+\mu_{t} & =\rho C_{\mu}\frac{k\text{²}}{\epsilon}
+\end{alignedat}
+\label{eq:kepsilon}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\sigma_{k},\sigma_{\epsilon},C_{\mu},C_{1\epsilon},$
+\end_inset
+
+ and 
+\begin_inset Formula $C_{2\epsilon}$
+\end_inset
+
+ are dimensionless constants.
+ The constants are optimized to give best possible performance in the design
+ cases.
+ 
+\end_layout
+
+\begin_layout Standard
+The Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:kepsilon"
+
+\end_inset
+
+ have rather standard form for a transport equations.
+ They both have a time derivative, advection, diffusion, production, and
+ dissipation terms.
+ All of these terms can be tackled with the methods discussed in Sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Heat-advection-and"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
@@ -612,11 +1130,581 @@ k-
 \begin_inset Formula $\mathrm{\omega}$
 \end_inset
 
- models
+-SST
+\end_layout
+
+\begin_layout Standard
+k-
+\begin_inset Formula $\mathrm{\omega}$
+\end_inset
+
+-SST model is very similar to earlier k-
+\begin_inset Formula $\mathrm{\omega}$
+\end_inset
+
+ and k-
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ models.
+ With some clever trick it, however, manages to combine the best parts of
+ them into a single model.
+ It usually performs as well, or better, than other linear two equation
+ RANS models.
+ 
+\end_layout
+
+\begin_layout Standard
+Generally speaking, k-
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ perform well far from wall and k-
+\begin_inset Formula $\omega$
+\end_inset
+
+ near walls.
+ k-
+\begin_inset Formula $\mathrm{\omega}$
+\end_inset
+
+-SST performs interpolation between these two models taking the best parts
+ of both.
+ 
+\end_layout
+
+\begin_layout Standard
+Another critical detail about k-
+\begin_inset Formula $\mathrm{\omega}$
+\end_inset
+
+-SST is that includes limiters.
+ Most linear two equation models are designed for flows that align with
+ bounding wall and where pressure gradients are negative or small.
+ If these criterion are violated, most linear two equation model give very
+ high values of turbulence production.
+ k-
+\begin_inset Formula $\mathrm{\omega}$
+\end_inset
+
+-SST has a limiter that, to some extend, limits the problem.
+\end_layout
+
+\begin_layout Standard
+The transport equations are
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\underbrace{\frac{\partial(\rho k)}{\partial t}}_{\text{time derivative}}+\underbrace{\frac{\partial(\rho U_{j}k)}{\partial x_{j}}}_{\text{advection}}=\underbrace{\frac{\partial}{\partial x_{i}}\left[(\mu+\sigma_{k}\mu_{t})\frac{\partial k}{\partial x_{i}}\right]}_{\text{diffusion}}+\underbrace{\tilde{P}}_{\text{production}}-\underbrace{\beta^{*}\rho k\omega}_{\text{dissipation}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\underbrace{\frac{\partial(\rho\omega)}{\partial t}}_{\text{time derivative}}+\underbrace{\frac{\partial(\rho U_{i}\omega)}{\partial x_{i}}}_{\text{advection}} & =\underbrace{\frac{\partial}{\partial x_{i}}\left[(\mu+\sigma_{\omega}\mu)\frac{\partial\omega}{\partial x_{i}}\right]}_{\text{diffusion}}+\underbrace{\frac{\alpha\tilde{P_{k}}}{\nu_{t}}}_{\text{production}}-\underbrace{\beta\rho\omega^{2}}_{\text{dissipation}}\\
+ & +2(1-F_{1})\rho\sigma_{\omega2}\frac{1}{\omega}\frac{\partial k}{\partial x_{i}}\frac{\partial\omega}{\partial x_{i}}\\
+\\
+\end{alignedat}
+\label{eq:omegaEq-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mu_{t}=\frac{\rho a_{1}k}{\max(a_{1}\omega,SF_{2})}\label{eq:mut-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\text{\tilde{P}=\min(P,10 \beta^{*} \rho\omega k )}\label{eq:Ptilde-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}P & =\mu_{t}\partial_{j}U_{i}(\partial_{j}U_{i}+\partial_{i}U_{j})\\
+ & =\mu_{t}grad(U)2S_{ij}
+\end{alignedat}
+\label{eq:P-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $a_{1},\alpha,\sigma_{k},\sigma_{\omega},\beta,\beta^{*},$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma_{\omega2}$
+\end_inset
+
+ are dimensionless constant.
+ Terms 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+and 
+\begin_inset Formula $F_{2}$
+\end_inset
+
+ are interpolation functions.
+ 
+\end_layout
+
+\begin_layout Standard
+Most of the terms in k-
+\begin_inset Formula $\omega$
+\end_inset
+
+-SST are very similar to k-
+\begin_inset Formula $\epsilon$
+\end_inset
+
+.
+ They are just expressed using 
+\begin_inset Formula $\omega\sim\frac{\epsilon}{k}$
+\end_inset
+
+ instead of 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+.
+ Now, however, we have limiters for production 
+\begin_inset Formula $\tilde{P}$
+\end_inset
+
+ and turbulent viscosity 
+\begin_inset Formula $\mu_{t}$
+\end_inset
+
+.
+ The interpolation terms 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+and 
+\begin_inset Formula $F_{2}$
+\end_inset
+
+ make the model behave differently in different parts of the flow.
+ 
+\end_layout
+
+\begin_layout Standard
+For full equations, see Appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Full-k--SST"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Energy equation
+\end_layout
+
+\begin_layout Standard
+This far we have only talked about the momentum equation.
+ Reynolds averaging also creates a new term in energy equation.
+ From Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:energy"
+
+\end_inset
+
+ we get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\rho h}{\partial t}+\nabla\cdot(\rho\mathbf{u}h)=\nabla\cdot\left(\left(\alpha+\alpha_{t}\right)\nabla h\right)+S_{h}+\rho\mathbf{g}\cdot\mathbf{u}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\alpha_{t}$
+\end_inset
+
+ is turbulent thermal diffusivity.
+\end_layout
+
+\begin_layout Standard
+Turbulent thermal diffusivity is usually defined using a turbulent Prandtl
+ number
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{Pr_{t}=\frac{\nu_{t}}{\alpha_{t}}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+in analogy to Prandtl number 
+\begin_inset Formula $\mathrm{Pr}=\frac{\nu}{\alpha}.$
+\end_inset
+
+ Turbulent Prandtl number is usually taken to be 
+\begin_inset Formula $0.85$
+\end_inset
+
+ but it varies between 
+\begin_inset Formula $0.7$
+\end_inset
+
+ and 
+\begin_inset Formula $1$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Inlet and outlet
+\end_layout
+
+\begin_layout Standard
+As all other fields, turbulent kinetic energy and dissipation (
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ or 
+\begin_inset Formula $\omega$
+\end_inset
+
+) require boundary condition.
+ It is very common that the inlet conditions are not known and we have to
+ make educated guesses.
+ For outlet, some form of zero gradient is usually used.
+\end_layout
+
+\begin_layout Standard
+A common way to estimate inlet turbulence properties is to use turbulence
+ intensity as a estimate of turbulent kinetic energy as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+I=\frac{u'}{U}=\frac{\sqrt{\frac{2}{3}k}}{\sqrt{U_{x}\text{²}+U_{y}\text{²}+U_{z}\text{²}}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Typical turbulence intensities vary between 1% and 5%.
+ Turbulent intensity can also be calculated for some known cases.
+ For example a pipe has
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+I=0.16\mathrm{Re_{d_{h}}^{-\frac{1}{8}}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\mathrm{Re_{d_{h}}}$
+\end_inset
+
+is Reynolds number based on hydraulic diameter.
+\end_layout
+
+\begin_layout Standard
+Turbulent dissipation rate 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ can be estimated from turbulent kinetic energy 
+\begin_inset Formula $k$
+\end_inset
+
+ and length scale 
+\begin_inset Formula $l$
+\end_inset
+
+ as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\epsilon=C_{\mu}^{3/4}\frac{k^{3/2}}{l}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where the length scale must be estimated somehow.
+ For a duct
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+l=0.07d_{h}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Specific dissipation 
+\begin_inset Formula $\omega\sim\frac{\epsilon}{k}$
+\end_inset
+
+ can be estimated similarly.
+ 
+\end_layout
+
+\begin_layout Standard
+Similarly, dissipation can be estimated by defining viscosity ratio at the
+ inlet
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\epsilon=\rho C_{\mu}\frac{k\text{²}}{\mu}\left(\frac{\mu_{t}}{\mu}\right)^{-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Most CFD software have boundary conditions similar to these.
+\end_layout
+
+\begin_layout Standard
+If the flow will have no time to develop before in enter the area of interest
+ in the simulation, the inlet turbulence conditions might be of large importance.
+ In general, it is better to avoid this problem by placing the inlet far
+ enough upstream for developed flow conditions to form.
 \end_layout
 
 \begin_layout Subsection
 Wall functions
+\end_layout
+
+\begin_layout Standard
+In addition to inlets and outlets, we usually have walls in our simulations.
+ The handling of walls is widely different in different models.
+ We will briefly study two main strategies: using wall functions and not
+ using them.
+ 
+\end_layout
+
+\begin_layout Standard
+We start our study of the wall behavior by remembering the law of the wall
+ from general fluid dynamics studies.
+ The average velocity of turbulent flow near a wall is 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}u^{+} & =\frac{1}{\kappa}\mathrm{ln}y^{+}+C^{+}\\
+y^{+} & =\frac{yu_{\tau}}{\nu}\\
+u_{\tau} & =\sqrt{\frac{\tau_{w}}{\rho}}\\
+u^{+} & =\frac{u}{u_{\tau}}
+\end{alignedat}
+\label{eq:lawOfTheWall}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\kappa\approx0.41$
+\end_inset
+
+and 
+\begin_inset Formula $C^{+}\approx5.0$
+\end_inset
+
+ for a smooth wall.
+ Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:lawOfTheWall"
+
+\end_inset
+
+ is valid in the log law region shown in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Law-of-the"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/turbulence/558px-Law_of_the_wall_(English).svg.png
+	lyxscale 20
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Law of the wall 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Law-of-the"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wiki:lawOfTheWall"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If our flow behaves similarly to the case for which the Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Law-of-the"
+
+\end_inset
+
+, i.e.
+ follows a wall, we can relax our mesh quality criteria considerably.
+ 
+\end_layout
+
+\begin_layout Standard
+As can be seen from Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Law-of-the"
+
+\end_inset
+
+, there is a laminar and linear sub layer close to the wall.
+ This close to the wall, the turbulence dissipates away.
+ 
+\end_layout
+
+\begin_layout Standard
+If we want to solve the boundary layer directly, the nearest cell center
+ to the wall must be in the linear region, usually 
+\begin_inset Formula $y^{+}<1$
+\end_inset
+
+.
+ For turbulent kinetic energy we know that at the wall
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+k_{wall}=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+because velocity is zero.
+ For turbulent dissipation we have 
 \end_layout
 
 \end_body

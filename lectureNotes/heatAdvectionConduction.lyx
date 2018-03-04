@@ -79,6 +79,13 @@
 
 \begin_layout Section
 Heat advection and conduction
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Heat-advection-and"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
