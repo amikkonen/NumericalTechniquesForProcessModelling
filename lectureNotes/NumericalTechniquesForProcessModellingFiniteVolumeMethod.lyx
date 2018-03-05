@@ -147,7 +147,7 @@ Tampere University of Technology
 \begin_inset Newline newline
 \end_inset
 
-Version 0.3.x
+Version 0.4
 \begin_inset Newline newline
 \end_inset
 
@@ -226,6 +226,15 @@ Some license similar to creative commons will be added once the legal details
  For now, these notes are for use of the students of KEB-45250 only.
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang finnish
+\begin_inset VSpace vfill
 \end_inset
 
 
@@ -461,7 +470,7 @@ Section 4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.4
 \end_layout
 
 \end_inset

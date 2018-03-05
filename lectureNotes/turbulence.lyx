@@ -449,7 +449,7 @@ To avoid the fine mesh near wall, many models combine LES and RANS models.
 \end_layout
 
 \begin_layout Subsubsection
-Reynolds averaged Navier-Stokes (RANS)
+Reynolds averaged Navier-Stokes - RANS
 \end_layout
 
 \begin_layout Standard
@@ -503,8 +503,8 @@ reference "eq:incompressibleConstantNuNSNonConservative"
 \begin_inset Formula 
 \begin{equation}
 \begin{alignedat}{1}\frac{1}{\Delta t}\int_{t}^{t+\Delta t}\rho\left(\frac{\partial u}{\partial t}+\frac{\partial\left(u_{j}u_{i}\right)}{\partial x_{j}}\right) & \mathrm{d}t=\frac{1}{\Delta t}\int_{t}^{t+\Delta t}\left(\mu\frac{\partial^{2}u_{i}}{\partial x_{j}\text{²}}-\frac{\partial p}{\partial x_{i}}+f_{i}\right)\mathrm{d}t\\
-\rho\left(\frac{\partial U}{\partial t}+\frac{\partial\left(U_{j}U_{i}\right)}{\partial x_{j}}\right) & +\underbrace{\frac{\partial\left(\rho\overline{u_{i}'u_{j}^{\prime}}\right)}{\partial x_{j}}}_{\text{Reynolds stress}}=\mu\frac{\partial^{2}U_{i}}{\partial x_{j}\text{²}}-\frac{\partial P}{\partial x_{i}}+F_{i}\\
-\rho\left(\frac{\partial U}{\partial t}+\frac{\partial\left(U_{j}U_{i}\right)}{\partial x_{j}}\right) & =\frac{\partial}{\partial x_{j}}\left(\mu\frac{\partial U_{i}}{\partial x_{j}}-\underbrace{\rho\overline{u_{i}'u_{j}^{\prime}}}_{\text{Reynolds stress}}\right)-\frac{\partial P}{\partial x_{i}}+F_{i}
+\Leftrightarrow\rho\left(\frac{\partial U}{\partial t}+\frac{\partial\left(U_{j}U_{i}\right)}{\partial x_{j}}\right) & +\underbrace{\frac{\partial\left(\rho\overline{u_{i}'u_{j}^{\prime}}\right)}{\partial x_{j}}}_{\text{Reynolds stress}}=\mu\frac{\partial^{2}U_{i}}{\partial x_{j}\text{²}}-\frac{\partial P}{\partial x_{i}}+F_{i}\\
+\Leftrightarrow\rho\left(\frac{\partial U}{\partial t}+\frac{\partial\left(U_{j}U_{i}\right)}{\partial x_{j}}\right) & =\frac{\partial}{\partial x_{j}}\left(\mu\frac{\partial U_{i}}{\partial x_{j}}-\underbrace{\rho\overline{u_{i}'u_{j}^{\prime}}}_{\text{Reynolds stress}}\right)-\frac{\partial P}{\partial x_{i}}+F_{i}
 \end{alignedat}
 \label{eq:RANS}
 \end{equation}
@@ -634,7 +634,7 @@ reference "eq:incompressibleConstantNuNSNonConservative"
 \end_layout
 
 \begin_layout Subsubsection
-Reynolds stress model (RSM) 
+Reynolds stress model - RSM 
 \end_layout
 
 \begin_layout Standard
@@ -1678,7 +1678,21 @@ reference "fig:Law-of-the"
 
 , there is a laminar and linear sub layer close to the wall.
  This close to the wall, the turbulence dissipates away.
- 
+ Standard k-
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ is not suited for this low-Re region near wall.
+ Modified Low-Re k-
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ exists.
+ k-
+\begin_inset Formula $\omega$
+\end_inset
+
+-SST works both in high-Re and low-Re regions.
 \end_layout
 
 \begin_layout Standard
@@ -1704,7 +1718,48 @@ k_{wall}=0
 
 \begin_layout Standard
 because velocity is zero.
- For turbulent dissipation we have 
+ For specific turbulent dissipation 
+\begin_inset Formula $\omega$
+\end_inset
+
+ at the wall adjacent cell center we have
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\omega_{P}=\frac{\sqrt{k_{P}}}{C_{\mu}^{1/4}\kappa y_{P}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using wall functions based on the law of the wall, a much coarser mesh can
+ be used.
+ We will not work through the different wall functions as there are great
+ many options for different cases.
+ Most of them assume a equilibrium flow condition similar to the law of
+ the wall and require the wall adjacent cell center to be in the log law
+ region.
+\end_layout
+
+\begin_layout Standard
+In practice, we would usually choose a blending function that blends the
+ two approaches depending on local values.
+ This makes meshing much easier as the model will work in a wider region
+ of 
+\begin_inset Formula $y^{+}$
+\end_inset
+
+values.
+ Remember, however, that with complex flows, wall functions are unreliable.
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \end_body
