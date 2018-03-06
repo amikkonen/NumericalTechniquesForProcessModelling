@@ -1,0 +1,2 @@
+https://turbmodels.larc.nasa.gov/naca0012_val.html
+https://confluence.cornell.edu/display/SIMULATION/Airfoil+CFD+Validation+Using+a+NASA-provided+Mesh
