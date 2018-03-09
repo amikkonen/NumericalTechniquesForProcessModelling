@@ -89,7 +89,7 @@ Antti Mikkonen
 \end_layout
 
 \begin_layout Standard
-\begin_inset VSpace vfill
+\begin_inset Newpage newpage
 \end_inset
 
 
@@ -118,10 +118,10 @@ Introduction
 \begin_layout Standard
 This course contains three assignments: two about CFD and one that will
  be published later.
- At least one of the CFD assignments and the assignment that is published
+ At least one of the CFD assignments and the assignment that will be published
  later must be passed.
- It is also possible to complete all three assignments.
- If well done, this will earn a student 5-10% extra points.
+ It is also possible to return all three assignments.
+ This makes it possible to earn 5-10% extra points.
  See Sec.
  
 \begin_inset CommandInset ref
@@ -134,7 +134,7 @@ reference "sec:Course-grading"
 \end_layout
 
 \begin_layout Standard
-One of the CFD assignments is a classical 2D NACA 0012 airfoil turbulence
+The first of the CFD assignments is a classical 2D NACA 0012 airfoil turbulence
  model validation case.
  It is assumed that this assignment is completed with Fluent or OpenFOAM.
  If you wish to use some other tool, ask first.
@@ -149,8 +149,8 @@ reference "part:NACA-0012"
 \end_layout
 
 \begin_layout Standard
-The second CFD assignments is a 2D Blasius boundary layer solution with
- custom code.
+The second CFD option is a 2D Blasius boundary layer solution with finite
+ volume method using a custom code.
  In this case, the pressure term and many other terms in the general solution
  can be ignored.
  This makes the solution much easier.
@@ -171,8 +171,11 @@ Submitting the report
 \end_layout
 
 \begin_layout Standard
-Both CFD assignments will be reported and the report submitted to antti.mikkonen@
-tut.fi in pdf format.
+Both CFD assignments will be reported and the report submitted to 
+\begin_inset Newline newline
+\end_inset
+
+antti.mikkonen@tut.fi in pdf format.
 \end_layout
 
 \begin_layout Standard
@@ -186,7 +189,7 @@ Deadline Sunday 29.04.
 \end_layout
 
 \begin_layout Standard
-I will send a answer email withing 24 hours.
+I will send an answer email withing 24 hours.
  If you receive no such email, assume that something went wrong and contact
  me.
 \end_layout
@@ -211,21 +214,11 @@ If you use some third party sources, cite them in a good scientific manner.
 The report may be written in Finnish or English.
 \end_layout
 
-\begin_layout Section
-General requirements for the report
-\end_layout
-
 \begin_layout Standard
-The report must be given in pdf format.
- 
-\end_layout
-
-\begin_layout Standard
-It must be written in good scientific style with citations at appropriate
- places.
+The report must be written in good scientific style with citations at appropriat
+e places.
  Equations, figures, etc.
- must be numbered.
- 
+ must be numbered and referenced in the text.
 \end_layout
 
 \begin_layout Standard
@@ -273,9 +266,11 @@ target "https://www.lyx.org/Screenshots"
 \end_inset
 
 ).
- It combines the automated functionality of LaTeX to a pretty GUI.
+ It combines the automated functionality of LaTeX to a graphical user interface.
  Especially equation typing is much easier in a little more graphical environmen
 t.
+ Equation number, figure numbers, citations, cross-references, etc.
+ are handled automatically.
 \end_layout
 
 \begin_layout Standard
@@ -283,6 +278,7 @@ This pdf has been written in LyX and contains most of the elements you will
  need in your report.
  The raw LyX file is attached.
  If you are new to LyX, I would recommend using this file as a template.
+ I am happy to help with the report also.
 \end_layout
 
 \begin_layout Standard
@@ -320,7 +316,6 @@ name "sec:Course-grading"
 
 \begin_layout Standard
 The exact method for weighting the grades will be decided later.
- 
 \end_layout
 
 \begin_layout Itemize
@@ -426,11 +421,7 @@ The assignment that will be published later
 
 \begin_deeper
 \begin_layout Itemize
-must be passed, grading 0-5
-\end_layout
-
-\begin_layout Itemize
-15% weight 
+must be passed, grading 0-5, 15% weight 
 \end_layout
 
 \end_deeper
@@ -460,9 +451,16 @@ reference "fig:NACA-0012"
 
 , validation case for our assignment.
  See NASA for details (https://turbmodels.larc.nasa.gov/naca0012_val.html).
- It should be easy to find other references as well.
+ Note that the CFD studies references on the NASA page are quite old.
+ Modern models are easier to use.
+ 
+\end_layout
+
+\begin_layout Standard
+It should be easy to find newer references as well.
  It is recommended to spend a while learning how large a domain, how fine
  a mesh, and what kind of turbulence model you need.
+ The case can be solved in 2D and steady state.
  
 \end_layout
 
@@ -508,12 +506,7 @@ name "fig:NACA-0012"
 \end_layout
 
 \begin_layout Standard
-The case can be solved in 2D and steady state.
- 
-\end_layout
-
-\begin_layout Standard
-The measured values are usually given using dimensionless numbers.
+The measured values are usually given in dimensionless units.
  It should not matter how you choose the dimensions, but the values in Table
  
 \begin_inset CommandInset ref
@@ -531,7 +524,7 @@ Input values
 
 \begin_layout Standard
 The angle of attach is based on the last digit of student number.
- All other parameters are the same for all, see Tables 
+ All other parameters are the same for everyone, see Tables 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Inputs"
@@ -1079,7 +1072,7 @@ Measurement data from NASA
 
 \begin_deeper
 \begin_layout Itemize
-LadsonForceData.txt
+filesForNACA0012/LadsonForceData.txt
 \end_layout
 
 \end_deeper
@@ -1089,7 +1082,7 @@ This pdf, and the LyX files used to create it
 
 \begin_deeper
 \begin_layout Itemize
-lyxRawFiles
+filesForNACA0012/lyxRawFiles
 \end_layout
 
 \end_deeper
@@ -1099,11 +1092,7 @@ Geometry files for structured mesh and unstructured meshes
 
 \begin_deeper
 \begin_layout Itemize
-NACA0012_structured_small_domain.agdb
-\end_layout
-
-\begin_layout Itemize
-NACA0012_unstructured_small_domain.agdb
+filesForNACA0012/geometry
 \end_layout
 
 \end_deeper
@@ -1113,7 +1102,7 @@ An intentionally coarse and small mesh for testing
 
 \begin_deeper
 \begin_layout Itemize
-structuredMesh_coarse_small_domain.msh
+filesForNACA0012/mesh
 \end_layout
 
 \end_deeper
@@ -1123,7 +1112,7 @@ Some code that might be useful
 
 \begin_deeper
 \begin_layout Itemize
-code_snippets.py 
+filesForNACA0012/code_snippets.py 
 \end_layout
 
 \end_deeper
@@ -1131,6 +1120,12 @@ code_snippets.py
 Chosen tutorials, provided by EDR&Medeso
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+filesForNACA0012/tutorials
+\end_layout
+
+\end_deeper
 \begin_layout Section
 Include in your report
 \end_layout
@@ -1139,17 +1134,33 @@ Include in your report
 Calculate drag and lift coefficients
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+In this case, CFD should give very food results
+\end_layout
+
+\begin_layout Itemize
+On the NASA page, see the What to Expect section
+\end_layout
+
+\begin_layout Itemize
+For example, SST model gives very good results (https://turbmodels.larc.nasa.gov/na
+ca0012_val_sst.html)
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 Two turbulence models
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-Both must make sense but only one needs to give correct results
+Discuss the differences and similarities between models
 \end_layout
 
 \begin_layout Itemize
-Do not, for example, choose a low Re model for high Re flow
+It is required for one of the models to give comparable results to those
+ reported by NASA
 \end_layout
 
 \end_deeper
@@ -1159,7 +1170,7 @@ Mesh Independence study
 
 \begin_deeper
 \begin_layout Itemize
-You may use a mesh from a 3rd party for comparison.
+You may use a mesh from a 3rd party for comparison
 \end_layout
 
 \begin_layout Itemize
@@ -1207,6 +1218,12 @@ Discretization schemes
 Convergence
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+Monitors of lift and drag are a good criteria
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 Governing equations 
 \end_layout
@@ -1225,6 +1242,42 @@ Boundary conditions
 \begin_deeper
 \begin_layout Itemize
 also for walls
+\end_layout
+
+\begin_layout Itemize
+Some wall functions are very complicated.
+ Just explain the basics.
+ If you are using Fluent, the Fluent theory guide is a good source.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Qualitative flow field visualization
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Velocity field and pressure field contours, perhaps
+\end_layout
+
+\begin_layout Itemize
+Velocity vectors or streamlines
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Only discuss one model in detail
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+There is no need to plot results of the cases used in the mesh independency
+ study, for example
+\end_layout
+
+\begin_layout Itemize
+Use tables or charts to compactly explain than you have done tried other
+ meshes, domain sizes, etc.
 \end_layout
 
 \end_deeper
@@ -1247,10 +1300,19 @@ near wall turbulence
 
 \begin_layout Itemize
 size of the domain.
- You likely need a large domain.
+ You will likely need a large domain.
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+The Fluent Theory manual, in ANSYS help, is very useful
+\end_layout
+
+\begin_layout Itemize
+Youtube has a lot of tutorials.
+ They are usually made with older versions but the differences are minor.
+\end_layout
+
 \begin_layout Itemize
 When using structured grids, large jumps in mesh size may cause discontinuities
  in the field values
@@ -1280,6 +1342,13 @@ WS04_Airfoil tutorial in the Fluent quick start by EDR&Medeso
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Part
 Blasius boundary layer
 \begin_inset CommandInset label
@@ -1296,7 +1365,16 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Blasius boundary layer has a well known analytical solution.
+Blasius boundary layer is a well known classic of fluid dynamics.
+ See, for example, Wikipedia (
+\begin_inset CommandInset href
+LatexCommand href
+name "https://en.wikipedia.org/wiki/Blasius_boundary_layer"
+target "https://en.wikipedia.org/wiki/Blasius_boundary_layer"
+
+\end_inset
+
+) Blasius boundary layer has a well known analytical solution.
  In this assignment, the same case is solved using finite volume method
  and a custom code.
  The analytical solution is used for validation.
@@ -1336,31 +1414,10 @@ The simplified governing equations of the Blasius boundary layer are
 \end_layout
 
 \begin_layout Standard
-The analytical solution is explained, for example, here https://www.calpoly.edu/~k
-shollen/ME347/Handouts/Blasius.pdf.
-\end_layout
-
-\begin_layout Standard
-The boundary layer is rather straight forward to solve because we can ignore
- the pressure gradient.
- Many other terms are also excluded during the derivation of Eqs.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:cont"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:NS-1"
-
-\end_inset
-
-.
- You may include the excluded terms in your finite volume solution or exclude
- them.
+Note that the equations given in Wikipedia have a pressure term.
+ We ignore it.
+ The analytical solution is explained, for example, in here https://www.calpoly.ed
+u/ ~kshollen/ME347/Handouts/Blasius.pdf.
 \end_layout
 
 \begin_layout Standard
@@ -1406,10 +1463,56 @@ name "fig:Blasius-boundary-layer"
 \end_layout
 
 \begin_layout Standard
+Because of the ignored pressure gradient, the Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cont"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:NS-1"
+
+\end_inset
+
+ are considerably easier to solve than more general Navier-Stokes equations.
+ As this assignment is outside the scope of the exercises done on this course,
+ it is likely it will require 
+\bar under
+a lot of work
+\bar default
+.
+\end_layout
+
+\begin_layout Standard
+Many other terms are also excluded during the derivation of Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cont"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:NS-1"
+
+\end_inset
+
+.
+ You may include the excluded terms in your finite volume solution or exclude
+ them.
+\end_layout
+
+\begin_layout Standard
 The Blasius boundary layer is well known and it should be easy to find reference
 s.
  It is recommended to use them.
- Just remember to cite the sources and write your own code.
+ Just remember to cite the sources and to write your own code.
  
 \end_layout
 
@@ -1432,10 +1535,20 @@ Include in your report
 \end_layout
 
 \begin_layout Itemize
-Running, parameterized code with validation
+Running, parameterized code
 \end_layout
 
 \begin_deeper
+\begin_layout Itemize
+The code should be able to accept velocity, viscosity, domain dimensions
+ and mesh size as parameters
+\end_layout
+
+\begin_layout Itemize
+The code should automatically plot the results of your finite volume code
+ in the same figure as the results from the validation code
+\end_layout
+
 \begin_layout Itemize
 It is required that you have written the code by yourself
 \end_layout
@@ -1445,14 +1558,9 @@ include the code when sending the report.
  In a .py format
 \end_layout
 
-\begin_layout Itemize
-the code should work in the whole range of applicability of the method
-\end_layout
-
 \end_deeper
 \begin_layout Itemize
-Validation with analytical solution in a couple of cases and at different
- locations of the domain.
+Include velocity plots for both the analytical solution and your solution
 \end_layout
 
 \begin_layout Itemize
@@ -1483,6 +1591,10 @@ Bag of tricks
 \end_layout
 
 \begin_layout Itemize
+Use sparse matrices 
+\end_layout
+
+\begin_layout Itemize
 The flow will require some space to develop.
  Use a large enough domain.
 \end_layout
@@ -1493,7 +1605,8 @@ Remember to validate you code in as small steps as possible
 
 \begin_deeper
 \begin_layout Itemize
-there will be bugs in the code
+During development, there will be bugs in the code.
+ It is easier to spot them early.
 \end_layout
 
 \end_deeper
