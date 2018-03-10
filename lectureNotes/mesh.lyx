@@ -1,0 +1,591 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\numberwithin{equation}{section}
+\usepackage{siunitx}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\paperheight 40cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Mesh
+\end_layout
+
+\begin_layout Standard
+We have already discussed meshes above on multiple occasions.
+ In Introduction, Sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Introduction"
+
+\end_inset
+
+, we introduced us to the most common mesh types.
+ In the turbulence section, Sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Turbulence"
+
+\end_inset
+
+, we discussed the effect of mesh to turbulence modeling and the 
+\begin_inset Formula $y^{+}$
+\end_inset
+
+.
+ Here, we will discuss the most important aspects of meshing that we missed
+ earlier.
+\end_layout
+
+\begin_layout Standard
+The importance of meshing should not be underestimated.
+ The mesh is the core of finite volume method and it is related to everything
+ discussed earlier.
+ Also, during the work flow of typical CFD case, meshing is usually the
+ most time consuming part.
+\end_layout
+
+\begin_layout Subsection
+Mesh quality
+\end_layout
+
+\begin_layout Standard
+The discretization is always based on some simplifying assumptions.
+ Usually, it is assumed that the cell faces are located between cell centers
+ and that the cell are, for example, perfect quads.
+ Following are some types of mesh quality criteria.
+\end_layout
+
+\begin_layout Standard
+Note that different software calculate things in different ways.
+ Therefore different things are of importance.
+ The definition for mesh quality criteria, for example skewness, also varies.
+\end_layout
+
+\begin_layout Standard
+Modern CFD codes use corrections for the errors listed below and it is near
+ impossible to create a perfect mesh for complex geometry.
+ All deviations from ideal mesh, however, cause additional errors in the
+ solution.
+\end_layout
+
+\begin_layout Subsubsection
+Orthogonality
+\end_layout
+
+\begin_layout Standard
+Usually, meshes are not perfectly orthogonal and some discretization arises
+ from nonorthogonality.
+ CFD software has correction schemes for nonorthogonality, some of which
+ are similar to liner upwind scheme.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/mesh/orthogonality.png
+	lyxscale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Nonorthogonality
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Nonorthogonality"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Skewness
+\end_layout
+
+\begin_layout Standard
+Skewness measures the deviation control volume shape from the ideal shape,
+ see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Skewness"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Skewness causes errors in interpolation.
+ For example, using linear interpolation we expect face centers to be on
+ a line between cell centers.
+ Deviations from this cause errors, see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Interpolation-error"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Correction approaches are used for the interpolation.
+ However, skewness should be avoided when possible.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/mesh/Skewnessquad.PNG
+	lyxscale 20
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Skewness 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Skewness"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wiki:skewness"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/mesh/skewError.png
+	lyxscale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Interpolation error 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Interpolation-error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Aspect ratio
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Aspect-ratio"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+All aspects of a cell should be similar.
+ Large deviations will cause errors.
+ See Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Aspect-ratio"
+
+\end_inset
+
+ for low and high aspect ratio cells.
+\end_layout
+
+\begin_layout Standard
+The size of the errors, however, vary according to the flow behavior.
+ For example, near wall, the changes in flow properties are highest in the
+ wall normal direction.
+ Therefore a largest number of cells are needed in that direction and large
+ aspect ratios cells are suitable.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/mesh/Aspect_ratio_grid.PNG
+	lyxscale 20
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Aspect ratio
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Aspect-ratio"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wiki:aspectRatio"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It should be noted that high aspect ratio cell are only suitable for RANS
+ simulations.
+ High aspect ratio cells are not able to represent eddies or waves.
+ Sometimes, the wave killing behavior of high aspect ratio cells can be
+ exploited.
+ For high speed compressible flows, for example, the shock waves are often
+ mirrored at outlets (zero gradient).
+ High aspect ratio cells can be used to dampen the shocks.
+\end_layout
+
+\begin_layout Subsubsection
+Smoothness
+\end_layout
+
+\begin_layout Standard
+The transition between cells sizes should be smooth.
+ Large jumps in cell size will cause discontinuities in field values.
+ See Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Smoothness"
+
+\end_inset
+
+ for examples.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/mesh/Smooth_and_Large_Jump.PNG
+	lyxscale 20
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Smoothness 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Smoothness"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wiki:smoothness"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Wall layer
+\end_layout
+
+\begin_layout Standard
+As mentioned in Sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Aspect-ratio"
+
+\end_inset
+
+, high aspect ratio cells can be used in wall boundary layers.
+ The flow in the boundary layer is usually aligned with the wall and gradients
+ in the wall normal direction dominate.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/mesh/wallLayers.png
+	lyxscale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Wall layers 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Wall-layers"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Usage of wall layers is especially relevant when no wall functions, see
+ Sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Wall-functions"
+
+\end_inset
+
+, are used or when near wall behavior is important.
+ Typical example would be a heat exchanger with complex flows.
+ 
+\end_layout
+
+\begin_layout Subsection
+Flow field dependency
+\end_layout
+
+\begin_layout Standard
+It should be remembered that the most important criteria for the mesh quality
+ are flow dependent.
+ We want a high quality mesh in the regions of interest, and often do not
+ really care about the rest.
+ It is common to, for example, use low quality mesh in the outlet region.
+ 
+\end_layout
+
+\begin_layout Standard
+To avoid false diffusion, mesh faces should align with the flow.
+ This is usually impossible as flows are complex.
+ Usually some kind of main flow directions is, however, obvious.
+ See Sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:False-diffusion"
+
+\end_inset
+
+ for more details.
+\end_layout
+
+\end_body
+\end_document
