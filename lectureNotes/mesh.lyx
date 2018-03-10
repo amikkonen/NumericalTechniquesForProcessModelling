@@ -146,10 +146,18 @@ Orthogonality
 \end_layout
 
 \begin_layout Standard
-Usually, meshes are not perfectly orthogonal and some discretization arises
- from nonorthogonality.
- CFD software has correction schemes for nonorthogonality, some of which
- are similar to liner upwind scheme.
+In orthogonal meshes, the face normals and lines between cell centers are
+ perfectly aligned.
+ A non-orthogonal example is shown in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Nonorthogonality"
+
+\end_inset
+
+.
+ Non-orthogonality causes discretization errors.
 \end_layout
 
 \begin_layout Standard
@@ -173,7 +181,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Nonorthogonality
+Non-orthogonality
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Nonorthogonality"
@@ -191,6 +199,13 @@ name "fig:Nonorthogonality"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Usually, meshes are not perfectly orthogonal and some discretization arises
+ from non-orthogonality.
+ CFD software has correction schemes for nonorthogonality, some of which
+ are similar to liner upwind scheme.
 \end_layout
 
 \begin_layout Subsubsection
@@ -484,6 +499,18 @@ key "wiki:smoothness"
 
 \end_layout
 
+\begin_layout Standard
+In Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Wall-layers"
+
+\end_inset
+
+ we a smooth transition from wall layer mesh to a regular mesh.
+\end_layout
+
 \begin_layout Subsection
 Wall layer
 \end_layout
@@ -569,6 +596,16 @@ It should be remembered that the most important criteria for the mesh quality
  We want a high quality mesh in the regions of interest, and often do not
  really care about the rest.
  It is common to, for example, use low quality mesh in the outlet region.
+ 
+\end_layout
+
+\begin_layout Standard
+Meshing is always a compromise between saving computational resources and
+ accuracy.
+ How much user time it is best to spend on mesh optimization depends on
+ available user time and computer resources.
+ If high powered computers are available, it might be better to save user
+ time and just make a very fine, non-optimized mesh.
  
 \end_layout
 
