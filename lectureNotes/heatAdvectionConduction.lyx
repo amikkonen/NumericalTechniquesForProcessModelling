@@ -1345,6 +1345,13 @@ l stabilizers.
 
 \begin_layout Subsection
 False diffusion
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:False-diffusion"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

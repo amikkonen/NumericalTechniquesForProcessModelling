@@ -79,6 +79,13 @@
 
 \begin_layout Section
 Turbulence
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Turbulence"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -97,8 +104,8 @@ key "versteeg2007"
 \end_layout
 
 \begin_layout Standard
-For compact, well organized, information, I would especially recommend cfd-onlin
-e (https://www.cfd-online.com/Wiki/Turbulence).
+For compact, well organized, information, I would recommend cfd-online (https://
+www.cfd-online.com/Wiki/Turbulence).
  
 \end_layout
 
@@ -111,28 +118,17 @@ In this section we will learn the basic concepts of turbulence modeling
 \end_layout
 
 \begin_layout Standard
-During the time of writing, turbulence models are under intense academical
- study.
- The lines between conventional approaches to turbulence modeling are blurring,
- as more and more models use some combination of RANS and LES.
- I would expect one form or another of these new hybrid models to become
- a dominant turbulence model in the near future.
- At the moment, I am most interested in 
+Great many different models exists, all with their advantages and weakness.
+ As a rule of a thump: if you do not know what to do, use 
 \begin_inset Formula $k-\omega$
 \end_inset
 
--SST SAS, as it requires minimal additional effort from the user.
- 
-\end_layout
-
-\begin_layout Standard
-However, we will not discuss these more advanced models here.
- Instead, I will give a simple rule of a thump: if you do not know what
- to do, use 
-\begin_inset Formula $k-\omega$
+-SST or k-
+\begin_inset Formula $\epsilon$
 \end_inset
 
--SST.
+ realizable with a wall function that works in most cases.
+ See the documentation of your software.
 \end_layout
 
 \begin_layout Subsection
@@ -142,8 +138,7 @@ Disclaimer
 \begin_layout Standard
 Turbulence modeling is a much studied subject that still lack a generally
  accepted solution.
- It is rather impossible to give generally accepted definitions on as there
- are very few.
+ It is rather impossible to give generally accepted definitions.
  Different authors disagree on naming conventions and definitions.
  
 \end_layout
@@ -158,8 +153,8 @@ Introduction to turbulence
 \end_layout
 
 \begin_layout Standard
-All flows will become turbulence with sufficiently large Reynolds number
- ,
+All flows will become turbulence with sufficiently large Reynolds number,
+ 
 \begin_inset Formula $\mathrm{Re}=\frac{UL}{\nu}$
 \end_inset
 
@@ -168,7 +163,7 @@ All flows will become turbulence with sufficiently large Reynolds number
  to dissipate the fluctuations arising from the non-linear nature of momentum
  advection.
  With higher Reynolds number, the momentum of the fluctuations becomes too
- powerful for the viscosity to dissipate.
+ strong for the viscosity to dissipate.
  This creates eddies in the flow.
  The eddies interact with the mean flow and with each other creating a highly
  non-linear and chaotic behavior.
@@ -186,11 +181,11 @@ For our purposes it is convenient to divide the instantaneous velocity
 \begin_inset Formula $U$
 \end_inset
 
- and fluctuating parts 
+ and fluctuating 
 \begin_inset Formula $u'$
 \end_inset
 
- as 
+ parts as 
 \end_layout
 
 \begin_layout Standard
@@ -285,6 +280,13 @@ Kolmogorov microscales
 and the eddy energy is dissipated into heat.
  The energy cascade is shown in Fig.
  
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Energy-cascade"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -338,10 +340,11 @@ key "wiki:energyCascade"
 
 \begin_layout Standard
 The large scale eddies are highly isotropic.
- The mean flow is component is usually dominant to the fluctuations.
+ The mean flow is usually dominant to the fluctuations.
  The velocity fluctuations have three components and the component aligning
  to the mean flow is usually larger than the other two.
- If there is a wall nearby, the component normal to the wall becomes small.
+ If there is a wall nearby, the component normal to the wall becomes the
+ smallest.
 \end_layout
 
 \begin_layout Standard
@@ -355,15 +358,7 @@ The small scales, however, are dominated by local phenomena and are isotropic.
 Many turbulence models are based on these two concepts: energy cascade and
  isotropic small scale turbulence.
  Using turbulence models, it is not necessary to model the small scale phenomena.
- The details and the 
-\begin_inset Quotes eld
-\end_inset
-
-cut wave number
-\begin_inset Quotes erd
-\end_inset
-
- are different in each model.
+ The details are different in each model.
 \end_layout
 
 \begin_layout Subsection
@@ -375,7 +370,7 @@ Direct numerical simulation - DNS
 \end_layout
 
 \begin_layout Standard
-Direct numerical simulation (DNS) is conceptually the most simple approach
+Direct numerical simulation (DNS) is conceptually the simplest approach
  to turbulence modeling.
  It uses no additional models to the governing equations descried in Section
  
@@ -397,7 +392,7 @@ In order to directly model all the scales of turbulence down to Kolmogorov
 \end_layout
 
 \begin_layout Standard
-DNS is mostly as a academical tool in turbulence modeling.
+DNS is mostly as a academical tool.
  A high quality DNS model gives near exact information about the flow.
  The detailed information helps researchers to develop better turbulence
  models.
@@ -420,7 +415,8 @@ Large eddy simulation (LES) is the intermediate step between direct simulation
 \begin_layout Standard
 Spacial filtering is the essence of LES.
  The eddies that are larger than the filtering threshold are modeled directly,
- and the eddies that are smaller are filtered out and modeled.
+ and the eddies that are smaller are filtered out and modeled with simplificatio
+ns.
  
 \end_layout
 
@@ -428,8 +424,7 @@ Spacial filtering is the essence of LES.
 The models for the small eddies are called subgrid models.
  There are many different subgrid models.
  Some subgrid models are similar to the RANS models discussed later.
- Some are mathematically more abstract filters with no obvious physical
- meaning.
+ Some do the filtering more directly.
 \end_layout
 
 \begin_layout Standard
@@ -448,6 +443,13 @@ To avoid the fine mesh near wall, many models combine LES and RANS models.
  
 \end_layout
 
+\begin_layout Standard
+Hybrid schemes that blend LES and RANS are under intense academical study.
+ The basic idea is to solve LES where the mesh is fine enough and solve
+ RANS else where.
+ 
+\end_layout
+
 \begin_layout Subsubsection
 Reynolds averaged Navier-Stokes - RANS
 \end_layout
@@ -457,7 +459,11 @@ Reynolds averaging is the most common method today.
  The most notable difference between RANS to LES and DNS is the cheapness.
  RANS can be run in steady state and in 2D.
  The requirements for mesh and time step are much more relaxed than in LES.
- The cheapness, however, comes with less reliability.
+ 
+\end_layout
+
+\begin_layout Standard
+The cheapness, however, comes with less reliability.
  The RANS models are typically created and optimized for some specific case.
  They might work very well in that case but fail miserably in others.
 \end_layout
@@ -546,12 +552,12 @@ reference "eq:Reynold decomposition"
 
 \begin_layout Standard
 Note that the structure of Reynolds averaged Navier-Stokes equations is
- exactly the same as non-averaged, expect for the Reynolds stress term 
+ the same as non-averaged, expect for the Reynolds stress term 
 \begin_inset Formula $\rho\overline{u_{i}'u_{j}^{\prime}}$
 \end_inset
 
 .
- Now, let us spend a moment studying the math of averaging.
+ To explain this, let us spend a moment studying the math of averaging.
 \end_layout
 
 \begin_layout Standard
@@ -567,7 +573,7 @@ For linear terms, the time average is simply the Reynolds averaged value.
 \end_layout
 
 \begin_layout Standard
-For the non linear momentum advection term, however, a extra term is needed
+For the non-linear momentum advection term, however, a extra term is needed
 \end_layout
 
 \begin_layout Standard
@@ -600,7 +606,7 @@ For
 compressible flow equations
 \series default
 , the time averaging leads to some inconvenient math problems.
- To avoid this, Favre averaging is used instead.
+ To avoid this, density based Favre averaging is used instead.
  The end results is very similar, and we will not repeat the analysis here.
 \end_layout
 
@@ -629,7 +635,7 @@ reference "eq:incompressibleConstantNuNSNonConservative"
 .
  This causes a closure problem as the Reynolds stress cannot be directly
  calculated from the other quantities.
- This creates a need for turbulence models.
+ We need additional equations, the turbulence model.
  
 \end_layout
 
@@ -640,7 +646,7 @@ Reynolds stress model - RSM
 \begin_layout Standard
 Reynolds stress models are the most direct models using the Reynolds averaged
  form.
- Extending the Reynolds stress tensor we get
+ Extending the Reynolds stress tensor we have
 \end_layout
 
 \begin_layout Standard
@@ -688,12 +694,12 @@ Boussinesq eddy viscosity hypothesis
 \end_layout
 
 \begin_layout Standard
-To simplify the closure problem with Reynolds stress 
+To simplify the problem with Reynolds stress 
 \begin_inset Formula $\rho\overline{u_{i}'u_{j}^{\prime}}$
 \end_inset
 
- the Boussinesq eddy viscosity hypothesis, often called Boussinesq hypothesis,
- is often used.
+, Boussinesq eddy viscosity hypothesis, often called Boussinesq hypothesis,
+ is used.
  The Boussinesq hypothesis states that we can solve the Reynolds stress
  from analogy to viscous stress by
 \end_layout
@@ -713,7 +719,7 @@ To simplify the closure problem with Reynolds stress
 \end_layout
 
 \begin_layout Standard
-for incompressible flow 
+For incompressible flow 
 \begin_inset Formula $\frac{2}{3}\frac{\partial U_{k}}{\partial x_{k}}\delta_{ij}=0$
 \end_inset
 
@@ -814,13 +820,22 @@ mean
 \end_layout
 
 \begin_layout Standard
-Viscosity transports information by diffusion giving rise to a smooth field.
+Viscosity transports information by diffusion, giving rise to a smooth field.
  The small eddies of a turbulent flow perform a similar transport and smoothing
  effect on a 
 \bar under
 time averaged
 \bar default
  flow field.
+ Usually the turbulent viscosity is much larger than the real 
+\begin_inset Quotes eld
+\end_inset
+
+laminar
+\begin_inset Quotes erd
+\end_inset
+
+ viscosity.
  
 \end_layout
 
@@ -864,7 +879,29 @@ which can often be substituted for for viscosity when using RANS modeling.
 \end_inset
 
  is often ignored in the literature.
- This omission is a mystery to the author.
+ For incompressible Reynolds averaged momentum equation with constant viscosity
+ this gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Leftrightarrow\rho\left(\frac{\partial U}{\partial t}+\frac{\partial\left(U_{j}U_{i}\right)}{\partial x_{j}}\right)=\mu_{eff}\frac{\partial^{2}U_{i}}{\partial x_{j}\text{²}}-\frac{\partial P}{\partial x_{i}}+F_{i}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where the only difference to instantaneous momentum equation is the substitution
+ of 
+\begin_inset Formula $\mu_{eff}$
+\end_inset
+
+ and use of Reynolds averaged fields.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -974,7 +1011,7 @@ The usual choices for time scale are turbulent kinetic energy dissipation
 \begin_inset Formula $\omega$
 \end_inset
 
- varies from model to model and author to author.
+ varies from model to model.
  
 \end_layout
 
@@ -1066,10 +1103,23 @@ Standard k-
 
  models form a large family, giving very different results in different
  cases.
+ The most common one is the k-
+\begin_inset Formula $\mathrm{\epsilon}$
+\end_inset
+
+ realizable, which often gives very similar results to k-
+\begin_inset Formula $\mathrm{\omega}$
+\end_inset
+
+-SST.
 \end_layout
 
 \begin_layout Standard
-The transport equations are
+The transport equations for standard k-
+\begin_inset Formula $\mathrm{\epsilon}$
+\end_inset
+
+ model are
 \end_layout
 
 \begin_layout Standard
@@ -1159,7 +1209,7 @@ Generally speaking, k-
 \begin_inset Formula $\epsilon$
 \end_inset
 
- perform well far from wall and k-
+ performs well far away from walls and k-
 \begin_inset Formula $\omega$
 \end_inset
 
@@ -1168,8 +1218,7 @@ Generally speaking, k-
 \begin_inset Formula $\mathrm{\omega}$
 \end_inset
 
--SST performs interpolation between these two models taking the best parts
- of both.
+-SST blends the two models, taking the best parts of both.
  
 \end_layout
 
@@ -1187,11 +1236,15 @@ Another critical detail about k-
 \begin_inset Formula $\mathrm{\omega}$
 \end_inset
 
--SST has a limiter that, to some extend, limits the problem.
+-SST has a limiter that, to some extend, prevents this problem.
 \end_layout
 
 \begin_layout Standard
-The transport equations are
+The transport equations for k-
+\begin_inset Formula $\mathrm{\omega}$
+\end_inset
+
+-SST are
 \end_layout
 
 \begin_layout Standard
@@ -1409,7 +1462,11 @@ Inlet and outlet
 \end_layout
 
 \begin_layout Standard
-As all other fields, turbulent kinetic energy and dissipation (
+As all other fields, turbulent kinetic energy (
+\begin_inset Formula $k$
+\end_inset
+
+) and dissipation (
 \begin_inset Formula $\epsilon$
 \end_inset
 
@@ -1418,9 +1475,13 @@ As all other fields, turbulent kinetic energy and dissipation (
 \end_inset
 
 ) require boundary condition.
- It is very common that the inlet conditions are not known and we have to
- make educated guesses.
- For outlet, some form of zero gradient is usually used.
+ It is very common that the boundary conditions are not known and we have
+ to make educated guesses.
+ 
+\end_layout
+
+\begin_layout Standard
+For outlet, some form of zero gradient is usually good enough.
 \end_layout
 
 \begin_layout Standard
@@ -1442,7 +1503,7 @@ I=\frac{u'}{U}=\frac{\sqrt{\frac{2}{3}k}}{\sqrt{U_{x}\text{²}+U_{y}\text{²}+U_
 \begin_layout Standard
 Typical turbulence intensities vary between 1% and 5%.
  Turbulent intensity can also be calculated for some known cases.
- For example a pipe has
+ For example a fully developed pipe flow has
 \end_layout
 
 \begin_layout Standard
@@ -1558,7 +1619,8 @@ In addition to inlets and outlets, we usually have walls in our simulations.
 \begin_layout Standard
 We start our study of the wall behavior by remembering the law of the wall
  from general fluid dynamics studies.
- The average velocity of turbulent flow near a wall is 
+ The average velocity of turbulent flow near a wall, in the logarithmic
+ region, is 
 \end_layout
 
 \begin_layout Standard
@@ -1587,14 +1649,18 @@ and
 \end_inset
 
  for a smooth wall.
- Equation 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:lawOfTheWall"
+ In the linear region
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+u^{+}=y^{+}\label{eq:lawOfTheWallLinear}
+\end{equation}
 
 \end_inset
 
- is valid in the log law region shown in Fig.
+For the regions, see Fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1676,39 +1742,106 @@ reference "fig:Law-of-the"
 
 \end_inset
 
-, there is a laminar and linear sub layer close to the wall.
+, there is a linear laminar sub layer close to the wall.
  This close to the wall, the turbulence dissipates away.
- Standard k-
+ k-
 \begin_inset Formula $\epsilon$
 \end_inset
 
- is not suited for this low-Re region near wall.
- Modified Low-Re k-
-\begin_inset Formula $\epsilon$
-\end_inset
-
- exists.
+ based models performs poorly in the near wall region.
  k-
 \begin_inset Formula $\omega$
 \end_inset
 
--SST works both in high-Re and low-Re regions.
+ based models perform well in the near wall region.
+ Both models can, however, be used with suitable wall functions.
+ 
 \end_layout
 
 \begin_layout Standard
-If we want to solve the boundary layer directly, the nearest cell center
- to the wall must be in the linear region, usually 
+Similarly to velocity, Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:lawOfTheWall"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:lawOfTheWallLinear"
+
+\end_inset
+
+, other quantities have typical near wall behavior as well.
+ These are implemented in CFD programs as wall functions.
+ A wide variety of wall functions exists, see the documentation of the software
+ you are using for details.
+ 
+\end_layout
+
+\begin_layout Standard
+Using wall functions, the wall adjacent cell value is calculated from the
+ wall function, i.e.
+ calculated 
+\begin_inset Quotes eld
+\end_inset
+
+analytically
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Much coarser near wall meshes can be used.
+ If the flow case corresponds to the wall function, very good results can
+ be expected.
+ However, if the flow field is different from the wall function, large errors
+ are possible.
+\end_layout
+
+\begin_layout Standard
+Historically, the use wall functions required the wall adjacent cell center
+ to be in the logarithmic region.
+ Many modern wall functions use blending functions between the regions and
+ perform well in large ranges of 
+\begin_inset Formula $y^{+}$
+\end_inset
+
+ values.
+ Again, see the documentation of the software you are using.
+\end_layout
+
+\begin_layout Standard
+A more direct, but resource intensive approach is to calculate the near
+ wall region directly.
+ A very fine mesh is needed, usually with 
 \begin_inset Formula $y^{+}<1$
 \end_inset
 
 .
- For turbulent kinetic energy we know that at the wall
+ The wall adjacent cell center must be in the linear region for the calculations
+ to be accurate.
+ 
+\end_layout
+
+\begin_layout Standard
+Care must be taken to use a turbulence model that works near walls, for
+ example k-
+\begin_inset Formula $\omega$
+\end_inset
+
+-SST.
+ At the wall we can set 
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-k_{wall}=0
+\mathit{\begin{alignedat}{1}k_{wall} & =0\\
+U_{wall} & =0
+\end{alignedat}
+}
 \end{equation}
 
 \end_inset
@@ -1717,7 +1850,7 @@ k_{wall}=0
 \end_layout
 
 \begin_layout Standard
-because velocity is zero.
+because velocity is zero at walls.
  For specific turbulent dissipation 
 \begin_inset Formula $\omega$
 \end_inset
@@ -1737,29 +1870,13 @@ because velocity is zero.
 \end_layout
 
 \begin_layout Standard
-Using wall functions based on the law of the wall, a much coarser mesh can
- be used.
- We will not work through the different wall functions as there are great
- many options for different cases.
- Most of them assume a equilibrium flow condition similar to the law of
- the wall and require the wall adjacent cell center to be in the log law
- region.
+Specific dissipation is usually highest near walls.
+ Other models also exits.
 \end_layout
 
 \begin_layout Standard
-In practice, we would usually choose a blending function that blends the
- two approaches depending on local values.
- This makes meshing much easier as the model will work in a wider region
- of 
-\begin_inset Formula $y^{+}$
-\end_inset
-
-values.
- Remember, however, that with complex flows, wall functions are unreliable.
-\end_layout
-
-\begin_layout Standard
-
+As a rule of a thump: if you don't know how to handle the walls, use a blending
+ wall function that should perform well in most cases.
 \end_layout
 
 \end_body

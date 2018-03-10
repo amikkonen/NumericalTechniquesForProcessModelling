@@ -277,62 +277,6 @@ TODO! Two different single indexes
 \end_layout
 
 \begin_layout Subsection
-Navier-Stokes with tensor notations
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:Navier-Stokes-with-tensor"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-\frac{\partial\rho u_{i}}{\partial t}+\frac{\partial\left(\rho u_{j}u_{i}\right)}{\partial x_{j}}=\frac{\partial\tau_{ij}}{\partial x_{j}}-\frac{\partial p}{\partial x_{i}}+f_{i}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{alignat}{1}
-\tau_{ij} & =\mu\text{\left(\frac{\partial u_{i}}{\partial x_{j}}+\frac{\partial u_{j}}{\partial x_{j}}\right)+\left(-\frac{2}{3}\mu+\kappa\right)\frac{\partial u_{j}}{\partial x_{j}}\delta_{ij} }\\
- & =2D_{ij}\mu\text{+\left(-\frac{2}{3}\mu+\kappa\right)\frac{\partial u_{j}}{\partial x_{j}}\delta_{ij} }
-\end{alignat}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-\frac{\partial\rho u_{i}}{\partial t}+\frac{\partial\left(\rho u_{j}u_{i}\right)}{\partial x_{j}}=\frac{\partial}{\partial x_{j}}\left(\mu\text{\left(\frac{\partial u_{i}}{\partial x_{j}}+\frac{\partial u_{j}}{\partial x_{j}}\right) }\right)-\frac{\partial p}{\partial x_{i}}+f_{i}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-\frac{\partial u_{i}}{\partial t}+\frac{\partial\left(u_{j}u_{i}\right)}{\partial x_{j}}=\frac{\partial}{\partial x_{j}}\left(\nu\text{\left(\frac{\partial u_{i}}{\partial x_{j}}+\frac{\partial u_{j}}{\partial x_{j}}\right) }\right)-\frac{1}{\rho}\frac{\partial p}{\partial x_{i}}+f_{i}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
 Common operators
 \end_layout
 
@@ -452,7 +396,63 @@ Gauss divergence theorem
 
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
+Navier-Stokes with tensor notations
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Navier-Stokes-with-tensor"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\rho u_{i}}{\partial t}+\frac{\partial\left(\rho u_{j}u_{i}\right)}{\partial x_{j}}=\frac{\partial\tau_{ij}}{\partial x_{j}}-\frac{\partial p}{\partial x_{i}}+f_{i}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{alignat}{1}
+\tau_{ij} & =\mu\text{\left(\frac{\partial u_{i}}{\partial x_{j}}+\frac{\partial u_{j}}{\partial x_{j}}\right)+\left(-\frac{2}{3}\mu+\kappa\right)\frac{\partial u_{j}}{\partial x_{j}}\delta_{ij} }\\
+ & =2D_{ij}\mu\text{+\left(-\frac{2}{3}\mu+\kappa\right)\frac{\partial u_{j}}{\partial x_{j}}\delta_{ij} }
+\end{alignat}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\rho u_{i}}{\partial t}+\frac{\partial\left(\rho u_{j}u_{i}\right)}{\partial x_{j}}=\frac{\partial}{\partial x_{j}}\left(\mu\text{\left(\frac{\partial u_{i}}{\partial x_{j}}+\frac{\partial u_{j}}{\partial x_{j}}\right) }\right)-\frac{\partial p}{\partial x_{i}}+f_{i}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial u_{i}}{\partial t}+\frac{\partial\left(u_{j}u_{i}\right)}{\partial x_{j}}=\frac{\partial}{\partial x_{j}}\left(\nu\text{\left(\frac{\partial u_{i}}{\partial x_{j}}+\frac{\partial u_{j}}{\partial x_{j}}\right) }\right)-\frac{1}{\rho}\frac{\partial p}{\partial x_{i}}+f_{i}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Full k-
 \begin_inset Formula $\omega$
 \end_inset
@@ -468,6 +468,10 @@ name "sec:Full-k--SST"
 \end_layout
 
 \begin_layout Standard
+Other versions with the same name exists.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
 \frac{\partial(\rho k)}{\partial t}+\frac{\partial(\rho U_{j}k)}{\partial x_{j}}=\tilde{P}_{k}-\beta^{*}\rho k\omega+\frac{\partial}{\partial x_{i}}\left[(\mu+\sigma_{k}\mu_{t})\frac{\partial k}{\partial x_{i}}\right]
@@ -475,11 +479,6 @@ name "sec:Full-k--SST"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-\noindent
 
 \end_layout
 
@@ -799,6 +798,15 @@ Open source, mature, FVM based CFD software
 \end_layout
 
 \begin_layout Itemize
+Linux, Windows, Mac OX, ..., even Android with some tweaking
+\end_layout
+
+\begin_layout Itemize
+Text based user interface.
+ Graphical interfaces are also being developed
+\end_layout
+
+\begin_layout Itemize
 Many different versions available, at the moment I would recommend 
 \end_layout
 
@@ -809,7 +817,7 @@ http://www.openfoam.com/
 
 \end_deeper
 \begin_layout Itemize
-Others
+Others popular ones
 \end_layout
 
 \begin_deeper
@@ -838,6 +846,10 @@ Free, limited, edition available for students
 
 \begin_layout Itemize
 http://www.ansys.com/
+\end_layout
+
+\begin_layout Itemize
+The theory guide in ANSYS Help is very useful
 \end_layout
 
 \end_deeper

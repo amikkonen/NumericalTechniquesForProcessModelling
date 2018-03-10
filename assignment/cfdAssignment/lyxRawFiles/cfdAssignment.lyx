@@ -1300,10 +1300,16 @@ near wall turbulence
 
 \begin_layout Itemize
 size of the domain.
- You will likely need a large domain.
+ You will likely need a large domain
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+You can use correlations to estimate how fine near wall mesh you need.
+ One such correlation is implemented here: https://www.cfd-online.com/Tools/yplus.p
+hp
+\end_layout
+
 \begin_layout Itemize
 The Fluent Theory manual, in ANSYS help, is very useful
 \end_layout
