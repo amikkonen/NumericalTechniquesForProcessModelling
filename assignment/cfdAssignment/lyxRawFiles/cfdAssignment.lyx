@@ -1097,7 +1097,8 @@ filesForNACA0012/geometry
 
 \end_deeper
 \begin_layout Itemize
-An intentionally coarse and small mesh for testing
+An intentionally coarse and small mesh for testing.
+ You need to make you own meshes.
 \end_layout
 
 \begin_deeper
@@ -1144,10 +1145,15 @@ On the NASA page, see the What to Expect section
 \end_layout
 
 \begin_layout Itemize
-For example, SST model gives very good results (https://turbmodels.larc.nasa.gov/na
-ca0012_val_sst.html)
+For example, SST model gives very good results 
 \end_layout
 
+\begin_deeper
+\begin_layout Standard
+(https://turbmodels.larc.nasa.gov/naca0012_val_sst.html)
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Itemize
 Two turbulence models
@@ -1266,7 +1272,7 @@ Velocity vectors or streamlines
 
 \end_deeper
 \begin_layout Itemize
-Only discuss one model in detail
+Only discuss one simulation in detail
 \end_layout
 
 \begin_deeper
@@ -1306,10 +1312,15 @@ size of the domain.
 \end_deeper
 \begin_layout Itemize
 You can use correlations to estimate how fine near wall mesh you need.
- One such correlation is implemented here: https://www.cfd-online.com/Tools/yplus.p
-hp
+ One such correlation is implemented here: 
 \end_layout
 
+\begin_deeper
+\begin_layout Standard
+https://www.cfd-online.com/Tools/yplus.php
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 The Fluent Theory manual, in ANSYS help, is very useful
 \end_layout
@@ -1520,6 +1531,21 @@ s.
  It is recommended to use them.
  Just remember to cite the sources and to write your own code.
  
+\end_layout
+
+\begin_layout Standard
+There are some Python libraries for Finite Volume Method, for example FiPy
+ (
+\begin_inset CommandInset href
+LatexCommand href
+target "https://www.ctcms.nist.gov/fipy/"
+
+\end_inset
+
+).
+ This assignment would be too easy with such tools and using them is not
+ allowed.
+ If, however, you wish to use such tools, ask for a more complex problem.
 \end_layout
 
 \begin_layout Section
