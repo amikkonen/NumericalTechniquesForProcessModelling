@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -35,6 +35,8 @@
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -65,6 +67,7 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -74,7 +77,10 @@
 \tocdepth 3
 \paragraph_separation indent
 \paragraph_indentation default
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -147,7 +153,7 @@ Tampere University of Technology
 \begin_inset Newline newline
 \end_inset
 
-Version 0.5
+Version 0.6
 \begin_inset Newline newline
 \end_inset
 
@@ -256,12 +262,7 @@ Publication version history
 \end_layout
 
 \begin_layout Standard
-These notes are written during the first implementation of this course and
- published in parts.
- Backward compatibility in equation numbers etc.
- is attempted.
- Below you'll see the main changes between published versions.
- Small modifications are not noted.
+Below you will see the main changes between published versions.
 \begin_inset Newline newline
 \end_inset
 
@@ -270,7 +271,7 @@ These notes are written during the first implementation of this course and
 
 \begin_layout Standard
 \begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="5">
+<lyxtabular version="3" rows="7" columns="5">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -560,6 +561,61 @@ First complete version.
 \end_inset
 </cell>
 </row>
+<row>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+03.03.2020
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Moisture transport equations
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typos etc.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typo check up to Sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Fluid-flow"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
 </lyxtabular>
 
 \end_inset
@@ -642,22 +698,22 @@ Preface
 
 \begin_layout Standard
 This lecture note is meant for students on the course Numerical Techniques
- for Process Modelling, arranged on Tampere University of Technology.
- The course consist of three parts: computational fluid dynamics, general
- use of numerical methods in energy related industrial problems, and reaction
- modeling.
+ for Process Modelling, arranged at Tampere University.
+ The course consist of two parts: computational fluid dynamics and general
+ use of numerical methods in energy related industrial problems.
  This booklet considers the computational fluid dynamics part.
 \end_layout
 
 \begin_layout Standard
 This lecture note is a custom fitted to contain the material considered
- on the course and presented in my style.
+ in the course.
  If you prefer a full text book, see the introductory level text book by
  Versteeg and Malalasekera, An introduction to Computational Fluid Dynamics
  
 \begin_inset CommandInset citation
 LatexCommand cite
 key "versteeg2007"
+literal "true"
 
 \end_inset
 
@@ -667,8 +723,7 @@ key "versteeg2007"
 \end_layout
 
 \begin_layout Standard
-This is the first time this lecture note is used and the lecture note will
- be written as the course progresses.
+This booklet is more of a hobby project and will take time to finish.
  Errors are inevitable.
  Feel free to email the author: antti.mikkonen@iki.fi.
 \end_layout
@@ -680,7 +735,7 @@ Very few things in this world are solo achievements.
  sources are listed in the references.
  People who have contributed in some less obvious way are listed in the
  next section.
- Thanks for all the contributers!
+ Thanks for all the contributors!
 \end_layout
 
 \begin_layout Subsection*
@@ -896,7 +951,7 @@ Mikko Pirttiniemi
 \begin_inset Text
 
 \begin_layout Plain Layout
-Elli Heikkinen
+Elli Mikkonen
 \end_layout
 
 \end_inset

@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -24,6 +24,8 @@
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -54,6 +56,7 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -63,7 +66,10 @@
 \tocdepth 3
 \paragraph_separation indent
 \paragraph_indentation default
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -77,7 +83,7 @@
 \begin_body
 
 \begin_layout Section
-Heat Conduction (diffusion)
+Heat conduction (diffusion)
 \end_layout
 
 \begin_layout Standard
@@ -89,6 +95,7 @@ The topics discussed in this section may be found in a from Versteeg and
 \begin_inset CommandInset citation
 LatexCommand cite
 key "versteeg2007"
+literal "true"
 
 \end_inset
 
@@ -96,19 +103,19 @@ key "versteeg2007"
 \end_layout
 
 \begin_layout Standard
-In this section we learn to implement a finite volume solver for heat conduction.
+In this section, we learn to implement a finite volume solver for heat conductio
+n.
  This will allow us to create our own solvers for heat conduction and to
  understand more complex problems later on.
  
 \end_layout
 
 \begin_layout Standard
-The goal of finite volume method (FVM), and most other CFD methods, is to
- divide a complex continuous problem into manageable small pieces.
+The goal of the finite volume method (FVM), and most other CFD methods,
+ is to divide a complex continuous problem into manageable small pieces.
  An approximate solution of the original problem is expressed with a large
  number of simple arithmetic equations.
- These equations are readily assembled in to a matrix and solved with a
- computer.
+ These equations are readily assembled into a matrix and solved with a computer.
  
 \end_layout
 
@@ -116,8 +123,8 @@ The goal of finite volume method (FVM), and most other CFD methods, is to
 The main advantages of numerical solution over analytical solution is the
  ease of solving problems in complicated geometries, boundary conditions
  or with varying fluid properties.
- For such problems analytical solutions often don't exists or are very time
- consuming to implement.
+ For such problems, analytical solutions often don't exists or are very
+ time consuming to implement.
  A word of warning is, however in order: it is very easy to produce false
  results with numerical tools! Especially with commercial software.
  Therefore it is important to always verify the numerical method with a
@@ -126,9 +133,9 @@ The main advantages of numerical solution over analytical solution is the
 \end_layout
 
 \begin_layout Standard
-During this course we become familiar with Finite Volume Method (FVM).
- Other very similar numerical methods include Finite Element Method (FEM)
- and Finite Difference Method (FDM).
+During this course, we become familiar with the Finite Volume Method (FVM).
+ Other very similar numerical methods include the Finite Element Method
+ (FEM) and the Finite Difference Method (FDM).
  In general, numerical solution of fluid related problems are called Computation
 al Fluid Dynamics (CFD).
  FVM method is the preferred method for fluid flow problems because of it's
@@ -154,6 +161,7 @@ See Versteeg and Malalasekare
 \begin_inset CommandInset citation
 LatexCommand cite
 key "versteeg2007"
+literal "true"
 
 \end_inset
 
@@ -167,9 +175,9 @@ We will start with a 1D problem and only briefly consider 2D and 3D problems
 \end_layout
 
 \begin_layout Standard
-The key concept for nearly all numerical solutions is discretization of
- the problem.
- In Finite Volume Method we divide the solution domain in small control
+The key concept for nearly all numerical solutions is the discretization
+ of the problem.
+ In the Finite Volume Method we divide the solution domain in small control
  volumes very similar to the ones used in analytical modeling, see Fig.
  
 \begin_inset CommandInset ref
@@ -181,7 +189,7 @@ reference "fig:Discretization-and-terminology"
 .
  The difference is that in analytical modeling we allow to control volume
  to become infinitesimally small.
- In 
+ In the 
 \bar under
 Finite
 \bar default
@@ -193,8 +201,8 @@ Finite
 Together the control volumes fill the solution domain.
  We will derive the equations for a single cell at a time.
  We will start by defining notations first.
- In general, we need information of the cell we are studying and its immediate
- neighbors.
+ In general, we need information about the cell we are studying and its
+ immediate neighbors.
  
 \end_layout
 
@@ -208,11 +216,11 @@ We use letter
 \begin_inset Formula $W$
 \end_inset
 
- and 
+ (west) and 
 \begin_inset Formula $E$
 \end_inset
 
- to refer to neighboring nodes as shown in Fig.
+ (east) to refer to neighboring nodes as shown in Fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -479,7 +487,7 @@ reference "eq:1dHeat"
 
 \end_inset
 
- contains the essence of Finite Volume Method.
+ contains the essence of the Finite Volume Method.
  Using a familiar control volume approach, we have discretized our problem
  for heat fluxes.
  
@@ -509,10 +517,10 @@ What remains is to express the temperature gradients
 \end_inset
 
  is usually independent of the temperature and requires no special care.
- Thermal conductivity may also be known independent from temperature and
+ Thermal conductivity may also be known independent of the temperature and
  directly available from the geometry.
  Let us now consider the more general case when thermal conductivity depends
- on temperature.
+ on the temperature.
  
 \end_layout
 
@@ -550,7 +558,7 @@ reference "fig:Central-differencing"
 \begin_inset Formula $k$
 \end_inset
 
- we can ignore the interpolation in Eq.
+, we can ignore the interpolation in Eq.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -563,7 +571,8 @@ reference "eq:linearInterpolation"
 \end_layout
 
 \begin_layout Standard
-The most common way to discretize gradient term is to use central differencing.
+The most common way to discretize the gradient term is to use central differenci
+ng.
  Similarly to linear interpolation, the basic idea is to assume a linear
  temperature profile between two nodes as shown in Fig.
  
@@ -619,7 +628,7 @@ name "fig:Central-differencing"
 \end_layout
 
 \begin_layout Standard
-With uniform grid central differencing scheme gives for a temperature gradients
+With uniform grid, central differencing scheme gives a temperature gradients
  at faces
 \end_layout
 
@@ -638,7 +647,7 @@ With uniform grid central differencing scheme gives for a temperature gradients
 \end_layout
 
 \begin_layout Standard
-Note that for non-uniform grid where the 
+Note that for a non-uniform grid where the 
 \begin_inset Formula $\Delta x$
 \end_inset
 
@@ -749,7 +758,7 @@ reference "eq:1dConductionReadyShort"
 \end_layout
 
 \begin_layout Standard
-At this point our equation is ready for a computer, but let us make some
+At this point, our equation is ready for a computer, but let us make some
  sanity checks first.
  
 \end_layout
@@ -796,7 +805,7 @@ reference "eq:1dConductionReadyShort"
 
  is positive.
  This agrees with our experience.
- And what if we increase thermal conductivity? Multiplier 
+ What if we increase thermal conductivity? Multiplier 
 \begin_inset Formula $a_{W}$
 \end_inset
 
@@ -835,7 +844,7 @@ name "subsec:Same-thing-in"
 
 \begin_layout Standard
 For one-dimensional steady heat conduction (diffusion) with a volumetric
- source term the governing equation is
+ source term, the governing equation is
 \end_layout
 
 \begin_layout Standard
@@ -983,7 +992,7 @@ reference "subsec:Developing-the-equations"
 
 \end_inset
 
- we developed the discretized equations for 1D heat transfer inside the
+, we developed the discretized equations for 1D heat transfer inside the
  domain.
  In order to use the equation 
 \begin_inset CommandInset ref
@@ -1063,6 +1072,7 @@ See Versteeg and Malalasekare
 \begin_inset CommandInset citation
 LatexCommand cite
 key "versteeg2007"
+literal "true"
 
 \end_inset
 
@@ -1080,7 +1090,7 @@ constant temperature
 
  
 \series bold
-for left boundary
+for the left boundary
 \series default
 .
  We note that the distance from node 1 to face A is 
@@ -1223,7 +1233,7 @@ side face doesn't exist and is replaced with source terms
 \end_inset
 
  stays unchanged.
- This is typical to boundary conditions are simplifies matrix assembly.
+ This is typical of boundary conditions are simplifies matrix assembly.
  We can first assemble the inner face coefficients and volumetric sources
  and worry about boundaries later.
  More about matrix assembly later in Sec.
@@ -1255,7 +1265,7 @@ reference "fig:Boundary-conditions-1D"
 \end_inset
 
  boundary.
- Now we replace East side coefficient 
+ Now we replace east side coefficient 
 \begin_inset Formula $a_{E}$
 \end_inset
 
@@ -1287,6 +1297,7 @@ See Versteeg and Malalasekare
 \begin_inset CommandInset citation
 LatexCommand cite
 key "versteeg2007"
+literal "true"
 
 \end_inset
 
@@ -1294,7 +1305,7 @@ key "versteeg2007"
 \end_layout
 
 \begin_layout Standard
-Zero gradient boundary for temperature in heat conduction context means
+Zero gradient boundary for the temperature in heat conduction context means
  insulations as 
 \end_layout
 
@@ -1364,8 +1375,8 @@ name "subsec:Matrix-assembly"
 \end_layout
 
 \begin_layout Standard
-In previous section we have learned how to formulate the equations for our
- problem.
+In the previous section we have learned how to formulate the equations for
+ our problem.
  Now we learn how to assemble these equations into a matrix form and feed
  it to a computer.
  We use Python for calculations.
@@ -1441,7 +1452,7 @@ We but all the constant values that do not depend on
 \begin_inset Formula $\boldsymbol{b}$
 \end_inset
 
- and all the multiplying coefficients of temperatures in matrix 
+ and all the multiplying coefficients of temperatures in the matrix 
 \begin_inset Formula $\boldsymbol{A}$
 \end_inset
 
@@ -1536,7 +1547,7 @@ reference "eq:1dConsductionConstantTLEft"
 \begin_inset Formula 
 \begin{equation}
 \begin{array}{cc}
-\underbrace{\left(\frac{k}{\Delta x}+\overbrace{\frac{k}{\Delta x/2}}^{S_{P}}\right)}_{a_{P}=a_{E}+S_{P}}T_{P}=\underbrace{\left(\frac{k}{\Delta x}\right)}_{a_{E}}T_{E}+\underbrace{\left(\frac{k}{\Delta x/2}\right)T_{A}+\overline{S}\Delta V}_{S_{u}}\\
+\underbrace{\left(\frac{k}{\Delta x}+\overbrace{\frac{k}{\Delta x/2}}^{S_{P}}\right)}_{a_{P}=a_{E}+S_{P}}T_{P}=\underbrace{\left(\frac{k}{\Delta x}\right)}_{a_{E}}T_{E}+\underbrace{\left(\frac{k}{\Delta x/2}\right)T_{A}+\overline{S}\Delta x}_{S_{u}}\\
 \Leftrightarrow a_{P}T_{P}=a_{E}T_{E}+S_{u}
 \end{array}\label{eq:1DworkedLeft}
 \end{equation}
@@ -1566,7 +1577,7 @@ reference "eq:insulated1Dconduction"
 \begin_inset Formula 
 \begin{equation}
 \begin{array}{cc}
-\underbrace{\left(\frac{k}{\Delta x}\right)}_{a_{P}=a_{W}}T_{P}=\underbrace{\left(\frac{k}{\Delta x}\right)}_{a_{w}}T_{W}+\underbrace{\overline{S}\Delta V}_{S_{u}}\\
+\underbrace{\left(\frac{k}{\Delta x}\right)}_{a_{P}=a_{W}}T_{P}=\underbrace{\left(\frac{k}{\Delta x}\right)}_{a_{w}}T_{W}+\underbrace{\overline{S}\Delta x}_{S_{u}}\\
 \Leftrightarrow a_{P}T_{P}=a_{W}T_{W}+S_{u}
 \end{array}\label{eq:1dWorkedRigth}
 \end{equation}
@@ -1592,7 +1603,7 @@ reference "eq:1dWorkedRigth"
 
 \end_inset
 
- that the for all cells that do have a west boundary, the west face coefficient
+ that for all cells that do have a west boundary, the west face coefficient
  is the same 
 \begin_inset Formula $a_{W}=\frac{k}{\Delta x}$
 \end_inset
@@ -1636,7 +1647,7 @@ Adding the west side coefficients into matrix
 \end_layout
 
 \begin_layout Standard
-With python this can be done as
+With Python this can be done as
 \end_layout
 
 \begin_layout Standard
@@ -1697,7 +1708,7 @@ a_{E} & -a_{E} & 0 & 0 & 0\\
 \end_layout
 
 \begin_layout Standard
-With python
+With Python
 \end_layout
 
 \begin_layout Standard
@@ -1796,7 +1807,7 @@ The constant boundary condition also contributes a source term
 \end_layout
 
 \begin_layout Standard
-With python the constant boundary condition is added as 
+With Python the constant boundary condition is added as 
 \end_layout
 
 \begin_layout Standard
@@ -1829,7 +1840,7 @@ The insulated boundary on the right produces no coefficients as no heat
 \end_layout
 
 \begin_layout Standard
-As the final step we need to add the volumetric source to our source vector
+As the final step, we need to add the volumetric source to our source vector
  
 \begin_inset Formula $\boldsymbol{b}$
 \end_inset
@@ -1861,7 +1872,7 @@ reference "eq:1dWorkedRigth"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\boldsymbol{b}=\begin{bmatrix}\left(\frac{k}{\Delta x/2}\right)T_{B}+S\Delta x & S\Delta x & S\Delta x & S\Delta x & S\Delta x\end{bmatrix}^{T}
+\boldsymbol{b}=\begin{bmatrix}\left(\frac{k}{\Delta x/2}\right)T_{A}+S\Delta x & S\Delta x & S\Delta x & S\Delta x & S\Delta x\end{bmatrix}^{T}
 \end{equation}
 
 \end_inset
@@ -1870,7 +1881,7 @@ reference "eq:1dWorkedRigth"
 \end_layout
 
 \begin_layout Standard
-With python this can be done with vectorized statement as 
+With Python this can be done with vectorized statement as 
 \end_layout
 
 \begin_layout Standard
@@ -1924,7 +1935,7 @@ T_{2}\\
 T_{3}\\
 T_{4}\\
 T_{5}
-\end{bmatrix}}_{\boldsymbol{T}}=\underbrace{\begin{bmatrix}\left(\frac{k}{\Delta x/2}\right)T_{B}+S\Delta x\\
+\end{bmatrix}}_{\boldsymbol{T}}=\underbrace{\begin{bmatrix}\left(\frac{k}{\Delta x/2}\right)T_{A}+S\Delta x\\
 S\Delta x\\
 S\Delta x\\
 S\Delta x\\
@@ -1940,15 +1951,15 @@ S\Delta x
 \begin_layout Standard
 It's a good idea to check your code in as small increments as possible.
  Print out your coefficients and matrices during development and compare
- them to known values.
+ them with known values.
  Debugging of small pieces is easier that large ones.
- Software houses have teams of designated testers working in their companies
+ Software companies have teams of designated testers working in their companies
  with the sole purpose of finding bugs.
  Do it early.
 \end_layout
 
 \begin_layout Standard
-You can plot the solutions with python as 
+You can plot the solutions with Python as 
 \end_layout
 
 \begin_layout Standard
@@ -1999,7 +2010,7 @@ Plotting
 \end_layout
 
 \begin_layout Subsection
-Unsteady
+Transient
 \end_layout
 
 \begin_layout Standard
@@ -2009,6 +2020,7 @@ See Versteeg and Malalasekare
 \begin_inset CommandInset citation
 LatexCommand cite
 key "versteeg2007"
+literal "true"
 
 \end_inset
 
@@ -2049,7 +2061,7 @@ were
 \begin_inset Formula $\frac{\partial T}{\partial t}$
 \end_inset
 
- and 
+, and 
 \begin_inset Formula $\frac{\partial T}{\partial x}$
 \end_inset
 
@@ -2059,12 +2071,13 @@ were
 
 \begin_layout Standard
 We will try to avoid mathematics as much as possible.
- For a more formal approach see 
+ For a more formal approach, see 
 \shape italic
 Versteeg and Malalasekare 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "versteeg2007"
+literal "true"
 
 \end_inset
 
@@ -2200,7 +2213,7 @@ reference "eq:time"
 \begin_inset Formula $T^{0}$
 \end_inset
 
- we get explicit Euler scheme.
+, we get explicit Euler scheme.
  Explicit Euler requires very small time steps and is rarely suitable.
  
 \end_layout
@@ -2209,7 +2222,7 @@ reference "eq:time"
 We choose to use the new time.
  This is called implicit Euler scheme.
  Implicit Euler is unconditionally stable and easy to use.
- For more temporal accuracy look in to Runge-Kutta or other higher order
+ For more temporal accuracy, look in to Runge-Kutta or other higher order
  schemes.
 \end_layout
 
@@ -2264,8 +2277,8 @@ reference "eq:1DconductionUnsteady"
 
 \end_inset
 
- we see that the solution of one time step in unsteady case is very similar
- to the steady one.
+, we see that the solution of one time step in the transient case is very
+ similar to the steady state one.
  We only have two extra terms, 
 \begin_inset Formula $a_{P}^{0}$
 \end_inset
@@ -2336,7 +2349,7 @@ reference "fig:Time-stepping"
 \end_layout
 
 \begin_layout Standard
-To progress the solution repeat the process in a loop.
+To progress the solution, repeat the process in a loop.
  An example is given in Fig.
  
 \begin_inset CommandInset ref
@@ -2408,6 +2421,7 @@ See Versteeg and Malalasekare
 \begin_inset CommandInset citation
 LatexCommand cite
 key "versteeg2007"
+literal "true"
 
 \end_inset
 
@@ -2415,7 +2429,7 @@ key "versteeg2007"
 \end_layout
 
 \begin_layout Standard
-Extension from 1D to 2D or 3D is straight forward.
+Extension from 1D to 2D or 3D is straightforward.
  We again form a control volume and add all the fluxes in a balance equation.
  It is customary to use North and South (N,S) as names for the upper and
  lower neighbors.
@@ -2507,8 +2521,8 @@ Forming a balance equation for 2D heat conduction results in
 \end_layout
 
 \begin_layout Standard
-With finite volume method, using central differencing and linear interpolation
- Eq.
+With the finite volume method, using central differencing and linear interpolati
+on Eq.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2561,7 +2575,7 @@ reference "eq:2dconductionShrt"
 
 \end_inset
 
- the extension from 1D to 2D only bring a couple of new terms to the equation.
+, the extension from 1D to 2D only bring a couple of new terms to the equation.
  The structure remains the same.
  
 \end_layout
@@ -2605,7 +2619,7 @@ Notations
 \begin_layout Standard
 One we move from 1D to 2D or 3D, the full notation of partial differential
  equations quickly becomes cumbersome.
- Using a 3D heat conduction as an example the full form is 
+ Using a 3D heat conduction as an example, the full form is 
 \end_layout
 
 \begin_layout Standard
@@ -2661,7 +2675,7 @@ and with tensor notation
 \begin_layout Standard
 Both vector and tensor notations are widely used in the literature.
  It's rather necessary to understand them and they will be used on this
- course also.
+ course.
  For index notation see Appendix 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2716,17 +2730,17 @@ The multiplying matrix
  is mostly empty in most FVM problems, i.e.
  mostly filled with zeros.
  It would be a LOT faster to use sparse matrices.
- With large systems sparse matrices are decades faster that dense matrices.
+ With large systems, sparse matrices are decades faster that dense matrices.
  Sparseness also saves memory.
 \end_layout
 
 \begin_layout Standard
-The Python syntax for sparse matrices is rather verbose, but straight forward
+The Python syntax for sparse matrices is rather verbose, but straightforward
  to use.
- Do not be frighten by the long commands.
+ Do not be frightened by the long commands.
  You can usually just copy-paste it from your previous codes or create a
  wrapper.
- For an example wrapper see Fig.
+ For an example wrapper, see Fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2735,7 +2749,7 @@ reference "fig:Sparse-matrix-wrapper"
 \end_inset
 
 .
- For more detail see https://docs.scipy.org/doc/scipy/reference/sparse.html.
+ For more detail, see https://docs.scipy.org/doc/scipy/reference/sparse.html.
  
 \end_layout
 
@@ -2805,16 +2819,40 @@ Many problems in other fields are very similar to heat conduction.
 \end_layout
 
 \begin_layout Paragraph
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Moisture transfer
+Moisture transfer in building materials
 \end_layout
+
+\begin_layout Standard
+Heat and moisture transport in porous building materials is very similar
+ to the pure heat conduction we have considered here.
+ Below are the governing equations for heat and moisture transport.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\left(c_{m}\rho_{m}+c_{w}w\right)\frac{\partial T}{\partial t} & =-\nabla\cdot\left(-\underbrace{k\nabla T}_{\mathrm{cond}}+\underbrace{r_{a}\rho_{a}c_{p,a}T+g_{v}h_{w}}_{\mathrm{conv}}\right)\end{alignedat}
+\end{equation}
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\frac{\partial w}{\partial t} & =-\nabla\cdot\left(\left[\underbrace{-\delta_{p}(w)\nabla p_{v}}_{\text{diffusion}}+\underbrace{\boldsymbol{r}_{a}v}_{\text{convection}}\right]+\left[K\left(w\right)\nabla p_{suc}\right]\right)\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The physical phenomena is different, but the equations are very similar.
 \end_layout
 
 \begin_layout Paragraph
@@ -2939,13 +2977,13 @@ For small deformations
 \end_layout
 
 \begin_layout Standard
-The resulting equation is similar linear system as for heat conduction and
- can be solved with same methods.
+The resulting equation is a similar linear system as for heat conduction
+ and can be solved with the same methods.
  
 \end_layout
 
 \begin_layout Standard
-The stress equation is very similar as that in Navier-Stokes equations.
+The stress equation is very similar to that in Navier-Stokes equations.
  If we remove movement related terms from Navier-Stokes equations, we end
  up with an equation very similar to Eq.
  

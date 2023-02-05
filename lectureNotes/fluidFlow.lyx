@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -25,6 +25,8 @@
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -55,6 +57,7 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -64,7 +67,10 @@
 \tocdepth 3
 \paragraph_separation indent
 \paragraph_indentation default
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -97,6 +103,7 @@ Some of the topics discussed in this section may be found from Versteeg
 \begin_inset CommandInset citation
 LatexCommand cite
 key "versteeg2007"
+literal "true"
 
 \end_inset
 
@@ -104,10 +111,10 @@ key "versteeg2007"
 \end_layout
 
 \begin_layout Standard
-In this section we learn the basics of solution methods for practical fluid
+In this section, we learn the basics of solution methods for practical fluid
  flow problems.
- In previous section we studied diffusion and advection problems in fine
- enough detail to implement our own solvers.
+ In the previous section we studied diffusion and advection problems in
+ fine enough detail to implement our own solvers.
  Unfortunately, such a detailed presentation is outside our time limits
  here.
  Most of the methods discussed for diffusion and advection, however, are
@@ -117,12 +124,12 @@ In this section we learn the basics of solution methods for practical fluid
 
 \begin_layout Standard
 The main goal of this section is to give a student enough understanding
- of the solution methods to read the manuals of software packages.
+ about the solution methods to read the manuals of software packages.
 \end_layout
 
 \begin_layout Standard
-This section considers single phase, non-reacting incompressible and compressibl
-e flows without turbulence models.
+This section considers a single phase, non-reacting, incompressible and
+ compressible flows without turbulence models.
  
 \end_layout
 
@@ -131,11 +138,11 @@ Notations
 \end_layout
 
 \begin_layout Standard
-During this section we move from the one dimensional problems to three dimension
-s.
+During this section, we move from the one dimensional problems to three
+ dimensions.
  As the full sets of equations quickly become cumbersome, we will be using
  vector notations.
- Some of the equations are also collected to the Appendix 
+ Some of the equations are also collected into the Appendix 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "subsec:Navier-Stokes-with-tensor"
@@ -155,9 +162,9 @@ Gradient,
 \end_layout
 
 \begin_layout Standard
-Gradient tells the rate of change of the variable.
+A gradient tells the rate of change of the variable.
  Usually the change is relative to spacial coordinates.
- Gradient is often taken from both scalar and vector values.
+ A gradient is often taken from both scalar and vector values.
  A familiar example is the heat flux from Eq.
  
 \begin_inset CommandInset ref
@@ -227,8 +234,8 @@ Divergence,
 
 \begin_layout Standard
 Divergence is one of the most common operators in fluid dynamics.
- In the context of finite volume method, it tells the difference of fluxes
- entering and leaving the control volume.
+ In the context of the finite volume method, it tells the difference of
+ fluxes entering and leaving the control volume.
  For example, in the one dimensional heat conduction in Eq.
  
 \begin_inset CommandInset ref
@@ -249,7 +256,7 @@ Mathematically, divergence can be though as a dot product of gradient operator
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\mathrm{div}\mathbf{u}=\frac{\partial u_{i}}{\partial x_{i}}=\nabla\cdot\mathbf{u}=\left(\frac{\partial}{\partial x},\frac{\partial}{\partial y},\frac{\partial}{\partial z}\right)\cdot\left(u,v,w\right)=\frac{\partial u_{1}}{\partial x}+\frac{\partial u_{2}}{\partial x}+\frac{\partial u_{3}}{\partial x}
+\mathrm{div}\mathbf{u}=\frac{\partial u_{i}}{\partial x_{i}}=\nabla\cdot\mathbf{u}=\left(\frac{\partial}{\partial x},\frac{\partial}{\partial y},\frac{\partial}{\partial z}\right)\cdot\left(u,v,w\right)=\frac{\partial u_{1}}{\partial x}+\frac{\partial u_{2}}{\partial y}+\frac{\partial u_{3}}{\partial z}
 \end{equation}
 
 \end_inset
@@ -302,18 +309,17 @@ Finite volume method more mathematically
 \end_layout
 
 \begin_layout Standard
-In the previous sections we avoided math when using finite volume method.
+In the previous sections, we avoided math when using the finite volume method.
  We derived our discretized equations from balance equations for a control
  volume.
  We did this for simplicity, and because we will not have time to derive
- the disc
+ the discretized equations for the fluid flow because of time limits.
+ 
 \end_layout
 
 \begin_layout Standard
-We will not derive discretized equations for the fluid flow because of time
- limits.
- We, however, need to be able to recognize the terms and have a rough understand
-ing on how to discretize them.
+We, however, need to be able to recognize the terms and have a rough understandi
+ng on how to discretize them.
  Here will will work through one dimensional examples.
 \end_layout
 
@@ -326,9 +332,9 @@ Divergence,
 \end_layout
 
 \begin_layout Standard
-The formal finite volume discretization start with taking a volume integral
+The formal finite volume discretization starts with taking a volume integral
  of the function.
- In one dimensions divergence is simply a gradient
+ In one dimension, divergence is simply a gradient
 \end_layout
 
 \begin_layout Standard
@@ -363,7 +369,7 @@ where
 \begin_inset Formula $\boldsymbol{n}$
 \end_inset
 
- is surface normal unit vector.
+ is a surface normal unit vector.
  The surface integral can further be divided as a sum operation for all
  the faces
 \end_layout
@@ -380,7 +386,7 @@ where
 \end_layout
 
 \begin_layout Standard
-For one dimensional case this results in
+For a one dimensional case this results in
 \end_layout
 
 \begin_layout Standard
@@ -665,7 +671,7 @@ or, in non-conservative form
 Note that there are great many slight variations of the momentum equations
  in the literature.
  Insignificant terms are often omitted without mention.
- Make certain you know witch version you need!
+ Make certain you know which version you need!
 \end_layout
 
 \begin_layout Subsubsection
@@ -1373,6 +1379,7 @@ Versteeg and Malalasekara 2007, Chapter 6.4
 \begin_inset CommandInset citation
 LatexCommand cite
 key "versteeg2007"
+literal "true"
 
 \end_inset
 
@@ -1579,6 +1586,7 @@ name "fig:Staggered-grid.-Scalar"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "wiki:staggered"
+literal "true"
 
 \end_inset
 
@@ -1604,6 +1612,7 @@ The second, and more common, method is to apply a correction to the linearly
 \begin_inset CommandInset citation
 LatexCommand cite
 key "rhieChowOpenFOAM"
+literal "true"
 
 \end_inset
 
