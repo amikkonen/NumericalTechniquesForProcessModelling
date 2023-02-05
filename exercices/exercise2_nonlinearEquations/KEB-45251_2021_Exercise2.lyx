@@ -1,0 +1,750 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{siunitx}
+\date{}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+\begin_inset VSpace -4cm
+\end_inset
+
+KEB-45251 
+\begin_inset Newline newline
+\end_inset
+
+Numerical Techniques for Process Modeling
+\begin_inset Newline newline
+\end_inset
+
+Exercise 2 - Nonlinear equations
+\begin_inset Newline newline
+\end_inset
+
+20.01.2020 
+\end_layout
+
+\begin_layout Author
+Antti Mikkonen
+\begin_inset Newline newline
+\end_inset
+
+Niko Niemelä
+\end_layout
+
+\begin_layout Section*
+Problem 1
+\end_layout
+
+\begin_layout Standard
+In this exercise we practice solving single variable nonlinear equations
+ and plotting our results.
+ Our target is to solve the implicit Darcy friction factor correlation by
+ White-Colebrook
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{\sqrt{f}}=-2\log_{10}\left(\frac{\epsilon}{3.7d}+\frac{2.51}{\mathrm{\mathrm{\mathrm{Re}\sqrt{f}}}}\right)\label{eq:white}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+For validation we use Haaland explicit function 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{\sqrt{f}}=-1.8\log_{10}\left(\left(\frac{\epsilon}{3.7d}\right)^{1.11}+\frac{6.9}{\mathrm{\mathrm{\mathrm{Re}}}}\right)\label{eq:haalnad}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+giving near identical results.
+ Haaland equation, Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:haalnad"
+
+\end_inset
+
+, is given in template Python file, 
+\shape italic
+template1.py
+\shape default
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Solve
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(a)
+\end_layout
+
+\end_inset
+
+ First create your own iterative solution for Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:white"
+
+\end_inset
+
+ without using Scipy.
+ Use 
+\shape italic
+naive_white_colebrook 
+\shape default
+function in template.
+ Test result with Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:haalnad"
+
+\end_inset
+
+.
+ 
+\begin_inset Formula $\mathrm{Re}=10^{4}$
+\end_inset
+
+ and 
+\begin_inset Formula $\epsilon/d=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(b)
+\end_layout
+
+\end_inset
+
+ Solve case using 
+\shape italic
+root
+\shape default
+ and 
+\shape italic
+root_scalar
+\shape default
+.
+ See 
+\begin_inset CommandInset href
+LatexCommand href
+name "Scipy documentation"
+target "https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.root.html"
+literal "false"
+
+\end_inset
+
+ for details.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(c)
+\end_layout
+
+\end_inset
+
+ Repeat (b) for 
+\begin_inset Formula $\mathrm{4000\leq Re\leq5\times10^{6}}$
+\end_inset
+
+, i.e.
+ use a for-loop.
+ Plot the results using logarithmic scale (see template).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Problem 2
+\end_layout
+
+\begin_layout Standard
+In this exercise we practice solving a system of nonlinear equations.
+ To save time, the used correlations are implemented in the template file
+\shape italic
+ template2.py.
+ 
+\shape default
+You need to implement the balance equation, Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:balance"
+
+\end_inset
+
+, and solve it correctly.
+ The balance equation is called 
+\shape italic
+energy_balance(T) 
+\shape default
+in the template.
+\end_layout
+
+\begin_layout Standard
+We have hot gas (air for simplicity) in a chimney.
+ The chimney is build from two layers of thin metal with an air cavity between
+ them to provide insulation.
+ We assume there to be no heat bridges between the two layers.
+ 
+\series bold
+Calculate the thin metal plate temperatures.
+
+\series default
+ We assume the plate to be isothermal.
+
+\shape italic
+ 
+\shape default
+The nonlinear energy balance equations are given in Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:balance"
+
+\end_inset
+
+.
+ For convection correlations, see Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Nu"
+
+\end_inset
+
+-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:natural"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Inside the duct, heat is transfered with forced convection.
+ We assume the gas to be transparent to heat radiation and therefore there
+ is no radiative heat transfer inside the duct.
+ Inside the cavity, heat is transfered with convection and radiation.
+ Outside, heat is transfered with convection and radiation.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+\begin{alignedat}{1}0= & \underbrace{h_{i0}\left(T_{i}-T_{0}\right)}_{\textrm{convection in duct}}-\underbrace{h_{01}\left(T_{0}-T_{1}\right)}_{\text{convection in cavity}}-\underbrace{\epsilon\sigma\left(T_{0}^{4}-T_{1}^{4}\right)}_{\text{radiation in cavity}}\\
+0= & \underbrace{h_{01}\left(T_{0}-T_{1}\right)}_{\text{convection in cavity}}-\underbrace{h_{1\infty}\left(T_{1}-T_{\infty}\right)}_{\text{convection outside}}+\underbrace{\epsilon\sigma\left(T_{0}^{4}-T_{1}^{4}\right)}_{\text{radiation in cavity}}-\underbrace{\epsilon\sigma\left(T_{1}^{4}-T_{\infty}^{4}\right)}_{\text{radiation outside}}
+\end{alignedat}
+\end{cases}\label{eq:balance}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(a)
+\end_layout
+
+\end_inset
+
+ 
+\series bold
+First, form the balance equations 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:balance"
+
+\end_inset
+
+ in 
+\shape italic
+energy_balance 
+\shape default
+function.
+ Try a few times to solve the equations by guessing the correct temperatures.
+ How do you know when you have guessed correctly? 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(b)
+\end_layout
+
+\end_inset
+
+ 
+\series bold
+Solve the system with 
+\shape italic
+root
+\shape default
+ or similar
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+The chimney height is 
+\begin_inset Formula $L_{v}=\SI{2}{m}$
+\end_inset
+
+, hydraulic diameter is 
+\begin_inset Formula $D=\SI{1}{cm}$
+\end_inset
+
+.
+ The mean velocity inside the duct is 
+\begin_inset Formula $V=\SI{2}{m/s}$
+\end_inset
+
+and the duct is smooth.
+ The gas temperature is 
+\begin_inset Formula $T_{in}=\SI{800}{\celsius}$
+\end_inset
+
+and outside temperature is 
+\begin_inset Formula $T_{\infty}=\SI{20}{\celsius}$
+\end_inset
+
+.
+ Use normal pressure as a reference.
+ The metals are painted black and the_ emissivity is about 
+\begin_inset Formula $\epsilon=0.9$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+
+\shape italic
+\begin_inset Graphics
+	filename drawing.png
+	lyxscale 20
+	width 40col%
+
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 5em
+\end_inset
+
+
+\begin_inset Graphics
+	filename 3D.png
+	lyxscale 20
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\shape italic
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Sketch
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Skecth"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Problem 3 - Extra
+\end_layout
+
+\begin_layout Standard
+We have two parallel vertical plates facing each other.
+ 
+\series bold
+Solve the plate temperatures.
+
+\series default
+ Each plate is 
+\begin_inset Formula $L_{vertical}=$
+\end_inset
+
+
+\begin_inset Formula $\SI{10}{\cm}$
+\end_inset
+
+ high and 
+\begin_inset Formula $L_{horizontal}=$
+\end_inset
+
+
+\begin_inset Formula $\SI{5}{\cm}$
+\end_inset
+
+ wide.
+ The back sides of the plates are insulated.
+ Emissivity for both plates is 
+\begin_inset Formula $\epsilon=0.8$
+\end_inset
+
+.
+ The view factor is 
+\begin_inset Formula $F=0.3$
+\end_inset
+
+ for the plates.
+ Electrical input power for plate 1 is 
+\begin_inset Formula $Q_{1}=\SI{20}{W}$
+\end_inset
+
+ and for plate 2 
+\begin_inset Formula $Q_{2}=\SI{40}{W}$
+\end_inset
+
+.
+ The plates are in still air in room pressure and temperature.
+ The resulting energy balance for the plates is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}Q_{1} & =A\epsilon\sigma T_{1}^{4}-FA\epsilon\sigma T_{2}^{4}-\left(1-F\right)A\epsilon\sigma T_{\infty}^{4}+Ah_{1}\left(T_{1}-T_{\infty}\right)\\
+Q_{2} & =A\epsilon\sigma T_{2}^{4}-FA\epsilon\sigma T_{1}^{4}-\left(1-F\right)A\epsilon\sigma T_{\infty}^{4}+Ah_{2}\left(T_{2}-T_{\infty}\right)
+\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is Stefan-Boltman constant.
+ Natural convection can be calculated from
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\mathrm{Nu} & =0.478\mathrm{Gr^{1/4}}\\
+\mathrm{Gr} & =\frac{g\beta\left(T-T_{\infty}\right)L^{3}}{\nu^{2}}
+\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where 
+\begin_inset Formula $\mathrm{Nu}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathrm{Gr}$
+\end_inset
+
+ are Nusselt number and Grashof number, respectively.
+ For details, see 
+\shape italic
+for 
+\shape default
+example 
+\shape italic
+
+\begin_inset CommandInset href
+LatexCommand href
+name "Wikipedia"
+target "https://en.wikipedia.org/wiki/Natural_convection#Natural_convection_from_a_vertical_plate"
+literal "false"
+
+\end_inset
+
+.
+ 
+\shape default
+NOTE! We did not check the primary source for this correlation.
+ Use with caution!
+\end_layout
+
+\begin_layout Standard
+Use template 
+\shape italic
+template3.py.
+
+\shape default
+ To save time, natural convection is already written in the template.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Convection correlations for problem 2
+\end_layout
+
+\begin_layout Standard
+For the forced convection inside the duct 
+\shape italic
+(Gnielinski's correlation for turbulent flow in tubes, Haaland)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{Nu_{s}}=\frac{\frac{f}{8}\text{\left(\mathrm{Re}-1000\right)\ensuremath{\mathrm{Pr}}}}{1+12.7\left(\frac{f}{8}\right)^{1/2}\left(\mathrm{Pr}^{2/3}-1\right)}\label{eq:Nu}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{\sqrt{f}}=-1.8\log_{10}\left(\frac{6.9}{\mathrm{Re}}\right)\label{eq:f}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For the cap between plates 0 and 1 
+\shape italic
+(Building Physics - Heat, Air and Moisture, Hugo Hens, Eq.1.59, pp.57 )
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{Nu=\max\left(1,1+\frac{0.024\mathrm{Ra}^{1.39}}{\mathrm{Ra}+10100}\right)}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{Ra}=\frac{\beta gL^{3}\left(T_{0}-T_{1}\right)}{\nu^{2}}\mathrm{Pr}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For the natural convection on the outside (
+\shape italic
+
+\begin_inset CommandInset href
+LatexCommand href
+target "https://www.sfu.ca/~mbahrami/ ENSC%20388/Notes/Natural%20Convection.pdf"
+
+\end_inset
+
+) 
+\shape default
+Primary sources not checked!
+\shape italic
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\mathrm{Nu} & =0.59\mathrm{Ra^{1/4}},\:\text{if }\mathrm{Ra<10^{4}}\\
+\mathrm{Nu} & =0.1\mathrm{Ra^{1/3},\:\:\text{if }\mathrm{Ra>10^{4}}}\\
+\mathrm{Ra} & =\mathrm{GrPr}\\
+\mathrm{Gr} & =\frac{g\beta\left(T-T_{\infty}\right)L^{3}}{\nu^{2}}
+\end{alignedat}
+\label{eq:natural}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

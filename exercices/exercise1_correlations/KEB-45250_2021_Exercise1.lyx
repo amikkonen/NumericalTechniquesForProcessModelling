@@ -1,0 +1,723 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{siunitx}
+\date{}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+\begin_inset VSpace -4cm
+\end_inset
+
+KEB-45250 
+\begin_inset Newline newline
+\end_inset
+
+Numerical Techniques for Process Modeling
+\begin_inset Newline newline
+\end_inset
+
+Exercise 1 - Correlations and a primer to linear algebra
+\begin_inset Newline newline
+\end_inset
+
+13.01.2019 
+\end_layout
+
+\begin_layout Author
+Antti Mikkonen
+\end_layout
+
+\begin_layout Section*
+Problem 1
+\end_layout
+
+\begin_layout Standard
+We have a smooth, straight pipe with diameter 
+\begin_inset Formula $D=$
+\end_inset
+
+
+\begin_inset Formula $\SI{10}{\mm}$
+\end_inset
+
+ filled with water.
+ The volumetric flow rate is 
+\begin_inset Formula $Q=\SI{15}{l/min}.$
+\end_inset
+
+ The inlet temperature is 
+\begin_inset Formula $T_{in}=\SI{30}{\celsius}$
+\end_inset
+
+ and wall temperature is 
+\begin_inset Formula $T_{w}=\SI{120}{\celsius}$
+\end_inset
+
+.
+ Outlet pressure is 
+\begin_inset Formula $p_{out}=\SI{2}{bar}$
+\end_inset
+
+ and outlet temperature is 
+\begin_inset Formula $T_{out}=\SI{90}{\celsius}$
+\end_inset
+
+.
+
+\series bold
+ How long is the pipe?
+\series default
+ 
+\series bold
+What is the pressure at inlet?
+\series default
+ 
+\series bold
+Plot the temperature in the pipe.
+ Repeat the calculations for air.
+ 
+\series default
+Assume fully developed flow.
+\end_layout
+
+\begin_layout Standard
+A template is provided.
+ It is recommended to follow the structure in the template as it makes teaching
+ a large group a lot easier.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename schects1.png
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Pipe
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Pipe"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The relevant equations are given below.
+ Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:u"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:f"
+
+\end_inset
+
+ are valid for turbulent flow only.
+ For definitions of dimensionless numbers etc.
+ see lecture slides.
+ For fluid properties, use CoolProps, Google, or what ever method you prefer.
+ For simplicity, you may take the fluid properties at the mean temperature
+ and at the outlet pressure.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+How could you improve accuracy? How reliable are the results? What would
+ happed if we dropped the flow rate to 
+\begin_inset Formula $\boldsymbol{Q=\SI{5}{l/min}}$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{T_{w}-T_{out}}{T_{w}-T_{in}}=\exp(\frac{-hA_{wall}}{\dot{m}c_{p}})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{Nu}=\frac{\frac{f}{8}\text{\left(\mathrm{Re}-1000\right)\ensuremath{\mathrm{Pr}}}}{1+12.7\left(\frac{f}{8}\right)^{1/2}\left(\mathrm{Pr}^{2/3}-1\right)}\label{eq:u}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{\sqrt{f}}=-1.8\log_{10}\left(\frac{6.9}{\mathrm{Re}}\right)\label{eq:f}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta p=\frac{1}{2}\rho V\text{²\frac{L}{D}f }
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\frac{T_{w}-T_{out}}{T_{w}-T_{in}} & =\exp(\frac{-hA}{\dot{m}c_{p}})\\
+\ln\text{\left(\frac{T_{w}-T_{out}}{T_{w}-T_{in}}\right)} & =\frac{-h\pi DL}{\dot{m}c_{p}}\\
+L & =\frac{\ln\text{\left(\frac{T_{w}-T_{out}}{T_{w}-T_{in}}\right)}}{\frac{-h\pi D}{\dot{m}c_{p}}}
+\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Where 
+\begin_inset Formula $A_{wall}$
+\end_inset
+
+ is the pipe wall area.
+ Example CoolProps command for density 
+\begin_inset Quotes eld
+\end_inset
+
+
+\shape italic
+rho = PropsSI("D", "T", T_m, "P", 1e5, fluid)
+\shape default
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Substitute D with 
+\begin_inset Quotes eld
+\end_inset
+
+
+\shape italic
+V
+\shape default
+
+\begin_inset Quotes erd
+\end_inset
+
+ for dynamic viscosity, 
+\begin_inset Quotes eld
+\end_inset
+
+Prandtl
+\begin_inset Quotes erd
+\end_inset
+
+ for Prandtl number, 
+\begin_inset Quotes eld
+\end_inset
+
+C
+\begin_inset Quotes erd
+\end_inset
+
+ for heat capacity, and 
+\begin_inset Quotes eld
+\end_inset
+
+conductivity
+\begin_inset Quotes erd
+\end_inset
+
+ for heat conductivity.
+\end_layout
+
+\begin_layout Standard
+Some useful Python: 
+\begin_inset Quotes eld
+\end_inset
+
+sp.log
+\begin_inset Quotes erd
+\end_inset
+
+ for natural logarithm, 
+\begin_inset Quotes eld
+\end_inset
+
+sp.log10
+\begin_inset Quotes erd
+\end_inset
+
+ for 10-based logarithm, 
+\begin_inset Quotes eld
+\end_inset
+
+sp.pi
+\begin_inset Quotes erd
+\end_inset
+
+ for 
+\begin_inset Formula $\pi$
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+sp.exp(x)
+\begin_inset Quotes erd
+\end_inset
+
+ for 
+\begin_inset Formula $e^{x}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section*
+Problem 2
+\end_layout
+
+\begin_layout Standard
+Later on the course, we will be using matrices to solve practical problems.
+ In this primer, we will learn a sufficient level of math/programming skills
+ to solve them.
+ 
+\end_layout
+
+\begin_layout Standard
+In a template
+\shape italic
+ 
+\shape default
+you'll find an example solution for the following linear algebra problem
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\underbrace{\begin{bmatrix}3 & 2 & 0\\
+1 & -1 & 0\\
+0 & 5 & 1
+\end{bmatrix}}_{\boldsymbol{A}}\underbrace{\begin{bmatrix}2\\
+-2\\
+9
+\end{bmatrix}}_{\boldsymbol{x}}=\underbrace{\begin{bmatrix}2\\
+4\\
+-1
+\end{bmatrix}}_{\boldsymbol{b}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\series bold
+Using the methods learned from the template, transform the following linear
+ system in to standard form (Ax=b) and solve it.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{alignat*}{1}
+x+3y+4z & =3\\
+7x+2y+3z & =5\\
+7x+9y+2z & =6
+\end{alignat*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}1 & 3 & 4\\
+7 & 2 & 3\\
+7 & 9 & 2
+\end{bmatrix}\begin{bmatrix}x\\
+y\\
+z
+\end{bmatrix}=\begin{bmatrix}3\\
+5\\
+6
+\end{bmatrix}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Problem 3 - Extra
+\end_layout
+
+\begin_layout Standard
+From the literature, we can find multiple correlations for the stagnation
+ point heat transfer in impinging jets.
+ See schematics in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Impinging-jet-heat"
+
+\end_inset
+
+.
+ For stagnation point 
+\begin_inset Formula $r=0$
+\end_inset
+
+.
+ One such correlation is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{Nu}_{0}=a\mathrm{Re}^{b}\mathrm{Pr^{0.4}}\left(H/d\right)^{0.064}\label{eq:}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $a=0.56$
+\end_inset
+
+ and 
+\begin_inset Formula $b=0.53$
+\end_inset
+
+ and it works well for the larger nozzle diameters 
+\begin_inset Formula $d=\SI{6}{\mm}$
+\end_inset
+
+ and 
+\begin_inset Formula $d=\SI{8}{\mm}$
+\end_inset
+
+ shown in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Impinging-jet-heat"
+
+\end_inset
+
+.
+ However, from Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Impinging-jet-heat"
+
+\end_inset
+
+ we can readily see that for the smallest diameter nozzle 
+\begin_inset Formula $d=\SI{1.1}{\mm}$
+\end_inset
+
+, the correlation fails.
+ 
+\end_layout
+
+\begin_layout Standard
+In the literature, there is are large differences between the reported values
+ of 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+.
+ The differences mirror the differences in experimental setups.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename schematics.png
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Nu0.png
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Impinging jet heat transfer.
+ Unpublished data measured by Mikkonen and Pirttiniemi.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Impinging-jet-heat"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Modify 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ in Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:"
+
+\end_inset
+
+ to match 
+\begin_inset Formula $d=\SI{1.1}{\mm}$
+\end_inset
+
+ in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Impinging-jet-heat"
+
+\end_inset
+
+.
+ How reliable do you consider this correlation?
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Solve heat flux density at stagnation point
+\series default
+ for 
+\begin_inset Formula $d=\SI{6}{\mm}$
+\end_inset
+
+ and 
+\begin_inset Formula $d=\SI{1.1}{\mm}$
+\end_inset
+
+, 
+\begin_inset Formula $H/d=2$
+\end_inset
+
+, 
+\begin_inset Formula $V=\SI{50}{m/s}$
+\end_inset
+
+ air jet.
+ Wall temperature is 
+\begin_inset Formula $T_{w}=\SI{50}{\celsius}$
+\end_inset
+
+ and jet temperature is 
+\begin_inset Formula $T_{n}=\SI{20}{\celsius}$
+\end_inset
+
+.
+ Take fluid properties at jet temperature.
+\end_layout
+
+\end_body
+\end_document

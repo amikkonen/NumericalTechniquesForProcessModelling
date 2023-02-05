@@ -1,0 +1,596 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{siunitx}
+\date{}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+\begin_inset VSpace -4cm
+\end_inset
+
+KEB-45251 
+\begin_inset Newline newline
+\end_inset
+
+Numerical Techniques for Process Modeling
+\begin_inset Newline newline
+\end_inset
+
+Exercise 4 - Optimization
+\begin_inset Newline newline
+\end_inset
+
+02.02.2021 
+\end_layout
+
+\begin_layout Author
+Antti Mikkonen
+\end_layout
+
+\begin_layout Section*
+Problem 1
+\end_layout
+
+\begin_layout Standard
+We will start by playing with a practice function
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+f=x\sin\left(x\right)+0.2x^{2}-3
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+in range 
+\begin_inset Formula $x\in[0,10]$
+\end_inset
+
+.
+ 
+\series bold
+Start by plotting the function.
+ Then find
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(a)
+\end_layout
+
+\end_inset
+
+
+\series bold
+root with root
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(b)
+\end_layout
+
+\end_inset
+
+
+\series bold
+root with root_scalar using bracket
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(c)
+\end_layout
+
+\end_inset
+
+
+\series bold
+minimum with minimize_scalar
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(d)
+\end_layout
+
+\end_inset
+
+
+\series bold
+maximum with minimize_scalar
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(e)
+\end_layout
+
+\end_inset
+
+
+\series bold
+root using using minimize_scalar
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(f)
+\end_layout
+
+\end_inset
+
+
+\series bold
+minimum with constraint (use penalty) 
+\begin_inset Formula $h\geq0,$
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{equation}
+h=f\text{\left(x+6\right)}^{1/2}-x
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(extra)
+\end_layout
+
+\end_inset
+
+
+\series bold
+ do the same using pyswarm (
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+pythonhosted.org/pyswarm/
+\end_layout
+
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+The function is intentionally chosen to easily give false results.
+ Remember to check the results!
+\series default
+ Note that in real life, you may not be able to do this.
+\end_layout
+
+\begin_layout Standard
+We do not have a template for this exercise.
+ See previous exercises, lecture slides, and Scipy documentation (
+\begin_inset CommandInset href
+LatexCommand href
+target "https://docs.scipy.org/doc/scipy/reference/optimize.html"
+
+\end_inset
+
+) for hints.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Problem 2 
+\end_layout
+
+\begin_layout Standard
+In Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Impinging-jet.-Measurement"
+
+\end_inset
+
+ we have schematics for an impinging jet and experimental data for local
+ heat transfer.
+ The data was measured by Alimohamadi et.
+ al., the full paper is attached.
+ 
+\end_layout
+
+\begin_layout Standard
+As usual, the measurement data comes in a discrete format.
+ 
+\series bold
+Use interpolation between data points and plot the results
+\series default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+From experience, it is known that the heat transfer starts to decrease monotonic
+ally after some distance from the stagnation point.
+ 
+\series bold
+Fit an exponentially decreasing function to the data and plot results
+\series default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+See lecture slides for hints and use template
+\shape italic
+.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+
+\shape italic
+\begin_inset Graphics
+	filename schematics.png
+	lyxscale 20
+	width 40col%
+
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 1cm
+\end_inset
+
+
+\begin_inset Graphics
+	filename aliData.png
+	lyxscale 20
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\shape italic
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Impinging jet.
+ Measurement data by Alimohammadi.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Impinging-jet.-Measurement"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Problem 3 - Extra
+\end_layout
+
+\begin_layout Standard
+Similarly to problem 1 in exercise 1, we have cold water entering a hot
+ pipe.
+ The initial water temperature is 
+\begin_inset Formula $T_{in}=\SI{30}{\celsius}$
+\end_inset
+
+ and we want the outlet temperature to be 
+\begin_inset Formula $T_{out}=\SI{80}{\celsius}$
+\end_inset
+
+.
+ The pipe wall temperature is 
+\begin_inset Formula $T_{w}=\SI{100}{\celsius}$
+\end_inset
+
+.
+ Water mass flow rate is 
+\begin_inset Formula $\dot{m}=\SI{0.5}{kg/s}$
+\end_inset
+
+.
+ Maximum allowed pressure loss in the pipe is 
+\begin_inset Formula $\Delta p_{max}=\SI{1}{kPa}$
+\end_inset
+
+.
+ 
+\series bold
+Choose the pipe inner diameter 
+\begin_inset Formula $d$
+\end_inset
+
+ which minimizes pipe mass.
+
+\series default
+ Pipe wall thickness is 
+\begin_inset Formula $\SI{2}{mm}$
+\end_inset
+
+ and the pipe is made from copper.
+ 
+\end_layout
+
+\begin_layout Standard
+A template
+\shape italic
+ is 
+\shape default
+available
+\shape italic
+.
+ 
+\series bold
+\shape default
+First implement the function 
+\shape italic
+pipe 
+\shape default
+which solves the problem with one diameter and test it
+\series default
+.
+ 
+\series bold
+Then solve the optimization problem using penalty method
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+You may also verify your solution using brute force and plotting.
+ 
+\end_layout
+
+\begin_layout Section*
+\begin_inset Note Note
+status open
+
+\begin_layout Section*
+Problem 4 - Extra
+\end_layout
+
+\begin_layout Plain Layout
+Find the plate distance 
+\begin_inset Formula $L_{c}$
+\end_inset
+
+ which gives the lowest outer surface temperature 
+\begin_inset Formula $T_{1}$
+\end_inset
+
+ in last weeks Problem 1.
+ See 
+\shape italic
+KEB-45250_2020_Exercise3.pdf
+\shape default
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(a)
+\end_layout
+
+\end_inset
+
+
+\series bold
+Wrap the solution from exercise 4 problem 1 into a function that takes one
+ parameter, 
+\begin_inset Formula $L_{c}$
+\end_inset
+
+ and returns one value 
+\begin_inset Formula $T_{1}$
+\end_inset
+
+.
+ Test that the function works
+\series default
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(b)
+\end_layout
+
+\end_inset
+
+
+\series bold
+Run the minimization problem
+\series default
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(c)
+\end_layout
+
+\end_inset
+
+
+\series bold
+Plot the results.
+ If possible, brute force is an excellent solution.
+ In this particular case, how would you choose 
+\begin_inset Formula $L_{c}$
+\end_inset
+
+?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,533 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{siunitx}
+\date{}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+\begin_inset VSpace -4cm
+\end_inset
+
+KEB-45251 
+\begin_inset Newline newline
+\end_inset
+
+Numerical Techniques for Process Modeling
+\begin_inset Newline newline
+\end_inset
+
+Exercise 6 - Boundary value problem
+\begin_inset Newline newline
+\end_inset
+
+17.02.2021 
+\end_layout
+
+\begin_layout Author
+Antti Mikkonen
+\begin_inset Newline newline
+\end_inset
+
+Niko Niemelä
+\end_layout
+
+\begin_layout Section*
+Problem 1
+\end_layout
+
+\begin_layout Standard
+Write a numerical solver for a temperature profile in a fin with constant
+ circular cross section 
+\begin_inset Formula $A_{c}$
+\end_inset
+
+ and constant heat transfer coefficient 
+\begin_inset Formula $h$
+\end_inset
+
+.
+ Include radiation.
+ The fin base temperature 
+\begin_inset Formula $T_{B}>T_{\infty}$
+\end_inset
+
+ is given and fin tip is assumed insulated.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ripa.png
+	lyxscale 10
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Fin
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+The governing equation is 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+kA_{c}\frac{\mathrm{d}^{2}T}{\mathrm{d}x^{2}}-hP\left(T-T_{\infty}\right)-\epsilon\sigma P\left(T^{4}-T_{\infty}^{4}\right)=0\label{eq:h}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where 
+\begin_inset Formula $P$
+\end_inset
+
+ is fin perimeter and 
+\begin_inset Formula $A_{c}$
+\end_inset
+
+ is cross-section area.
+ 
+\end_layout
+
+\begin_layout Standard
+If there is no radiation, 
+\begin_inset Formula $\epsilon=0$
+\end_inset
+
+, an analytical solution exists
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}\frac{T-T_{\infty}}{T-T_{B}} & =\frac{\mathrm{cosh}\beta\left(L-x\right)}{\mathrm{cosh}\beta L}\\
+\beta & =\left(\frac{hP}{kA_{c}}\right)^{1/2}
+\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+use the analytical solution to validate your code for convection.
+ 
+\end_layout
+
+\begin_layout Standard
+To save time, most of the code is already written in the template file
+\shape italic
+, 
+\shape default
+you only need to implement function 
+\shape italic
+numerical
+\shape default
+.
+\end_layout
+
+\begin_layout Standard
+Scipy.integrate includes a numerical boundary value problem solver 
+\shape italic
+solve_bvp 
+\shape default
+(see documentation).
+ It requires the ode to be gives as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\mathrm{d}y}{\mathrm{d}x}=f\left(x,y\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+with boundary values given as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{bc}\left(y(a),y(b)\right)=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where 
+\begin_inset Formula $a\leq x\leq b$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ is a vector of first order functions.
+ In our case 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+y=\begin{bmatrix}T\\
+T'
+\end{bmatrix}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where 
+\begin_inset Formula $T'=\frac{\mathrm{d}T}{\mathrm{d}x}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The solver only requires a few lines of code.
+ However, to write those lines the 2nd order ODE in Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:h"
+
+\end_inset
+
+ needs to be transformed into a system of first order ODEs.
+ 
+\series bold
+You may wish to start with pen and paper.
+\end_layout
+
+\begin_layout Section*
+Problem 2
+\end_layout
+
+\begin_layout Standard
+Solve last week's problem with Runge-Kutta (or BDF, LSODA,...) using 
+\shape italic
+solve_ivp
+\shape default
+ from Scipy.
+ A template is available.
+ You only need to implement the ode function
+\shape italic
+.
+\end_layout
+
+\begin_layout Standard
+The governing equation is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+mc_{p}\frac{dT}{dt}=-hA\left(T-T_{\infty}\right)-\epsilon\sigma A\left(T^{4}-T_{\infty}^{4}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+Solve_ivp
+\shape default
+ expects the problem to be given in a standard form
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{dy}{dt}=f\left(t,y\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+with an initial value 
+\begin_inset Formula $y\left(t=0\right)=y_{0}$
+\end_inset
+
+.
+ Implement 
+\begin_inset Formula $f\left(t,y\right)$
+\end_inset
+
+ inside the 
+\shape italic
+ode
+\shape default
+ function.
+ For more details, see 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://docs.scipy.org/doc/scipy/reference/generated/ scipy.integrate.solve_ivp.html
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Problem 3 - Extra
+\end_layout
+
+\begin_layout Standard
+Flat plate laminar boundary layer flow is a classic example of a real life
+ fluid dynamics problem that can be solved with the methods discussed today.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename levy.png
+	lyxscale 10
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Laminar boundary layer.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Laminar-boundary-layer."
+
+\end_inset
+
+ 
+\size tiny
+Fig: https://www.chegg.com/homework-help/questions-and-answers/1-derive-similarity
+-solution-flat-plate-laminar-boundary-layer-blasius-solution-show-2-sol-q3296881
+8
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The derivation starts from the general 2D equations given in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Laminar-boundary-layer."
+
+\end_inset
+
+, and after many simplifications and math tricks reduces to 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}f'''+0.5ff'' & =0\\
+\eta\left(x,y\right) & =\frac{y}{\delta\left(x\right)}=y\sqrt{\frac{U_{\infty}}{\nu x}}\\
+u\left(x,y\right) & =U_{\infty}\frac{\mathrm{d}f}{\mathrm{d}\eta}=U_{\infty}f'\left(\eta\right)\\
+\\
+\end{alignedat}
+\label{eq:f}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+which can be transformed into a system of first order ODEs and solved numericall
+y.
+ Appropriate boundary conditions are 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}f\left(0\right) & =0\\
+f'\left(0\right) & =0\\
+f'\left(\infty\right) & =1
+\end{alignedat}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+First, solve the Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:f"
+
+\end_inset
+
+ using 
+\shape italic
+solve_bvp.
+ 
+\shape default
+Then plot some velocity profiles.
+\end_layout
+
+\end_body
+\end_document
