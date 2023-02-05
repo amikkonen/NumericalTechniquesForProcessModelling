@@ -1,5 +1,7 @@
 # NumericalTechniquesForProcessModelling
 
+[![DOI](https://zenodo.org/badge/116688697.svg)](https://zenodo.org/badge/latestdoi/116688697)
+
 This repository contain lecture notes, example codes, exercises, and other public material on the course Numerical Techniques for Process Modelling, arranged on Tampere University of Technology.
 
 This is the first time this lecture note is used and the lecture note will be written as the course progresses. Errors are inevitable. Feel free to email the author: antti.mikkonen@kapsi.fi.
